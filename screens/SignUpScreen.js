@@ -3,14 +3,13 @@ import {AsyncStorage, StyleSheet, View, Button} from 'react-native';
 
 export default class SignInScreen extends React.Component {
   static navigationOptions = {
-    title: 'Please sign in',
+    title: 'Please sign up',
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <Button title="Sign in!" onPress={this._signInAsync} />
-        <Button title="Sign up!" onPress={this._goToSignUp} />
+        <Button title="Sign up!" onPress={this._signInAsync} />
       </View>
     );
   }
@@ -19,10 +18,6 @@ export default class SignInScreen extends React.Component {
     await AsyncStorage.setItem('userToken', 'abc');
     this.props.navigation.navigate('Main');
   };
-
-  _goToSignUp = () => {
-    this.props.navigation.navigate('SignUp');
-  }
 }
 
 const styles = StyleSheet.create({
