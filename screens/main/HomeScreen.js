@@ -7,7 +7,8 @@ import {
   Text,
   View,
   Button,
-  AsyncStorage
+  AsyncStorage,
+  Modal
 } from 'react-native';
 
 import { MonoText } from '../../components/StyledText';
@@ -19,10 +20,18 @@ export default class HomeScreen extends React.Component {
     return {...headerLeftNav, title: 'Home'};
   };
 
+  state = {
+    modalVisible: false,
+  };
+
   _signOutAsync = async () => {
     await AsyncStorage.clear();
     this.props.navigation.navigate('Auth');
   };
+
+  _setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
 
   render() {
     return (
@@ -40,6 +49,34 @@ export default class HomeScreen extends React.Component {
           </View>
 
           <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
+
+          <Button
+            onPress={() => {
+              this._setModalVisible(true);
+            }}
+            title="Show Modal"
+          />
+
+          <Modal
+            animationType="slide"
+            transparent={false}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {
+              alert('Modal has been closed.');
+            }}>
+            <View style={styles.contentContainer}>
+              <View>
+                <Text>Hello World!</Text>
+
+                <Button
+                  onPress={() => {
+                    this._setModalVisible(!this.state.modalVisible);
+                  }}
+                  title="Hide Modal" 
+                />
+              </View>
+            </View>
+          </Modal>
 
         </ScrollView>
 
