@@ -1,13 +1,14 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator, createDrawerNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import LeftSliderScreen from '../screens/LeftSliderScreen';
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen,
+  Home: HomeScreen
 });
 
 HomeStack.navigationOptions = {
@@ -38,7 +39,14 @@ SettingsStack.navigationOptions = {
   ),
 };
 
-export default createBottomTabNavigator({
+const BottomTabNavigator = createBottomTabNavigator({
   HomeStack,
   SettingsStack,
 });
+
+export default createDrawerNavigator({
+  BottomTabNavigator: BottomTabNavigator,
+}, {
+  contentComponent: LeftSliderScreen
+});
+
