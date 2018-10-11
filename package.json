@@ -15,6 +15,7 @@
   "dependencies": {
     "@expo/samples": "2.1.1",
     "expo": "^30.0.1",
+    "prop-types": "^15.6.2",
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
     "react-native-i18n": "2.0.12",

@@ -3,7 +3,7 @@ module.exports = {
         "react-native/react-native": true,
         "es6": true 
     },
-    "extends": ["eslint:recommended", "plugin:react-native/all"],
+    "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:react-native/all"],
     "plugins": [
         "react",
         "react-native"

@@ -1,10 +1,15 @@
 import React from 'react';
 import {AsyncStorage, StyleSheet, View, Button} from 'react-native';
+import PropTypes from 'prop-types';
 
 export default class SignInScreen extends React.Component {
   static navigationOptions = {
     title: 'Please sign in',
   };
+
+  static propTypes = {
+    navigation: PropTypes.object,
+  }
 
   render() {
     return (

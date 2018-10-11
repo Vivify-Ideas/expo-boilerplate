@@ -6,11 +6,16 @@ import {
   StyleSheet,
   StatusBar
 } from 'react-native';
+import PropTypes from 'prop-types';
 
 export default class AuthLoadingScreen extends React.Component {
   constructor(props) {
     super(props);
     this._bootstrapAsync();
+  }
+
+  static propTypes = {
+    navigation: PropTypes.object,
   }
 
   // Fetch the token from storage then navigate to our appropriate place

@@ -10,6 +10,7 @@ import {
   AsyncStorage,
   Modal
 } from 'react-native';
+import PropTypes from 'prop-types';
 
 import { MonoText } from '../../components/StyledText';
 import { addHeaderLeftNavigator } from '../../helpers';
@@ -20,6 +21,10 @@ export default class HomeScreen extends React.Component {
     const headerLeftNav = addHeaderLeftNavigator(navigation);
     return {...headerLeftNav, title: 'Home'};
   };
+
+  static propTypes = {
+    navigation: PropTypes.object,
+  }
 
   state = {
     modalVisible: false,

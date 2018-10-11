@@ -11,6 +11,7 @@ const HomeStack = createStackNavigator({
   Home: HomeScreen
 });
 
+/* eslint-disable react/prop-types, react/display-name */
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
   tabBarIcon: ({ focused }) => (

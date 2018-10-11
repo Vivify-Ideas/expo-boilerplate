@@ -1,10 +1,18 @@
 import React from 'react';
 import { Icon } from 'expo';
 import { StyleSheet } from 'react-native';
+import PropTypes from 'prop-types'; 
 
 import Colors from '../constants/Colors';
 
 export default class TabBarIcon extends React.Component {
+  static displayName = 'TabBarIcon'
+
+  static propTypes = {
+    name: PropTypes.string.isRequired,
+    focused: PropTypes.bool
+  }
+
   render() {
     return (
       <Icon.Ionicons

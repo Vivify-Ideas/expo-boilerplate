@@ -4,8 +4,13 @@ import {
   Button,
   View
 } from 'react-native';
+import PropTypes from 'prop-types';
 
 export default class LeftSliderScreen extends React.Component {
+  static propTypes = {
+    navigation: PropTypes.object,
+  }
+  
   render() {
     return (
       <View style={styles.container}>
