@@ -10,8 +10,8 @@ import {
   AsyncStorage
 } from 'react-native';
 
-import { MonoText } from '../components/StyledText';
-import { addHeaderLeftNavigator } from '../helpers';
+import { MonoText } from '../../components/StyledText';
+import { addHeaderLeftNavigator } from '../../helpers';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -32,8 +32,8 @@ export default class HomeScreen extends React.Component {
             <Image
               source={
                 __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
+                  ? require('../../assets/images/robot-dev.png')
+                  : require('../../assets/images/robot-prod.png')
               }
               style={styles.welcomeImage}
             />

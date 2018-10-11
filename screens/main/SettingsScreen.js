@@ -1,7 +1,7 @@
 import React from 'react';
 import { ExpoConfigView } from '@expo/samples';
 
-import { addHeaderLeftNavigator } from '../helpers';
+import { addHeaderLeftNavigator } from '../../helpers';
 
 export default class SettingsScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {

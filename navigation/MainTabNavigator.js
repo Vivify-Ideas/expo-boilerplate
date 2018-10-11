@@ -3,9 +3,9 @@ import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator, createDrawerNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import SettingsScreen from '../screens/SettingsScreen';
-import LeftSliderScreen from '../screens/LeftSliderScreen';
+import HomeScreen from '../screens/main/HomeScreen';
+import SettingsScreen from '../screens/main/SettingsScreen';
+import LeftSliderScreen from '../screens/main/LeftSliderScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen
