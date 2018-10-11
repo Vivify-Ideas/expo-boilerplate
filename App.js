@@ -1,7 +1,9 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, YellowBox } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
+
+YellowBox.ignoreWarnings(['react-native-i18n module is not correctly linked']);
 
 export default class App extends React.Component {
   state = {

@@ -3,7 +3,8 @@ import {
   ActivityIndicator,
   AsyncStorage,
   View,
-  StyleSheet
+  StyleSheet,
+  StatusBar
 } from 'react-native';
 
 export default class AuthLoadingScreen extends React.Component {
@@ -26,6 +27,7 @@ export default class AuthLoadingScreen extends React.Component {
     return (
       <View style={styles.container}>
         <ActivityIndicator style={styles.loading} />
+        <StatusBar barStyle="default" />
       </View>
     );
   }

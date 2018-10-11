@@ -13,6 +13,7 @@ import {
 
 import { MonoText } from '../../components/StyledText';
 import { addHeaderLeftNavigator } from '../../helpers';
+import I18n from '../../i18n';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -38,6 +39,7 @@ export default class HomeScreen extends React.Component {
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
+            <Text>{I18n.t('helloWorld')}</Text>
             <Image
               source={
                 __DEV__
@@ -66,7 +68,7 @@ export default class HomeScreen extends React.Component {
             }}>
             <View style={styles.contentContainer}>
               <View>
-                <Text>Hello World!</Text>
+                <Text>{I18n.t('helloWorld')}</Text>
 
                 <Button
                   onPress={() => {
