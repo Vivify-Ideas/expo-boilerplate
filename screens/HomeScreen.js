@@ -9,20 +9,15 @@ import {
   Button,
   AsyncStorage
 } from 'react-native';
-import { Icon } from 'expo';
 
 import { MonoText } from '../components/StyledText';
+import { addHeaderLeftNavigator } from '../helpers';
 
 export default class HomeScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: 'Home',
-    headerLeft: <Icon.Ionicons
-      name='ios-menu'
-      size={24}
-      onPress={()=>{ navigation.toggleDrawer(); }}
-      style={styles.menuIcon}
-    />
-  });
+  static navigationOptions = ({ navigation }) => {
+    const headerLeftNav = addHeaderLeftNavigator(navigation);
+    return {...headerLeftNav, title: 'Home'};
+  };
 
   _signOutAsync = async () => {
     await AsyncStorage.clear();
@@ -115,9 +110,5 @@ const styles = StyleSheet.create({
   },
   navigationFilename: {
     marginTop: 5,
-  },
-  menuIcon: {
-    marginLeft: 10,
-    marginTop: 10
   }
 });
