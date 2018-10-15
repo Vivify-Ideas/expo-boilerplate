@@ -1,17 +1,46 @@
 import React from 'react';
 import { ExpoConfigView } from '@expo/samples';
+import { createMaterialTopTabNavigator } from 'react-navigation';
 
-import { addHeaderLeftNavigator } from '../../helpers';
-
-export default class SettingsScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    const headerLeftNav = addHeaderLeftNavigator(navigation);
-    return {...headerLeftNav, title: 'Settings'};
-  };
-
+class Tab1 extends React.Component {
   render() {
-    /* Go ahead and delete ExpoConfigView and replace it with your
-     * content, we just wanted to give you a quick view of your config */
     return <ExpoConfigView />;
   }
 }
+
+class Tab2 extends React.Component {
+  render() {
+    return <ExpoConfigView />;
+  }
+}
+
+class Tab3 extends React.Component {
+  render() {
+    return <ExpoConfigView />;
+  }
+}
+
+class Tab4 extends React.Component {
+  render() {
+    return <ExpoConfigView />;
+  }
+}
+
+class Tab5 extends React.Component {
+  render() {
+    return <ExpoConfigView />;
+  }
+}
+
+export default createMaterialTopTabNavigator({
+  Tab1,
+  Tab2,
+  Tab3,
+  Tab4,
+  Tab5,
+}, {
+  lazy: true,
+  tabBarOptions: {
+    scrollEnabled: true
+  }
+});

@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/main/HomeScreen';
 import SettingsScreen from '../screens/main/SettingsScreen';
 import LeftSliderScreen from '../screens/main/LeftSliderScreen';
+import { addHeaderLeftNavigator } from '../helpers';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen
@@ -27,7 +28,13 @@ HomeStack.navigationOptions = {
 };
 
 const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen,
+  Settings: {
+    screen: SettingsScreen,
+    navigationOptions: ({ navigation }) => {
+      const headerLeftNav = addHeaderLeftNavigator(navigation);
+      return {...headerLeftNav, title: 'Settings'};
+    }
+  }
 });
 
 SettingsStack.navigationOptions = {
