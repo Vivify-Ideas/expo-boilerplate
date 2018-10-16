@@ -1,6 +1,7 @@
 import React from 'react';
 import { AsyncStorage, StyleSheet, View, Button } from 'react-native';
 import PropTypes from 'prop-types';
+import config from '../../config';
 
 export default class SignInScreen extends React.Component {
   static navigationOptions = {

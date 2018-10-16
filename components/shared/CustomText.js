@@ -8,7 +8,7 @@ const FONT_FAMILY = {
   ITALIC: { fontFamily: 'montserrat-italic' }
 };
 
-const IdiomText = props => {
+const CustomText = props => {
   const getFontFamily = () => {
     if (props.bold) {
       return FONT_FAMILY.BOLD;
@@ -22,11 +22,11 @@ const IdiomText = props => {
   return <Text style={[getFontFamily(), props.style]}>{props.children}</Text>;
 };
 
-IdiomText.propTypes = {
+CustomText.propTypes = {
   bold: PropTypes.bool,
   italic: PropTypes.bool,
   style: PropTypes.object,
   children: PropTypes.children
 };
 
-export default IdiomText;
+export default CustomText;

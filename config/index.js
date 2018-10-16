@@ -1,7 +1,8 @@
+import { API_BASE_URL, IMAGE_BASE_URL } from 'react-native-dotenv';
+
 const config = {
-  API_BASE_URL: 'https://example.com/api/',
-  IMAGE_BASE_URL: 'https://example.com/',
-  VIDEO_BASE_URL: 'https://example.com/'
+  API_BASE_URL,
+  IMAGE_BASE_URL
 };
 
 export default config;
