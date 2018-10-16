@@ -7,7 +7,7 @@ YellowBox.ignoreWarnings(['react-native-i18n module is not correctly linked']);
 
 export default class App extends React.Component {
   state = {
-    isLoadingComplete: false,
+    isLoadingComplete: false
   };
 
   render() {
@@ -33,7 +33,7 @@ export default class App extends React.Component {
     return Promise.all([
       Asset.loadAsync([
         require('./assets/images/robot-dev.png'),
-        require('./assets/images/robot-prod.png'),
+        require('./assets/images/robot-prod.png')
       ]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar
@@ -41,7 +41,10 @@ export default class App extends React.Component {
         // We include SpaceMono because we use it in HomeScreen.js. Feel free
         // to remove this if you are not using it in your app
         'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
-      }),
+        'montserrat-bold': require('./assets/fonts/Montserrat-Bold.ttf'),
+        'montserrat-italic': require('./assets/fonts/Montserrat-Italic.ttf'),
+        'montserrat-regular': require('./assets/fonts/Montserrat-Regular.ttf')
+      })
     ]);
   };
 
@@ -59,6 +62,6 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
+    backgroundColor: '#fff'
+  }
 });
