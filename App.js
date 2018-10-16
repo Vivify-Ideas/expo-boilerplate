@@ -1,7 +1,14 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View, YellowBox } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
+import Sentry from 'sentry-expo';
+
 import AppNavigator from './navigation/AppNavigator';
+
+if (!__DEV__) {
+  // TODO replace key, and project with variables from ENV file
+  Sentry.config('https://<key>@sentry.io/<project>').install();
+}
 
 YellowBox.ignoreWarnings(['react-native-i18n module is not correctly linked']);
 
