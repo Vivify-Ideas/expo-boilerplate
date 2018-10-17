@@ -22,5 +22,5 @@ export async function registerForPushNotificationsAsync() {
   // Get the token that uniquely identifies this device
   let token = await Notifications.getExpoPushTokenAsync();
 
-  return notificationService.sendExpoTokenToServer(token);
+  // return notificationService.sendExpoTokenToServer(token);
 }
