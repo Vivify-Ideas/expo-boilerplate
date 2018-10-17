@@ -4,6 +4,7 @@ import { AppLoading, Asset, Font, Icon } from 'expo';
 import Sentry from 'sentry-expo';
 
 import AppNavigator from './navigation/AppNavigator';
+import NetworkInterceptor from './screens/NetworkInterceptor';
 
 if (!__DEV__) {
   // TODO replace key, and project with variables from ENV file
@@ -28,10 +29,12 @@ export default class App extends React.Component {
       );
     } else {
       return (
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <AppNavigator />
-        </View>
+        <NetworkInterceptor>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            <AppNavigator />
+          </View>
+        </NetworkInterceptor>
       );
     }
   }

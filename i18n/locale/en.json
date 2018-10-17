@@ -2,5 +2,8 @@
   "helloWorld": "Hello World",
   "common": {
     "ok": "OK"
+  },
+  "auth": {
+    "offline": "Please check your Internet connection"
   }
 }
