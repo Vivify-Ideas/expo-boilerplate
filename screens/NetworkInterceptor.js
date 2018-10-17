@@ -65,7 +65,7 @@ class NetworkInterceptor extends Component {
 }
 
 NetworkInterceptor.propTypes = {
-  children: PropTypes.children
+  children: PropTypes.any
 };
 
 export default NetworkInterceptor;
