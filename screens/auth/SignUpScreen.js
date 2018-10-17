@@ -14,6 +14,7 @@ import I18n from '../../i18n';
 import authService from '../../services/AuthService';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Sentry from 'sentry-expo';
+import ActivityIndicatorComponent from '../../components/shared/ActivityIndicatorComponent';
 
 export default class SignInScreen extends React.Component {
   static navigationOptions = {
@@ -23,7 +24,8 @@ export default class SignInScreen extends React.Component {
   state = {
     name: '',
     email: '',
-    password: ''
+    password: '',
+    loader: false
   };
 
   static propTypes = {
@@ -43,6 +45,7 @@ export default class SignInScreen extends React.Component {
       email: this.state.email,
       password: this.state.password
     };
+    this.setState({ loader: true });
     try {
       const response = await authService.signup(signupData);
       Alert.alert(I18n.t('common.success'), 'Sign up was successfull!');
@@ -51,42 +54,46 @@ export default class SignInScreen extends React.Component {
     } catch (e) {
       Sentry.captureException(e);
     }
+    this.setState({ loader: false });
   };
 
   render() {
     return (
-      <KeyboardAwareScrollView enableOnAndroid style={styles.container}>
-        <TextInput
-          autoCapitalize="words"
-          autoCorrect={false}
-          placeholder={I18n.t('auth.enterName')}
-          onChangeText={name => this.setState({ name })}
-          value={this.state.name}
-        />
+      <View style={styles.container}>
+        <KeyboardAwareScrollView enableOnAndroid>
+          <TextInput
+            autoCapitalize="words"
+            autoCorrect={false}
+            placeholder={I18n.t('auth.enterName')}
+            onChangeText={name => this.setState({ name })}
+            value={this.state.name}
+          />
 
-        <TextInput
-          keyboardType="email-address"
-          autoCapitalize="none"
-          autoCorrect={false}
-          placeholder={I18n.t('auth.enterEmail')}
-          onChangeText={email => this.setState({ email })}
-          value={this.state.email}
-        />
+          <TextInput
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
+            placeholder={I18n.t('auth.enterEmail')}
+            onChangeText={email => this.setState({ email })}
+            value={this.state.email}
+          />
 
-        <TextInput
-          secureTextEntry={true}
-          placeholder={I18n.t('auth.enterPass')}
-          onChangeText={password => this.setState({ password })}
-          value={this.state.password}
-        />
+          <TextInput
+            secureTextEntry={true}
+            placeholder={I18n.t('auth.enterPass')}
+            onChangeText={password => this.setState({ password })}
+            value={this.state.password}
+          />
 
-        <View>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('SignIn')}>
-            <Text>{I18n.t('auth.haveAccountLogIn')}</Text>
-          </TouchableOpacity>
-          <Button title={I18n.t('auth.signup')} onPress={this.confirmSignUp} />
-        </View>
-      </KeyboardAwareScrollView>
+          <View>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('SignIn')}>
+              <Text>{I18n.t('auth.haveAccountLogIn')}</Text>
+            </TouchableOpacity>
+            <Button title={I18n.t('auth.signup')} onPress={this.confirmSignUp} />
+          </View>
+        </KeyboardAwareScrollView>
+        {this.state.loader && <ActivityIndicatorComponent animating={this.state.loader} />}
+      </View>
     );
   }
 }
