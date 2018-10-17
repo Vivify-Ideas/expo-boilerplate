@@ -11,6 +11,7 @@ import {
 import PropTypes from 'prop-types';
 import I18n from '../../i18n';
 import authService from '../../services/AuthService';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default class SignInScreen extends React.Component {
   static navigationOptions = {
@@ -40,7 +41,7 @@ export default class SignInScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAwareScrollView enableOnAndroid style={styles.container}>
         <TextInput
           autoCapitalize="words"
           autoCorrect={false}
@@ -71,7 +72,7 @@ export default class SignInScreen extends React.Component {
           </TouchableOpacity>
           <Button title={I18n.t('auth.signup')} onPress={this.signUp} />
         </View>
-      </View>
+      </KeyboardAwareScrollView>
     );
   }
 }
