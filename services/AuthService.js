@@ -15,7 +15,8 @@ const ENDPOINTS = {
   SIGN_UP: '/auth/sign-up',
   LOGIN_SOCIAL: '/login-social',
   LOGOUT: '/auth/logout',
-  RESET_PASSWORD: '/auth/forgot-password'
+  RESET_PASSWORD: '/auth/forgot-password',
+  CHANGE_PASSWORD: '/auth/change-password'
 };
 
 class AuthService extends BaseService {
@@ -117,8 +118,12 @@ class AuthService extends BaseService {
     await this.destroySession();
   };
 
-  resetPassword = ({ email }) => {
+  resetPassword = email => {
     return this.apiClient().post(ENDPOINTS.RESET_PASSWORD, { email });
+  };
+
+  changePassword = data => {
+    return this.apiClient().post(ENDPOINTS.CHANGE_PASSWORD, data);
   };
 
   signup = signupData => {
