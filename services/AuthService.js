@@ -1,7 +1,7 @@
 import BaseService from './BaseService';
 import { AsyncStorage } from 'react-native';
 import Expo from 'expo';
-// import Sentry from 'sentry-expo';
+import Sentry from 'sentry-expo';
 import config from '../config';
 import { registerForPushNotificationsAsync } from '../utils/NavigationService';
 // import notificationService from '../../services/api/NotificationService';
@@ -56,7 +56,7 @@ class AuthService extends BaseService {
       const expoPushToken = await registerForPushNotificationsAsync();
       await AsyncStorage.setItem('expoPushToken', expoPushToken.data.secret);
     } catch (error) {
-      // Sentry.captureException(error);
+      Sentry.captureException(error);
     }
   };
 
@@ -65,7 +65,7 @@ class AuthService extends BaseService {
       await AsyncStorage.removeItem('user');
       // await notificationService.removeExpoTokenFromServer();
     } catch (error) {
-      // Sentry.captureException(error);
+      Sentry.captureException(error);
     }
 
     this.api.removeHeaders(['Authorization']);
@@ -91,7 +91,7 @@ class AuthService extends BaseService {
       }
       return { ok: false, error: result.type };
     } catch (e) {
-      // Sentry.captureException(e);
+      Sentry.captureException(e);
       return { ok: false, error: e };
     }
   };
@@ -140,7 +140,7 @@ class AuthService extends BaseService {
       const user = await AsyncStorage.getItem('user');
       return user ? JSON.parse(user).token : undefined;
     } catch (error) {
-      // Sentry.captureException(error);
+      Sentry.captureException(error);
       return null;
     }
   };
@@ -150,7 +150,7 @@ class AuthService extends BaseService {
       const user = await AsyncStorage.getItem('user');
       return JSON.parse(user);
     } catch (error) {
-      // Sentry.captureException(error);
+      Sentry.captureException(error);
       return null;
     }
   };
@@ -162,7 +162,7 @@ class AuthService extends BaseService {
       jsonUser = { ...jsonUser, ...property };
       AsyncStorage.setItem('user', JSON.stringify(jsonUser));
     } catch (error) {
-      // Sentry.captureException(error);
+      Sentry.captureException(error);
       return null;
     }
   };

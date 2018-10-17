@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import I18n from '../../i18n';
 import authService from '../../services/AuthService';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Sentry from 'sentry-expo';
 
 export default class SignInScreen extends React.Component {
   static navigationOptions = {
@@ -34,7 +35,7 @@ export default class SignInScreen extends React.Component {
       { text: 'Cancel', onPress: () => {}, style: 'cancel' },
       { text: 'Yes', onPress: () => this.signUp() }
     ]);
-  }
+  };
 
   signUp = async () => {
     const signupData = {
@@ -42,10 +43,14 @@ export default class SignInScreen extends React.Component {
       email: this.state.email,
       password: this.state.password
     };
-    // const response = await authService.signup(signupData);
-    Alert.alert(I18n.t('common.success'), 'Sign up was successfull!');
-    await AsyncStorage.setItem('userToken', 'abc');
-    this.props.navigation.navigate('Main');
+    try {
+      const response = await authService.signup(signupData);
+      Alert.alert(I18n.t('common.success'), 'Sign up was successfull!');
+      await AsyncStorage.setItem('userToken', 'abc');
+      this.props.navigation.navigate('Main');
+    } catch (e) {
+      Sentry.captureException(e);
+    }
   };
 
   render() {
