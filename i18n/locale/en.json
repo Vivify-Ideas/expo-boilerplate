@@ -1,7 +1,8 @@
 {
   "helloWorld": "Hello World",
   "common": {
-    "ok": "OK"
+    "ok": "OK",
+    "success": "success"
   },
   "auth": {
     "offline": "Please check your Internet connection",

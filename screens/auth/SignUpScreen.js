@@ -6,7 +6,8 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Button
+  Button,
+  Alert
 } from 'react-native';
 import PropTypes from 'prop-types';
 import I18n from '../../i18n';
@@ -28,6 +29,13 @@ export default class SignInScreen extends React.Component {
     navigation: PropTypes.object
   };
 
+  confirmSignUp = () => {
+    Alert.alert('Confirm', 'Are you sure that you want to singup with this data?', [
+      { text: 'Cancel', onPress: () => {}, style: 'cancel' },
+      { text: 'Yes', onPress: () => this.signUp() }
+    ]);
+  }
+
   signUp = async () => {
     const signupData = {
       name: this.state.name,
@@ -35,6 +43,7 @@ export default class SignInScreen extends React.Component {
       password: this.state.password
     };
     // const response = await authService.signup(signupData);
+    Alert.alert(I18n.t('common.success'), 'Sign up was successfull!');
     await AsyncStorage.setItem('userToken', 'abc');
     this.props.navigation.navigate('Main');
   };
@@ -70,7 +79,7 @@ export default class SignInScreen extends React.Component {
           <TouchableOpacity onPress={() => this.props.navigation.navigate('SignIn')}>
             <Text>{I18n.t('auth.haveAccountLogIn')}</Text>
           </TouchableOpacity>
-          <Button title={I18n.t('auth.signup')} onPress={this.signUp} />
+          <Button title={I18n.t('auth.signup')} onPress={this.confirmSignUp} />
         </View>
       </KeyboardAwareScrollView>
     );
