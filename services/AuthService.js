@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native';
 import Expo from 'expo';
 // import Sentry from 'sentry-expo';
 import config from '../config';
-// import { registerForPushNotificationsAsync } from '../../utils/ExpoPushToken';
+import { registerForPushNotificationsAsync } from '../utils/NavigationService';
 // import notificationService from '../../services/api/NotificationService';
 
 const { androidClientId, iosClientId, facebookAppId } = config;
@@ -52,8 +52,8 @@ class AuthService extends BaseService {
     try {
       await AsyncStorage.setItem('user', JSON.stringify(data));
       await this.setAuthorizationHeader();
-      // const expoPushToken = await registerForPushNotificationsAsync();
-      // await AsyncStorage.setItem('expoPushToken', expoPushToken.data.secret);
+      const expoPushToken = await registerForPushNotificationsAsync();
+      await AsyncStorage.setItem('expoPushToken', expoPushToken.data.secret);
     } catch (error) {
       // Sentry.captureException(error);
     }
