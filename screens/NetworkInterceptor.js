@@ -3,7 +3,7 @@ import { NetInfo } from 'react-native';
 import NavigationService from '../utils/NavigationService';
 import { Linking, Notifications } from 'expo';
 import PropTypes from 'prop-types';
-// import authService from '../services/api/AuthService';
+import authService from '../services/AuthService';
 
 class NetworkInterceptor extends Component {
   componentDidMount() {
@@ -39,19 +39,19 @@ class NetworkInterceptor extends Component {
   };
 
   async _processUrlEvent(queryParams) {
-    // const userToken = await authService.getUserToken();
+    const userToken = await authService.getToken();
 
     if (queryParams.forgot_password_token) {
-      NavigationService.navigate('ResetPasswordScreen', {
+      NavigationService.navigate('ResetPassword', {
         forgot_password_token: queryParams.forgot_password_token
       });
       return;
     }
 
-    // if (!userToken) {
-    //   NavigationService.navigate('AuthStack');
-    //   return;
-    // }
+    if (!userToken) {
+      NavigationService.navigate('Auth');
+      return;
+    }
 
     if (queryParams.notifications) {
       NavigationService.navigate('NotificationsScreen');

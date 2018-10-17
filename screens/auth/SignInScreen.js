@@ -15,7 +15,7 @@ export default class SignInScreen extends React.Component {
     password: ''
   };
 
-  _signInAsync = async () => {
+  signIn = async () => {
     const signinData = {
       email: this.state.email,
       password: this.state.password
@@ -25,8 +25,12 @@ export default class SignInScreen extends React.Component {
     this.props.navigation.navigate('Main');
   };
 
-  _goToSignUp = () => {
+  goToSignUp = () => {
     this.props.navigation.navigate('SignUp');
+  };
+
+  goToForgotPassword = () => {
+    this.props.navigation.navigate('ForgotPassword');
   };
 
   render() {
@@ -48,8 +52,9 @@ export default class SignInScreen extends React.Component {
           value={this.state.password}
         />
 
-        <Button title="Sign in!" onPress={this._signInAsync} />
-        <Button title="Sign up!" onPress={this._goToSignUp} />
+        <Button title="Sign in!" onPress={this.signIn} />
+        <Button title="Sign up!" onPress={this.goToSignUp} />
+        <Button title="Forgot password" onPress={this.goToForgotPassword} />
       </KeyboardAwareScrollView>
     );
   }
