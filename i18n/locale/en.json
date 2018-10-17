@@ -4,6 +4,11 @@
     "ok": "OK"
   },
   "auth": {
-    "offline": "Please check your Internet connection"
+    "offline": "Please check your Internet connection",
+    "signup": "Sign up",
+    "enterName": "Enter your name",
+    "enterEmail": "Enter your email",
+    "enterPass": "Enter your password",
+    "haveAccountLogIn": "Already have an account? Log in!"
   }
 }
