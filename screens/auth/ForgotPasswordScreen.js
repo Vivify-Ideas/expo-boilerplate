@@ -7,6 +7,10 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import ActivityIndicatorComponent from '../../components/shared/ActivityIndicatorComponent';
 
 class ForgotPasswordScreen extends Component {
+  static navigationOptions = {
+    title: 'Forgot Password'
+  };
+
   state = {
     email: '',
     loader: false

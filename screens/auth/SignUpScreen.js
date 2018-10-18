@@ -18,7 +18,7 @@ import ActivityIndicatorComponent from '../../components/shared/ActivityIndicato
 
 export default class SignInScreen extends React.Component {
   static navigationOptions = {
-    title: 'Please sign up'
+    title: 'Sign up'
   };
 
   static propTypes = {
