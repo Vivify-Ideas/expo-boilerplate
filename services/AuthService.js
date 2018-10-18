@@ -3,16 +3,15 @@ import { AsyncStorage } from 'react-native';
 import Expo from 'expo';
 import Sentry from 'sentry-expo';
 import config from '../config';
-import { registerForPushNotificationsAsync } from '../utils/NavigationService';
-// import notificationService from '../../services/api/NotificationService';
+import { askForNotificationsPermission } from '../services/PermissionsService';
 
 const { androidClientId, iosClientId, facebookAppId } = config;
 
 const { CLIENT_ID } = config;
 
 const ENDPOINTS = {
-  LOGIN: '/auth/login/',
-  SIGN_UP: '/auth/sign-up',
+  LOGIN: '/login',
+  SIGN_UP: '/register',
   LOGIN_SOCIAL: '/login-social',
   LOGOUT: '/auth/logout',
   RESET_PASSWORD: '/auth/forgot-password',
@@ -53,7 +52,7 @@ class AuthService extends BaseService {
     try {
       await AsyncStorage.setItem('user', JSON.stringify(data));
       await this.setAuthorizationHeader();
-      const expoPushToken = await registerForPushNotificationsAsync();
+      const expoPushToken = await askForNotificationsPermission();
       await AsyncStorage.setItem('expoPushToken', expoPushToken.data.secret);
     } catch (error) {
       Sentry.captureException(error);
@@ -62,8 +61,7 @@ class AuthService extends BaseService {
 
   destroySession = async () => {
     try {
-      await AsyncStorage.removeItem('user');
-      // await notificationService.removeExpoTokenFromServer();
+      await AsyncStorage.clear();
     } catch (error) {
       Sentry.captureException(error);
     }
@@ -73,7 +71,7 @@ class AuthService extends BaseService {
 
   login = async loginData => {
     try {
-      const { data } = await this.apiClient().post(ENDPOINTS.LOGIN, loginData);
+      const { data } = await this.apiClient.post(ENDPOINTS.LOGIN, loginData);
       this.createSession(data);
       return { ok: true, data };
     } catch (e) {
@@ -85,7 +83,7 @@ class AuthService extends BaseService {
     try {
       const result = await loginPromise;
       if (result.type === 'success') {
-        const { data } = await this.apiClient().post(ENDPOINTS.LOGIN_SOCIAL, result);
+        const { data } = await this.apiClient.post(ENDPOINTS.LOGIN_SOCIAL, result);
         this.createSession(data);
         return { ok: true, data };
       }
@@ -119,15 +117,15 @@ class AuthService extends BaseService {
   };
 
   resetPassword = email => {
-    return this.apiClient().post(ENDPOINTS.RESET_PASSWORD, { email });
+    return this.apiClient.post(ENDPOINTS.RESET_PASSWORD, { email });
   };
 
   changePassword = data => {
-    return this.apiClient().post(ENDPOINTS.CHANGE_PASSWORD, data);
+    return this.apiClient.post(ENDPOINTS.CHANGE_PASSWORD, data);
   };
 
   signup = signupData => {
-    return this.apiClient()
+    return this.apiClient
       .post(ENDPOINTS.SIGN_UP, signupData)
       .then(() => {
         const { email, password } = signupData;

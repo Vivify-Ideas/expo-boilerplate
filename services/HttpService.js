@@ -24,11 +24,11 @@ class HttpService {
     const { status } = error.response;
 
     switch (status) {
-      case 401:
-        this.unauthorizedCallback();
-        break;
-      default:
-        break;
+    case 401:
+      this.unauthorizedCallback();
+      break;
+    default:
+      break;
     }
 
     return Promise.reject(error);

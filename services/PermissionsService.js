@@ -1,9 +1,11 @@
 import { Permissions, Notifications } from 'expo';
 // import notificationService from '../services/api/NotificationService';
 
-export async function registerForPushNotificationsAsync() {
+export async function askForNotificationsPermission() {
   const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
   let finalStatus = existingStatus;
+
+  console.log(existingStatus);
 
   // only ask if permissions have not already been determined, because
   // iOS won't necessarily prompt the user a second time.
@@ -16,11 +18,13 @@ export async function registerForPushNotificationsAsync() {
 
   // Stop here if the user did not grant permissions
   if (finalStatus !== 'granted') {
-    return;
+    return null;
   }
 
   // Get the token that uniquely identifies this device
   let token = await Notifications.getExpoPushTokenAsync();
+  return token;
 
+  // TODO this token need to be saved on BE
   // return notificationService.sendExpoTokenToServer(token);
 }
