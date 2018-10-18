@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, TextInput, StyleSheet, Button, Alert } from 'react-native';
 import I18n from '../../i18n';
 import authService from '../../services/AuthService';
-import Sentry from 'sentry-expo';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ActivityIndicatorComponent from '../../components/shared/ActivityIndicatorComponent';
 
@@ -20,12 +19,13 @@ class ForgotPasswordScreen extends Component {
     this.setState({ loader: true });
     try {
       await authService.resetPassword(this.state.email);
+
       Alert.alert(
         I18n.t('common.success'),
         'The mail has been sent successfully. Check your inbox.'
       );
-    } catch (e) {
-      Sentry.captureException(e);
+    } catch (error) {
+      Alert.alert('Error', error.message);
     }
     this.setState({ loader: false });
   };
@@ -42,9 +42,14 @@ class ForgotPasswordScreen extends Component {
             onChangeText={email => this.setState({ email })}
             value={this.state.email}
           />
-          <Button title={I18n.t('common.send')} onPress={this.sendResetPasswordEmail} />
+          <Button
+            title={I18n.t('common.send')}
+            onPress={this.sendResetPasswordEmail}
+          />
         </KeyboardAwareScrollView>
-        {this.state.loader && <ActivityIndicatorComponent animating={this.state.loader} />}
+        {this.state.loader && (
+          <ActivityIndicatorComponent animating={this.state.loader} />
+        )}
       </View>
     );
   }

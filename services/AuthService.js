@@ -1,7 +1,6 @@
 import BaseService from './BaseService';
 import { AsyncStorage } from 'react-native';
 import Expo from 'expo';
-import Sentry from 'sentry-expo';
 import config from '../config';
 import { askForNotificationsPermission } from '../services/PermissionsService';
 
@@ -48,24 +47,18 @@ class AuthService extends BaseService {
     });
   };
 
-  createSession = async data => {
-    try {
-      await AsyncStorage.setItem('user', JSON.stringify(data));
-      await this.setAuthorizationHeader();
-      const expoPushToken = await askForNotificationsPermission();
-      await AsyncStorage.setItem('expoPushToken', expoPushToken.data.secret);
-    } catch (error) {
-      Sentry.captureException(error);
+  createSession = async user => {
+    await AsyncStorage.setItem('user', JSON.stringify(user));
+    await this.setAuthorizationHeader();
+    const expoPushToken = await askForNotificationsPermission();
+    if (expoPushToken) {
+      await AsyncStorage.setItem('expoPushToken', expoPushToken);
+      // TODO this token need to be saved on BE
     }
   };
 
   destroySession = async () => {
-    try {
-      await AsyncStorage.clear();
-    } catch (error) {
-      Sentry.captureException(error);
-    }
-
+    await AsyncStorage.clear();
     this.api.removeHeaders(['Authorization']);
   };
 
@@ -74,8 +67,8 @@ class AuthService extends BaseService {
       const { data } = await this.apiClient.post(ENDPOINTS.LOGIN, loginData);
       this.createSession(data);
       return { ok: true, data };
-    } catch (e) {
-      return { ok: false, error: e };
+    } catch (error) {
+      throw error;
     }
   };
 
@@ -83,13 +76,15 @@ class AuthService extends BaseService {
     try {
       const result = await loginPromise;
       if (result.type === 'success') {
-        const { data } = await this.apiClient.post(ENDPOINTS.LOGIN_SOCIAL, result);
+        const { data } = await this.apiClient.post(
+          ENDPOINTS.LOGIN_SOCIAL,
+          result
+        );
         this.createSession(data);
         return { ok: true, data };
       }
       return { ok: false, error: result.type };
     } catch (e) {
-      Sentry.captureException(e);
       return { ok: false, error: e };
     }
   };
@@ -125,45 +120,29 @@ class AuthService extends BaseService {
   };
 
   signup = signupData => {
-    return this.apiClient
-      .post(ENDPOINTS.SIGN_UP, signupData)
-      .then(() => {
-        const { email, password } = signupData;
-        return this.login({ email, password });
-      });
+    return this.apiClient.post(ENDPOINTS.SIGN_UP, signupData).then(() => {
+      const { email, password } = signupData;
+      return this.login({ email, password });
+    });
   };
 
   getToken = async () => {
-    try {
-      const user = await AsyncStorage.getItem('user');
-      return user ? JSON.parse(user).token : undefined;
-    } catch (error) {
-      Sentry.captureException(error);
-      return null;
-    }
+    const user = await AsyncStorage.getItem('user');
+    return user ? JSON.parse(user).token : undefined;
   };
 
   getUser = async () => {
-    try {
-      const user = await AsyncStorage.getItem('user');
-      return JSON.parse(user);
-    } catch (error) {
-      Sentry.captureException(error);
-      return null;
-    }
+    const user = await AsyncStorage.getItem('user');
+    return JSON.parse(user);
   };
 
   updateUserInStorage = async property => {
-    try {
-      const user = await AsyncStorage.getItem('user');
-      let jsonUser = JSON.parse(user);
-      jsonUser = { ...jsonUser, ...property };
-      AsyncStorage.setItem('user', JSON.stringify(jsonUser));
-    } catch (error) {
-      Sentry.captureException(error);
-      return null;
-    }
+    const user = await AsyncStorage.getItem('user');
+    let jsonUser = JSON.parse(user);
+    jsonUser = { ...jsonUser, ...property };
+    AsyncStorage.setItem('user', JSON.stringify(jsonUser));
   };
 }
+
 const authService = new AuthService();
 export default authService;

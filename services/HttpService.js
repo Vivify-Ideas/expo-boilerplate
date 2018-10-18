@@ -1,10 +1,14 @@
 import axios from 'axios';
 import config from '../config';
+import Sentry from 'sentry-expo';
 
 class HttpService {
   constructor(options = {}) {
     this.client = axios.create(options);
-    this.client.interceptors.response.use(this.handleSuccessResponse, this.handleErrorResponse);
+    this.client.interceptors.response.use(
+      this.handleSuccessResponse,
+      this.handleErrorResponse
+    );
     this.unauthorizedCallback = () => {};
   }
 
@@ -22,6 +26,8 @@ class HttpService {
 
   handleErrorResponse(error) {
     const { status } = error.response;
+
+    Sentry.captureException(error);
 
     switch (status) {
     case 401:

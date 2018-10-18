@@ -1,10 +1,17 @@
 import React from 'react';
-import { AsyncStorage, StyleSheet, Button, TextInput, View } from 'react-native';
+import {
+  AsyncStorage,
+  StyleSheet,
+  Button,
+  TextInput,
+  View
+} from 'react-native';
 import PropTypes from 'prop-types';
+import { Alert } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import I18n from '../../i18n';
 import authService from '../../services/AuthService';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Sentry from 'sentry-expo';
 import ActivityIndicatorComponent from '../../components/shared/ActivityIndicatorComponent';
 
 export default class SignInScreen extends React.Component {
@@ -31,10 +38,10 @@ export default class SignInScreen extends React.Component {
     try {
       await authService.login(signinData);
       await AsyncStorage.setItem('userToken', 'abc');
-      this.setState({ loader: false });
       this.props.navigation.navigate('Main');
-    } catch (e) {
-      Sentry.captureException(e);
+    } catch (error) {
+      this.setState({ loader: false });
+      Alert.alert('Error', error.message);
     }
   };
 
@@ -70,7 +77,9 @@ export default class SignInScreen extends React.Component {
           <Button title="Sign up!" onPress={this.goToSignUp} />
           <Button title="Forgot password" onPress={this.goToForgotPassword} />
         </KeyboardAwareScrollView>
-        {this.state.loader && <ActivityIndicatorComponent animating={this.state.loader} />}
+        {this.state.loader && (
+          <ActivityIndicatorComponent animating={this.state.loader} />
+        )}
       </View>
     );
   }
