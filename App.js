@@ -2,6 +2,7 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View, YellowBox } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import Sentry from 'sentry-expo';
+import PropTypes from 'prop-types';
 
 import AppNavigator from './navigation/AppNavigator';
 import NetworkInterceptor from './screens/NetworkInterceptor';
@@ -16,6 +17,10 @@ YellowBox.ignoreWarnings(['react-native-i18n module is not correctly linked']);
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false
+  };
+
+  static propTypes = {
+    skipLoadingScreen: PropTypes.bool
   };
 
   render() {

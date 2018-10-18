@@ -21,15 +21,15 @@ export default class SignInScreen extends React.Component {
     title: 'Please sign up'
   };
 
+  static propTypes = {
+    navigation: PropTypes.object
+  };
+
   state = {
     name: '',
     email: '',
     password: '',
     loader: false
-  };
-
-  static propTypes = {
-    navigation: PropTypes.object
   };
 
   confirmSignUp = () => {
@@ -47,14 +47,14 @@ export default class SignInScreen extends React.Component {
     };
     this.setState({ loader: true });
     try {
-      const response = await authService.signup(signupData);
+      await authService.signup(signupData);
       Alert.alert(I18n.t('common.success'), 'Sign up was successfull!');
       await AsyncStorage.setItem('userToken', 'abc');
+      this.setState({ loader: false });
       this.props.navigation.navigate('Main');
     } catch (e) {
       Sentry.captureException(e);
     }
-    this.setState({ loader: false });
   };
 
   render() {

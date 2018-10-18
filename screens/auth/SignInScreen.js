@@ -12,6 +12,10 @@ export default class SignInScreen extends React.Component {
     title: 'Please sign in'
   };
 
+  static propTypes = {
+    navigation: PropTypes.object
+  };
+
   state = {
     email: '',
     password: '',
@@ -25,13 +29,13 @@ export default class SignInScreen extends React.Component {
     };
     this.setState({ loader: true });
     try {
-      const response = await authService.login(signinData);
+      await authService.login(signinData);
       await AsyncStorage.setItem('userToken', 'abc');
+      this.setState({ loader: false });
       this.props.navigation.navigate('Main');
     } catch (e) {
       Sentry.captureException(e);
     }
-    this.setState({ loader: false });
   };
 
   goToSignUp = () => {
@@ -71,10 +75,6 @@ export default class SignInScreen extends React.Component {
     );
   }
 }
-
-SignInScreen.propTypes = {
-  navigation: PropTypes.object
-};
 
 const styles = StyleSheet.create({
   container: {

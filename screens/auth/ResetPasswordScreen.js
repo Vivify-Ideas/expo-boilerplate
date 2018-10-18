@@ -8,6 +8,10 @@ import PropTypes from 'prop-types';
 import ActivityIndicatorComponent from '../../components/shared/ActivityIndicatorComponent';
 
 class ResetPasswordScreen extends Component {
+  static propTypes = {
+    navigation: PropTypes.object
+  };
+  
   state = {
     newPassword: '',
     confirmPassword: '',
@@ -60,10 +64,6 @@ class ResetPasswordScreen extends Component {
 }
 
 export default ResetPasswordScreen;
-
-ResetPasswordScreen.propTypes = {
-  navigation: PropTypes.object
-};
 
 const styles = StyleSheet.create({
   container: {
