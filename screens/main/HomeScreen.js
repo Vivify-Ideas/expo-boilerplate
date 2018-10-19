@@ -19,15 +19,15 @@ import I18n from '../../i18n';
 export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const headerLeftNav = addHeaderLeftNavigator(navigation);
-    return {...headerLeftNav, title: 'Home'};
+    return { ...headerLeftNav, title: 'Home' };
   };
 
   static propTypes = {
-    navigation: PropTypes.object,
-  }
+    navigation: PropTypes.object
+  };
 
   state = {
-    modalVisible: false,
+    modalVisible: false
   };
 
   _signOutAsync = async () => {
@@ -36,7 +36,7 @@ export default class HomeScreen extends React.Component {
   };
 
   _setModalVisible(visible) {
-    this.setState({modalVisible: visible});
+    this.setState({ modalVisible: visible });
   }
 
   render() {
@@ -70,21 +70,21 @@ export default class HomeScreen extends React.Component {
             visible={this.state.modalVisible}
             onRequestClose={() => {
               alert('Modal has been closed.');
-            }}>
+            }}
+          >
             <View style={styles.contentContainer}>
               <View>
                 <Text>{I18n.t('helloWorld')}</Text>
-
+                <Text>Prettier </Text>
                 <Button
                   onPress={() => {
                     this._setModalVisible(!this.state.modalVisible);
                   }}
-                  title="Hide Modal" 
+                  title="Hide Modal"
                 />
               </View>
             </View>
           </Modal>
-
         </ScrollView>
 
         <View style={styles.tabBarInfoContainer}>
@@ -102,30 +102,30 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   contentContainer: {
-    paddingTop: 30,
+    paddingTop: 30
   },
   welcomeContainer: {
     alignItems: 'center',
     marginTop: 10,
-    marginBottom: 20,
+    marginBottom: 20
   },
   welcomeImage: {
     width: 100,
     height: 80,
     resizeMode: 'contain',
     marginTop: 3,
-    marginLeft: -10,
+    marginLeft: -10
   },
   codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
+    color: 'rgba(96,100,109, 0.8)'
   },
   codeHighlightContainer: {
     backgroundColor: 'rgba(0,0,0,0.05)',
     borderRadius: 3,
-    paddingHorizontal: 4,
+    paddingHorizontal: 4
   },
   tabBarInfoContainer: {
     position: 'absolute',
@@ -137,22 +137,22 @@ const styles = StyleSheet.create({
         shadowColor: 'black',
         shadowOffset: { height: -3 },
         shadowOpacity: 0.1,
-        shadowRadius: 3,
+        shadowRadius: 3
       },
       android: {
-        elevation: 20,
-      },
+        elevation: 20
+      }
     }),
     alignItems: 'center',
     backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
+    paddingVertical: 20
   },
   tabBarInfoText: {
     fontSize: 17,
     color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
+    textAlign: 'center'
   },
   navigationFilename: {
-    marginTop: 5,
+    marginTop: 5
   }
 });
