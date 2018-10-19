@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { NetInfo } from 'react-native';
-import NavigationService from '../utils/NavigationService';
+import NavigationService from '../services/NavigationService';
 import { Linking, Notifications } from 'expo';
 import PropTypes from 'prop-types';
 import authService from '../services/AuthService';
@@ -9,12 +9,14 @@ class NetworkInterceptor extends Component {
   componentDidMount() {
     this._connectionInfo();
     this._setUrlEventListener();
-    this._notificationSubscription = Notifications.addListener(this._handleNotification);
+    this._notificationSubscription = Notifications.addListener(
+      this._handleNotification
+    );
   }
 
-  _handleNotification = notification => {
-    // handle push notifications
-  };
+  // handle push notifications
+  // _handleNotification = notification => {
+  // };
 
   _connectionInfo = () => {
     NetInfo.isConnected.addEventListener('connectionChange', connectionInfo => {
