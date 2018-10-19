@@ -1,10 +1,10 @@
 import httpService from './HttpService';
 
-class BaseService {
+class ApiService {
   constructor() {
     this.api = httpService;
     this.apiClient = this.api.client;
   }
 }
 
-export default BaseService;
+export default ApiService;

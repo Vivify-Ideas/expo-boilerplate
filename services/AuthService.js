@@ -1,4 +1,4 @@
-import BaseService from './BaseService';
+import ApiService from './ApiService';
 import { AsyncStorage } from 'react-native';
 import Expo from 'expo';
 import config from '../config';
@@ -17,7 +17,7 @@ const ENDPOINTS = {
   CHANGE_PASSWORD: '/auth/change-password'
 };
 
-class AuthService extends BaseService {
+class AuthService extends ApiService {
   constructor() {
     super();
     this.init();

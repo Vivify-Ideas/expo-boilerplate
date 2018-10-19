@@ -6,6 +6,10 @@ import PropTypes from 'prop-types';
 import authService from '../services/AuthService';
 
 class NetworkInterceptor extends Component {
+  static propTypes = {
+    children: PropTypes.any
+  };
+
   componentDidMount() {
     this._connectionInfo();
     this._setUrlEventListener();
@@ -65,9 +69,5 @@ class NetworkInterceptor extends Component {
     return this.props.children;
   }
 }
-
-NetworkInterceptor.propTypes = {
-  children: PropTypes.any
-};
 
 export default NetworkInterceptor;
