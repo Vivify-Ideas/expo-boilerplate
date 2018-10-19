@@ -75,7 +75,7 @@ export default class HomeScreen extends React.Component {
             <View style={styles.contentContainer}>
               <View>
                 <Text>{I18n.t('helloWorld')}</Text>
-                <Text>Prettier </Text>
+                <Text>Prettier</Text>
                 <Button
                   onPress={() => {
                     this._setModalVisible(!this.state.modalVisible);
