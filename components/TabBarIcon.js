@@ -1,17 +1,17 @@
 import React from 'react';
 import { Icon } from 'expo';
 import { StyleSheet } from 'react-native';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 
 import Colors from '../constants/Colors';
 
 export default class TabBarIcon extends React.Component {
-  static displayName = 'TabBarIcon'
+  static displayName = 'TabBarIcon';
 
   static propTypes = {
     name: PropTypes.string.isRequired,
     focused: PropTypes.bool
-  }
+  };
 
   render() {
     return (
@@ -26,7 +26,7 @@ export default class TabBarIcon extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  icon: { 
-    marginBottom: -3 
+  icon: {
+    marginBottom: -3
   }
 });
