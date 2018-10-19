@@ -1,6 +1,10 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator, createDrawerNavigator } from 'react-navigation';
+import {
+  createStackNavigator,
+  createBottomTabNavigator,
+  createDrawerNavigator
+} from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/main/HomeScreen';
@@ -24,7 +28,7 @@ HomeStack.navigationOptions = {
           : 'md-information-circle'
       }
     />
-  ),
+  )
 };
 
 const SettingsStack = createStackNavigator({
@@ -32,7 +36,7 @@ const SettingsStack = createStackNavigator({
     screen: SettingsScreen,
     navigationOptions: ({ navigation }) => {
       const headerLeftNav = addHeaderLeftNavigator(navigation);
-      return {...headerLeftNav, title: 'Settings'};
+      return { ...headerLeftNav, title: 'Settings' };
     }
   }
 });
@@ -44,17 +48,19 @@ SettingsStack.navigationOptions = {
       focused={focused}
       name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
     />
-  ),
+  )
 };
 
 const BottomTabNavigator = createBottomTabNavigator({
   HomeStack,
-  SettingsStack,
+  SettingsStack
 });
 
-export default createDrawerNavigator({
-  BottomTabNavigator: BottomTabNavigator,
-}, {
-  contentComponent: LeftSliderScreen
-});
-
+export default createDrawerNavigator(
+  {
+    BottomTabNavigator: BottomTabNavigator
+  },
+  {
+    contentComponent: LeftSliderScreen
+  }
+);

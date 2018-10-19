@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from 'expo';
 
-export const addHeaderLeftNavigator = (navigation) => {
+export const addHeaderLeftNavigator = navigation => {
   const styles = {
     menuIcon: {
       marginLeft: 10,
@@ -10,11 +10,15 @@ export const addHeaderLeftNavigator = (navigation) => {
   };
 
   return {
-    headerLeft: <Icon.Ionicons
-      name='ios-menu'
-      size={24}
-      onPress={()=>{ navigation.toggleDrawer(); }}
-      style={styles.menuIcon}
-    />
+    headerLeft: (
+      <Icon.Ionicons
+        name="ios-menu"
+        size={24}
+        onPress={() => {
+          navigation.toggleDrawer();
+        }}
+        style={styles.menuIcon}
+      />
+    )
   };
 };
