@@ -8,7 +8,7 @@ export class MonoText extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  text: { 
-    fontFamily: 'space-mono' 
+  text: {
+    fontFamily: 'space-mono'
   }
 });
