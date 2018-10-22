@@ -11,17 +11,20 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import I18n from '../../i18n';
+import { connect } from 'react-redux';
 import authService from '../../services/AuthService';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ActivityIndicatorComponent from '../../components/shared/ActivityIndicatorComponent';
+import { login } from '../../store/actions/userActions';
 
-export default class SignInScreen extends React.Component {
+class SignInScreen extends React.Component {
   static navigationOptions = {
     title: 'Sign up'
   };
 
   static propTypes = {
-    navigation: PropTypes.object
+    navigation: PropTypes.object,
+    onLogin: PropTypes.func
   };
 
   state = {
@@ -32,14 +35,10 @@ export default class SignInScreen extends React.Component {
   };
 
   confirmSignUp = () => {
-    Alert.alert(
-      'Confirm',
-      'Are you sure that you want to singup with this data?',
-      [
-        { text: 'Cancel', onPress: () => {}, style: 'cancel' },
-        { text: 'Yes', onPress: () => this.signUp() }
-      ]
-    );
+    Alert.alert('Confirm', 'Are you sure that you want to singup with this data?', [
+      { text: 'Cancel', onPress: () => {}, style: 'cancel' },
+      { text: 'Yes', onPress: () => this.signUp() }
+    ]);
   };
 
   signUp = async () => {
@@ -52,7 +51,8 @@ export default class SignInScreen extends React.Component {
     try {
       await authService.signup(signupData);
       Alert.alert(I18n.t('common.success'), 'Sign up was successfull!');
-      await AsyncStorage.setItem('userToken', 'abc');
+      await AsyncStorage.setItem('userToken', this.state.email);
+      this.props.onLogin({ email: this.state.email });
       this.props.navigation.navigate('Main');
     } catch (error) {
       this.setState({ loader: false });
@@ -89,20 +89,13 @@ export default class SignInScreen extends React.Component {
           />
 
           <View>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('SignIn')}
-            >
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('SignIn')}>
               <Text>{I18n.t('auth.haveAccountLogIn')}</Text>
             </TouchableOpacity>
-            <Button
-              title={I18n.t('auth.signup')}
-              onPress={this.confirmSignUp}
-            />
+            <Button title={I18n.t('auth.signup')} onPress={this.confirmSignUp} />
           </View>
         </KeyboardAwareScrollView>
-        {this.state.loader && (
-          <ActivityIndicatorComponent animating={this.state.loader} />
-        )}
+        {this.state.loader && <ActivityIndicatorComponent animating={this.state.loader} />}
       </View>
     );
   }
@@ -114,3 +107,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   }
 });
+
+const mapDispatchToProps = dispatch => ({
+  onLogin: user => {
+    dispatch(login(user));
+  }
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(SignInScreen);
