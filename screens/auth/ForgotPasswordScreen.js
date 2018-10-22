@@ -4,6 +4,7 @@ import I18n from '../../i18n';
 import authService from '../../services/AuthService';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ActivityIndicatorComponent from '../../components/shared/ActivityIndicatorComponent';
+import { textInputStyle } from '../../constants/Form';
 
 class ForgotPasswordScreen extends Component {
   static navigationOptions = {
@@ -41,15 +42,11 @@ class ForgotPasswordScreen extends Component {
             placeholder={I18n.t('auth.enterEmail')}
             onChangeText={email => this.setState({ email })}
             value={this.state.email}
+            style={styles.textInputStyle}
           />
-          <Button
-            title={I18n.t('common.send')}
-            onPress={this.sendResetPasswordEmail}
-          />
+          <Button title={I18n.t('common.send')} onPress={this.sendResetPasswordEmail} />
         </KeyboardAwareScrollView>
-        {this.state.loader && (
-          <ActivityIndicatorComponent animating={this.state.loader} />
-        )}
+        {this.state.loader && <ActivityIndicatorComponent animating={this.state.loader} />}
       </View>
     );
   }
@@ -61,5 +58,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff'
-  }
+  },
+  textInputStyle
 });

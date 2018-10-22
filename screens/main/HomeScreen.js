@@ -8,7 +8,8 @@ import {
   View,
   Button,
   AsyncStorage,
-  Modal
+  Modal,
+  SafeAreaView
 } from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -72,7 +73,7 @@ export default class HomeScreen extends React.Component {
               alert('Modal has been closed.');
             }}
           >
-            <View style={styles.contentContainer}>
+            <SafeAreaView style={styles.container}>
               <View>
                 <Text>{I18n.t('helloWorld')}</Text>
 
@@ -83,7 +84,7 @@ export default class HomeScreen extends React.Component {
                   title="Hide Modal"
                 />
               </View>
-            </View>
+            </SafeAreaView>
           </Modal>
         </ScrollView>
 

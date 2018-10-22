@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  AsyncStorage,
-  StyleSheet,
-  Button,
-  TextInput,
-  View
-} from 'react-native';
+import { AsyncStorage, StyleSheet, Button, TextInput, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { Alert } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -13,6 +7,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import I18n from '../../i18n';
 import authService from '../../services/AuthService';
 import ActivityIndicatorComponent from '../../components/shared/ActivityIndicatorComponent';
+import { textInputStyle } from '../../constants/Form';
 
 export default class SignInScreen extends React.Component {
   static navigationOptions = {
@@ -64,6 +59,7 @@ export default class SignInScreen extends React.Component {
             placeholder={I18n.t('auth.enterEmail')}
             onChangeText={email => this.setState({ email })}
             value={this.state.email}
+            style={styles.textInputStyle}
           />
 
           <TextInput
@@ -71,15 +67,14 @@ export default class SignInScreen extends React.Component {
             placeholder={I18n.t('auth.enterPass')}
             onChangeText={password => this.setState({ password })}
             value={this.state.password}
+            style={styles.textInputStyle}
           />
 
           <Button title="Sign in!" onPress={this.signIn} />
           <Button title="Sign up!" onPress={this.goToSignUp} />
           <Button title="Forgot password" onPress={this.goToForgotPassword} />
         </KeyboardAwareScrollView>
-        {this.state.loader && (
-          <ActivityIndicatorComponent animating={this.state.loader} />
-        )}
+        {this.state.loader && <ActivityIndicatorComponent animating={this.state.loader} />}
       </View>
     );
   }
@@ -89,5 +84,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff'
-  }
+  },
+  textInputStyle
 });

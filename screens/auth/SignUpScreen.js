@@ -10,10 +10,12 @@ import {
   Alert
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import I18n from '../../i18n';
 import authService from '../../services/AuthService';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ActivityIndicatorComponent from '../../components/shared/ActivityIndicatorComponent';
+import { textInputStyle } from '../../constants/Form';
 
 export default class SignInScreen extends React.Component {
   static navigationOptions = {
@@ -32,14 +34,10 @@ export default class SignInScreen extends React.Component {
   };
 
   confirmSignUp = () => {
-    Alert.alert(
-      'Confirm',
-      'Are you sure that you want to singup with this data?',
-      [
-        { text: 'Cancel', onPress: () => {}, style: 'cancel' },
-        { text: 'Yes', onPress: () => this.signUp() }
-      ]
-    );
+    Alert.alert('Confirm', 'Are you sure that you want to singup with this data?', [
+      { text: 'Cancel', onPress: () => {}, style: 'cancel' },
+      { text: 'Yes', onPress: () => this.signUp() }
+    ]);
   };
 
   signUp = async () => {
@@ -70,6 +68,7 @@ export default class SignInScreen extends React.Component {
             placeholder={I18n.t('auth.enterName')}
             onChangeText={name => this.setState({ name })}
             value={this.state.name}
+            style={styles.textInputStyle}
           />
 
           <TextInput
@@ -79,6 +78,7 @@ export default class SignInScreen extends React.Component {
             placeholder={I18n.t('auth.enterEmail')}
             onChangeText={email => this.setState({ email })}
             value={this.state.email}
+            style={styles.textInputStyle}
           />
 
           <TextInput
@@ -86,23 +86,17 @@ export default class SignInScreen extends React.Component {
             placeholder={I18n.t('auth.enterPass')}
             onChangeText={password => this.setState({ password })}
             value={this.state.password}
+            style={styles.textInputStyle}
           />
 
           <View>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('SignIn')}
-            >
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('SignIn')}>
               <Text>{I18n.t('auth.haveAccountLogIn')}</Text>
             </TouchableOpacity>
-            <Button
-              title={I18n.t('auth.signup')}
-              onPress={this.confirmSignUp}
-            />
+            <Button title={I18n.t('auth.signup')} onPress={this.confirmSignUp} />
           </View>
         </KeyboardAwareScrollView>
-        {this.state.loader && (
-          <ActivityIndicatorComponent animating={this.state.loader} />
-        )}
+        {this.state.loader && <ActivityIndicatorComponent animating={this.state.loader} />}
       </View>
     );
   }
@@ -112,5 +106,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff'
-  }
+  },
+  textInputStyle
 });
