@@ -33,7 +33,7 @@ export default class SignInScreen extends React.Component {
     try {
       await authService.login(signinData);
       await AsyncStorage.setItem('userToken', 'abc');
-      this.props.navigation.navigate('Main');
+      this.props.navigation.navigate('MainStack');
     } catch (error) {
       this.setState({ loader: false });
       Alert.alert('Error', error.message);

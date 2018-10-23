@@ -51,7 +51,7 @@ export default class SignInScreen extends React.Component {
       await authService.signup(signupData);
       Alert.alert(I18n.t('common.success'), 'Sign up was successfull!');
       await AsyncStorage.setItem('userToken', 'abc');
-      this.props.navigation.navigate('Main');
+      this.props.navigation.navigate('MainStack');
     } catch (error) {
       this.setState({ loader: false });
       Alert.alert('Error', error.message);

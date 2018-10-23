@@ -13,9 +13,7 @@ class NetworkInterceptor extends Component {
   componentDidMount() {
     this._connectionInfo();
     this._setUrlEventListener();
-    this._notificationSubscription = Notifications.addListener(
-      this._handleNotification
-    );
+    this._notificationSubscription = Notifications.addListener(this._handleNotification);
   }
 
   // handle push notifications
@@ -55,7 +53,7 @@ class NetworkInterceptor extends Component {
     }
 
     if (!userToken) {
-      NavigationService.navigate('Auth');
+      NavigationService.navigate('AuthStack');
       return;
     }
 
