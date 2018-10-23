@@ -41,8 +41,8 @@ class HomeScreen extends React.Component {
 
   _signOutAsync = async () => {
     await AsyncStorage.clear();
-    this.props.navigation.navigate('AuthStack');
     this.props.onLogout();
+    this.props.navigation.navigate('AuthStack');
   };
 
   _setModalVisible(visible) {
