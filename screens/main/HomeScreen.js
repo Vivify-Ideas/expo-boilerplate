@@ -12,19 +12,27 @@ import {
   SafeAreaView
 } from 'react-native';
 import PropTypes from 'prop-types';
-
+import { connect } from 'react-redux';
 import { MonoText } from '../../components/StyledText';
 import { addHeaderLeftNavigator } from '../../helpers';
 import I18n from '../../i18n';
+import { logout } from '../../store/actions/userActions';
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const headerLeftNav = addHeaderLeftNavigator(navigation);
     return { ...headerLeftNav, title: 'Home' };
   };
 
   static propTypes = {
-    navigation: PropTypes.object
+    navigation: PropTypes.object,
+    user: PropTypes.shape({
+      isLoggedIn: PropTypes.boolean,
+      user: PropTypes.shape({
+        email: PropTypes.string
+      })
+    }),
+    onLogout: PropTypes.func
   };
 
   state = {
@@ -33,6 +41,7 @@ export default class HomeScreen extends React.Component {
 
   _signOutAsync = async () => {
     await AsyncStorage.clear();
+    this.props.onLogout();
     this.props.navigation.navigate('AuthStack');
   };
 
@@ -41,11 +50,14 @@ export default class HomeScreen extends React.Component {
   }
 
   render() {
+    const { isLoggedIn, user } = this.props.user;
+
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
             <Text>{I18n.t('helloWorld')}</Text>
+            {isLoggedIn && <Text>{user.email}</Text>}
             <Image
               source={
                 __DEV__
@@ -157,3 +169,16 @@ const styles = StyleSheet.create({
     marginTop: 5
   }
 });
+
+const mapStateToProps = state => ({ ...state });
+
+const mapDispatchToProps = dispatch => ({
+  onLogout: () => {
+    dispatch(logout());
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomeScreen);

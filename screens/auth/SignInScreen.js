@@ -3,19 +3,23 @@ import { AsyncStorage, StyleSheet, Button, TextInput, View } from 'react-native'
 import PropTypes from 'prop-types';
 import { Alert } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { connect } from 'react-redux';
 
 import I18n from '../../i18n';
 import authService from '../../services/AuthService';
 import ActivityIndicatorComponent from '../../components/shared/ActivityIndicatorComponent';
 import { textInputStyle } from '../../constants/Form';
 
-export default class SignInScreen extends React.Component {
+import { login } from '../../store/actions/userActions';
+
+class SignInScreen extends React.Component {
   static navigationOptions = {
     title: 'Please sign in'
   };
 
   static propTypes = {
-    navigation: PropTypes.object
+    navigation: PropTypes.object,
+    onLogin: PropTypes.func
   };
 
   state = {
@@ -32,7 +36,8 @@ export default class SignInScreen extends React.Component {
     this.setState({ loader: true });
     try {
       await authService.login(signinData);
-      await AsyncStorage.setItem('userToken', 'abc');
+      await AsyncStorage.setItem('userToken', this.state.email);
+      this.props.onLogin({ email: this.state.email });
       this.props.navigation.navigate('MainStack');
     } catch (error) {
       this.setState({ loader: false });
@@ -87,3 +92,14 @@ const styles = StyleSheet.create({
   },
   textInputStyle
 });
+
+const mapDispatchToProps = dispatch => ({
+  onLogin: user => {
+    dispatch(login(user));
+  }
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(SignInScreen);
