@@ -4,8 +4,8 @@ import { AppLoading, Asset, Font, Icon } from 'expo';
 import Sentry from 'sentry-expo';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-import { store } from './store';
-
+import store from './store';
+import NavigationService from './services/NavigationService';
 import AppNavigator from './navigation/AppNavigator';
 import NetworkInterceptor from './screens/NetworkInterceptor';
 
@@ -40,7 +40,11 @@ export default class App extends React.Component {
           <NetworkInterceptor>
             <View style={styles.container}>
               {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-              <AppNavigator />
+              <AppNavigator
+                ref={navigatorRef => {
+                  NavigationService.setTopLevelNavigator(navigatorRef);
+                }}
+              />
             </View>
           </NetworkInterceptor>
         </Provider>

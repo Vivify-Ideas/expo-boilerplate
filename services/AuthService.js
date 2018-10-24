@@ -12,7 +12,7 @@ const ENDPOINTS = {
   LOGIN: '/login',
   SIGN_UP: '/register',
   LOGIN_SOCIAL: '/login-social',
-  LOGOUT: '/auth/logout',
+  LOGOUT: '/logout',
   RESET_PASSWORD: '/auth/forgot-password',
   CHANGE_PASSWORD: '/auth/change-password'
 };
@@ -76,10 +76,7 @@ class AuthService extends ApiService {
     try {
       const result = await loginPromise;
       if (result.type === 'success') {
-        const { data } = await this.apiClient.post(
-          ENDPOINTS.LOGIN_SOCIAL,
-          result
-        );
+        const { data } = await this.apiClient.post(ENDPOINTS.LOGIN_SOCIAL, result);
         this.createSession(data);
         return { ok: true, data };
       }
@@ -108,7 +105,9 @@ class AuthService extends ApiService {
   };
 
   logout = async () => {
+    const { data } = await this.apiClient.post(ENDPOINTS.LOGOUT);
     await this.destroySession();
+    return { ok: true, data };
   };
 
   resetPassword = email => {

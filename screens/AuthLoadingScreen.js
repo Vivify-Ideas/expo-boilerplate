@@ -1,31 +1,31 @@
 import React from 'react';
-import { ActivityIndicator, AsyncStorage, View, StyleSheet, StatusBar } from 'react-native';
+import { ActivityIndicator, View, StyleSheet, StatusBar } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { login } from '../store/actions/userActions';
+import { setActiveUser } from '../store/actions/UserActions';
+import authService from '../services/AuthService';
 
 class AuthLoadingScreen extends React.Component {
-  constructor(props) {
-    super(props);
+  componentDidMount() {
     this._bootstrapAsync();
   }
 
   static propTypes = {
     navigation: PropTypes.object,
-    onLogin: PropTypes.func
+    onLogin: PropTypes.func,
+    setActiveUser: PropTypes.func
   };
 
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    const userToken = await AsyncStorage.getItem('userToken');
-
-    if (userToken) {
-      this.props.onLogin({ email: userToken });
+    const user = await authService.getUser();
+    if (user) {
+      this.props.setActiveUser(user);
     }
 
     // This will switch to the Main screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(userToken ? 'MainStack' : 'AuthStack');
+    this.props.navigation.navigate(user ? 'MainStack' : 'AuthStack');
   };
 
   // Render any loading content that you like here
@@ -50,11 +50,11 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapDispatchToProps = dispatch => ({
-  onLogin: user => {
-    dispatch(login(user));
-  }
-});
+const mapDispatchToProps = dispatch => {
+  return {
+    setActiveUser: payload => dispatch(setActiveUser(payload))
+  };
+};
 
 export default connect(
   null,

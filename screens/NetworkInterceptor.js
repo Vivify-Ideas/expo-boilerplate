@@ -1,13 +1,16 @@
-import { Component } from 'react';
-import { NetInfo } from 'react-native';
+import React, { Component } from 'react';
+import { NetInfo, View, StyleSheet } from 'react-native';
 import NavigationService from '../services/NavigationService';
 import { Linking, Notifications } from 'expo';
 import PropTypes from 'prop-types';
 import authService from '../services/AuthService';
+import ActivityIndicatorComponent from '../components/shared/ActivityIndicatorComponent';
+import { connect } from 'react-redux';
 
 class NetworkInterceptor extends Component {
   static propTypes = {
-    children: PropTypes.any
+    children: PropTypes.any,
+    loader: PropTypes.bool
   };
 
   componentDidMount() {
@@ -64,8 +67,26 @@ class NetworkInterceptor extends Component {
   }
 
   render() {
-    return this.props.children;
+    return (
+      <View style={styles.container}>
+        {this.props.children}
+        {this.props.loader && <ActivityIndicatorComponent animating={this.props.loader} />}
+      </View>
+    );
   }
 }
 
-export default NetworkInterceptor;
+const mapStateToProps = state => {
+  return {
+    loader: state.loader
+  };
+};
+
+export default connect(mapStateToProps)(NetworkInterceptor);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff'
+  }
+});

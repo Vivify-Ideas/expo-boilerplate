@@ -1,16 +1,12 @@
 import React from 'react';
-import { AsyncStorage, StyleSheet, Button, TextInput, View } from 'react-native';
+import { StyleSheet, Button, TextInput, View } from 'react-native';
 import PropTypes from 'prop-types';
-import { Alert } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
-
 import I18n from '../../i18n';
-import authService from '../../services/AuthService';
 import ActivityIndicatorComponent from '../../components/shared/ActivityIndicatorComponent';
 import { textInputStyle } from '../../constants/Form';
-
-import { login } from '../../store/actions/userActions';
+import { login } from '../../store/actions/UserActions';
 
 class SignInScreen extends React.Component {
   static navigationOptions = {
@@ -19,7 +15,7 @@ class SignInScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
-    onLogin: PropTypes.func
+    login: PropTypes.func
   };
 
   state = {
@@ -33,16 +29,7 @@ class SignInScreen extends React.Component {
       email: this.state.email,
       password: this.state.password
     };
-    this.setState({ loader: true });
-    try {
-      await authService.login(signinData);
-      await AsyncStorage.setItem('userToken', this.state.email);
-      this.props.onLogin({ email: this.state.email });
-      this.props.navigation.navigate('MainStack');
-    } catch (error) {
-      this.setState({ loader: false });
-      Alert.alert('Error', error.message);
-    }
+    this.props.login(signinData);
   };
 
   goToSignUp = () => {
@@ -94,9 +81,7 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onLogin: user => {
-    dispatch(login(user));
-  }
+  login: user => dispatch(login(user))
 });
 
 export default connect(
