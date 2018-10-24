@@ -7,7 +7,6 @@ import {
   Text,
   View,
   Button,
-  AsyncStorage,
   Modal,
   SafeAreaView
 } from 'react-native';
@@ -16,7 +15,7 @@ import { connect } from 'react-redux';
 import { MonoText } from '../../components/StyledText';
 import { addHeaderLeftNavigator } from '../../helpers';
 import I18n from '../../i18n';
-import { logout } from '../../store/actions/userActions';
+import { logout } from '../../store/actions/UserActions';
 
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -26,13 +25,8 @@ class HomeScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
-    user: PropTypes.shape({
-      isLoggedIn: PropTypes.boolean,
-      user: PropTypes.shape({
-        email: PropTypes.string
-      })
-    }),
-    onLogout: PropTypes.func
+    user: PropTypes.object,
+    logout: PropTypes.func
   };
 
   state = {
@@ -40,9 +34,7 @@ class HomeScreen extends React.Component {
   };
 
   _signOutAsync = async () => {
-    await AsyncStorage.clear();
-    this.props.onLogout();
-    this.props.navigation.navigate('AuthStack');
+    this.props.logout();
   };
 
   _setModalVisible(visible) {
@@ -112,6 +104,17 @@ class HomeScreen extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({ ...state });
+
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch(logout())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomeScreen);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -169,16 +172,3 @@ const styles = StyleSheet.create({
     marginTop: 5
   }
 });
-
-const mapStateToProps = state => ({ ...state });
-
-const mapDispatchToProps = dispatch => ({
-  onLogout: () => {
-    dispatch(logout());
-  }
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HomeScreen);

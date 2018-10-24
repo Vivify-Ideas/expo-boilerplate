@@ -1,32 +1,21 @@
 import React from 'react';
-import {
-  AsyncStorage,
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Button,
-  Alert
-} from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Button, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import I18n from '../../i18n';
 import { connect } from 'react-redux';
-import authService from '../../services/AuthService';
-import ActivityIndicatorComponent from '../../components/shared/ActivityIndicatorComponent';
 import { textInputStyle } from '../../constants/Form';
-import { login } from '../../store/actions/userActions';
+import { signUp } from '../../store/actions/UserActions';
 
-class SignInScreen extends React.Component {
+class SignUpScreen extends React.Component {
   static navigationOptions = {
     title: 'Sign up'
   };
 
   static propTypes = {
     navigation: PropTypes.object,
-    onLogin: PropTypes.func
+    signUp: PropTypes.func
   };
 
   state = {
@@ -49,17 +38,7 @@ class SignInScreen extends React.Component {
       email: this.state.email,
       password: this.state.password
     };
-    this.setState({ loader: true });
-    try {
-      await authService.signup(signupData);
-      Alert.alert(I18n.t('common.success'), 'Sign up was successfull!');
-      await AsyncStorage.setItem('userToken', this.state.email);
-      this.props.onLogin({ email: this.state.email });
-      this.props.navigation.navigate('MainStack');
-    } catch (error) {
-      this.setState({ loader: false });
-      Alert.alert('Error', error.message);
-    }
+    this.props.signUp(signupData);
   };
 
   render() {
@@ -100,7 +79,6 @@ class SignInScreen extends React.Component {
             <Button title={I18n.t('auth.signup')} onPress={this.confirmSignUp} />
           </View>
         </KeyboardAwareScrollView>
-        {this.state.loader && <ActivityIndicatorComponent animating={this.state.loader} />}
       </View>
     );
   }
@@ -115,12 +93,10 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onLogin: user => {
-    dispatch(login(user));
-  }
+  signUp: user => dispatch(signUp(user))
 });
 
 export default connect(
   null,
   mapDispatchToProps
-)(SignInScreen);
+)(SignUpScreen);

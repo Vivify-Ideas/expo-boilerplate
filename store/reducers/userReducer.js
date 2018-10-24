@@ -1,19 +1,19 @@
-import { USER_LOGIN, USER_LOGOUT } from '../constants/userTypes';
+import { SET_ACTIVE_USER, USER_LOGOUT } from '../actions/ActionTypes';
 
 const initialState = {
-  isLoggedIn: false,
   user: {}
 };
 
 export default (state = initialState, action) => {
+  /*eslint-disable indent */
   switch (action.type) {
-  case USER_LOGIN:
-    return {
-      isLoggedIn: true,
-      user: action.payload
-    };
-  case USER_LOGOUT:
-  default:
-    return state;
+    case SET_ACTIVE_USER:
+      return {
+        user: action.payload
+      };
+    case USER_LOGOUT:
+      return { user: {} };
+    default:
+      return state;
   }
 };
