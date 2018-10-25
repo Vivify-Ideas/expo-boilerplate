@@ -64,22 +64,18 @@ class AuthService extends ApiService {
 
   login = async loginData => {
     const { data } = await this.apiClient.post(ENDPOINTS.LOGIN, loginData);
-    this.createSession(data);
-    return { ok: true, data };
+    await this.createSession(data);
+    return data;
   };
 
   socialLogin = async loginPromise => {
-    try {
-      const result = await loginPromise;
-      if (result.type === 'success') {
-        const { data } = await this.apiClient.post(ENDPOINTS.LOGIN_SOCIAL, result);
-        this.createSession(data);
-        return { ok: true, data };
-      }
-      return { ok: false, error: result.type };
-    } catch (e) {
-      return { ok: false, error: e };
+    const result = await loginPromise;
+    if (result.type !== 'success') {
+      throw new Error(result.type);
     }
+    const { data } = await this.apiClient.post(ENDPOINTS.LOGIN_SOCIAL, result);
+    await this.createSession(data);
+    return data;
   };
 
   loginWithGoogle = async () => {
