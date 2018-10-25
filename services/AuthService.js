@@ -63,13 +63,9 @@ class AuthService extends ApiService {
   };
 
   login = async loginData => {
-    try {
-      const { data } = await this.apiClient.post(ENDPOINTS.LOGIN, loginData);
-      this.createSession(data);
-      return { ok: true, data };
-    } catch (error) {
-      throw error;
-    }
+    const { data } = await this.apiClient.post(ENDPOINTS.LOGIN, loginData);
+    this.createSession(data);
+    return { ok: true, data };
   };
 
   socialLogin = async loginPromise => {
@@ -118,11 +114,10 @@ class AuthService extends ApiService {
     return this.apiClient.post(ENDPOINTS.CHANGE_PASSWORD, data);
   };
 
-  signup = signupData => {
-    return this.apiClient.post(ENDPOINTS.SIGN_UP, signupData).then(() => {
-      const { email, password } = signupData;
-      return this.login({ email, password });
-    });
+  signup = async signupData => {
+    await this.apiClient.post(ENDPOINTS.SIGN_UP, signupData);
+    const { email, password } = signupData;
+    return this.login({ email, password });
   };
 
   getToken = async () => {

@@ -72,14 +72,6 @@ class SignInScreen extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff'
-  },
-  textInputStyle
-});
-
 const mapDispatchToProps = dispatch => ({
   login: user => dispatch(login(user))
 });
@@ -88,3 +80,11 @@ export default connect(
   null,
   mapDispatchToProps
 )(SignInScreen);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff'
+  },
+  textInputStyle
+});
