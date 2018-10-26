@@ -11,7 +11,7 @@ export default class LeftSliderScreen extends React.Component {
     return (
       <SafeAreaView style={styles.container}>
         <View>
-          <Button onPress={() => this.props.navigation.goBack()} title="Close me" />
+          <Button onPress={() => this.props.navigation.closeDrawer()} title="Close me" />
         </View>
       </SafeAreaView>
     );
