@@ -1,8 +1,8 @@
 {
-  "presets": ["babel-preset-expo", "react-native-dotenv"],
+  "presets": ["babel-preset-expo", "module:react-native-dotenv"],
   "env": {
     "development": {
-      "plugins": ["transform-react-jsx-source"]
+      "plugins": ["@babel/transform-react-jsx-source"]
     }
   }
 }
