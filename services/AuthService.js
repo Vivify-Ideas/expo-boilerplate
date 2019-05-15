@@ -1,6 +1,6 @@
 import ApiService from './ApiService';
 import { AsyncStorage } from 'react-native';
-import Expo from 'expo';
+import { Facebook, Google } from 'expo';
 import config from '../config';
 import { askForNotificationsPermission } from '../services/PermissionsService';
 
@@ -80,7 +80,7 @@ class AuthService extends ApiService {
 
   loginWithGoogle = async () => {
     return await this.socialLogin(
-      Expo.Google.logInAsync({
+      Google.logInAsync({
         androidClientId,
         iosClientId,
         scopes: ['profile', 'email']
@@ -90,7 +90,7 @@ class AuthService extends ApiService {
 
   loginWithFacebook = async () => {
     return await this.socialLogin(
-      Expo.Facebook.logInWithReadPermissionsAsync(facebookAppId, {
+      Facebook.logInWithReadPermissionsAsync(facebookAppId, {
         permissions: ['public_profile', 'email']
       })
     );
