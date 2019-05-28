@@ -28,6 +28,7 @@
     "@expo/samples": "2.1.1",
     "axios": "^0.18.0",
     "expo": "^32.0.0",
+    "formik": "^1.5.7",
     "prop-types": "^15.6.2",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
@@ -37,7 +38,8 @@
     "react-redux": "^5.0.7",
     "redux": "^4.0.1",
     "redux-saga": "^0.16.2",
-    "sentry-expo": "^1.10.0"
+    "sentry-expo": "^1.10.0",
+    "yup": "^0.27.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",

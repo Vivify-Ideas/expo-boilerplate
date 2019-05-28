@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, Button, TextInput, View } from 'react-native';
+import { StyleSheet, Button, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
-import I18n from '../../i18n';
+
 import ActivityIndicatorComponent from '../../components/shared/ActivityIndicatorComponent';
-import { textInputStyle } from '../../constants/Form';
 import { login, facebookLogin, googleLogin } from '../../store/actions/UserActions';
+import { SignInForm } from '../../components/auth/SignInForm';
 
 class SignInScreen extends React.Component {
   static navigationOptions = {
@@ -26,12 +26,8 @@ class SignInScreen extends React.Component {
     loader: false
   };
 
-  signIn = async () => {
-    const signinData = {
-      email: this.state.email,
-      password: this.state.password
-    };
-    this.props.login(signinData);
+  onSubmit = signInData => {
+    this.props.login(signInData);
   };
 
   goToSignUp = () => {
@@ -46,23 +42,7 @@ class SignInScreen extends React.Component {
     return (
       <View style={styles.container}>
         <KeyboardAwareScrollView enableOnAndroid>
-          <TextInput
-            keyboardType="email-address"
-            autoCapitalize="none"
-            autoCorrect={false}
-            placeholder={I18n.t('auth.enterEmail')}
-            onChangeText={email => this.setState({ email })}
-            value={this.state.email}
-            style={styles.textInputStyle}
-          />
-
-          <TextInput
-            secureTextEntry={true}
-            placeholder={I18n.t('auth.enterPass')}
-            onChangeText={password => this.setState({ password })}
-            value={this.state.password}
-            style={styles.textInputStyle}
-          />
+          <SignInForm onSubmit={this.onSubmit} />
 
           <Button title="Sign in!" onPress={this.signIn} />
           <Button title="Sign in with Facebook!" onPress={this.props.facebookLogin} />
@@ -91,6 +71,5 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     flex: 1
-  },
-  textInputStyle
+  }
 });
