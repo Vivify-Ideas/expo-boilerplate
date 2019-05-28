@@ -15,6 +15,30 @@ export function* userLogin({ payload }) {
   }
 }
 
+export function* userFacebookLogin() {
+  try {
+    yield put(setLoader(true));
+    yield call(authService.loginWithFacebook);
+    NavigationService.navigate('AuthLoading');
+  } catch (error) {
+    console.log(error); /*eslint-disable-line*/
+  } finally {
+    yield put(setLoader(false));
+  }
+}
+
+export function* userGoogleLogin() {
+  try {
+    yield put(setLoader(true));
+    yield call(authService.loginWithGoogle);
+    NavigationService.navigate('AuthLoading');
+  } catch (error) {
+    console.log({ error }); /*eslint-disable-line*/
+  } finally {
+    yield put(setLoader(false));
+  }
+}
+
 export function* userSignUp({ payload }) {
   try {
     yield put(setLoader(true));
