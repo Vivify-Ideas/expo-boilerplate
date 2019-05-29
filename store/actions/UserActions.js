@@ -4,7 +4,11 @@ import {
   USER_LOGOUT,
   SET_ACTIVE_USER,
   USER_FACEBOOK_LOGIN,
-  USER_GOOGLE_LOGIN
+  USER_GOOGLE_LOGIN,
+  FORGOT_PASSWORD,
+  FORGOT_PASSWORD_ERROR_SET,
+  RESET_PASSWORD,
+  RESET_PASSWORD_ERROR_SET
 } from './ActionTypes';
 
 export const logout = () => {
@@ -43,5 +47,33 @@ export const facebookLogin = () => {
 export const googleLogin = () => {
   return {
     type: USER_GOOGLE_LOGIN
+  };
+};
+
+export const passwordForgot = payload => {
+  return {
+    type: FORGOT_PASSWORD,
+    payload
+  };
+};
+
+export const setForgotPasswordError = payload => {
+  return {
+    type: FORGOT_PASSWORD_ERROR_SET,
+    payload
+  };
+};
+
+export const passwordReset = payload => {
+  return {
+    type: RESET_PASSWORD,
+    payload
+  };
+};
+
+export const setResetPasswordError = payload => {
+  return {
+    type: RESET_PASSWORD_ERROR_SET,
+    payload
   };
 };

@@ -47,7 +47,6 @@ class NetworkInterceptor extends Component {
 
   async _processUrlEvent(queryParams) {
     const userToken = await authService.getToken();
-
     if (queryParams.forgot_password_token) {
       NavigationService.navigate('ResetPassword', {
         forgot_password_token: queryParams.forgot_password_token
@@ -86,7 +85,7 @@ export default connect(mapStateToProps)(NetworkInterceptor);
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    flex: 1
   }
 });

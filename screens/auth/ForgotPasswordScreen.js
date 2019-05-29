@@ -1,61 +1,59 @@
 import React, { Component } from 'react';
-import { View, TextInput, StyleSheet, Button, Alert } from 'react-native';
-import $t from 'i18n';
-
-import authService from '../../services/AuthService';
+import { View, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import ActivityIndicatorComponent from '../../components/shared/ActivityIndicatorComponent';
-import { textInputStyle } from '../../constants/Form';
+
+import { ForgotPasswordForm } from '../../components/auth/ForgotPasswordForm';
+import { passwordForgot } from '../../store/actions/UserActions';
 
 class ForgotPasswordScreen extends Component {
   static navigationOptions = {
     title: 'Forgot Password'
   };
 
-  state = {
-    email: '',
-    loader: false
+  static propTypes = {
+    navigation: PropTypes.object,
+    passwordForgot: PropTypes.func,
+    forgotPasswordError: PropTypes.bool
   };
 
-  sendResetPasswordEmail = async () => {
-    this.setState({ loader: true });
-    try {
-      await authService.resetPassword(this.state.email);
-
-      Alert.alert($t('common.success'), 'The mail has been sent successfully. Check your inbox.');
-    } catch (error) {
-      Alert.alert('Error', error.message);
-    }
-    this.setState({ loader: false });
+  handleSubmit = forgotPasswordData => {
+    this.props.passwordForgot(forgotPasswordData);
   };
 
   render() {
+    const { forgotPasswordError } = this.props;
+
     return (
       <View style={styles.container}>
         <KeyboardAwareScrollView enableOnAndroid>
-          <TextInput
-            keyboardType="email-address"
-            autoCapitalize="none"
-            autoCorrect={false}
-            placeholder={$t('auth.enterEmail')}
-            onChangeText={email => this.setState({ email })}
-            value={this.state.email}
-            style={styles.textInputStyle}
+          <ForgotPasswordForm
+            onSubmit={this.handleSubmit}
+            forgotPasswordError={forgotPasswordError}
           />
-          <Button title={$t('common.send')} onPress={this.sendResetPasswordEmail} />
         </KeyboardAwareScrollView>
-        {this.state.loader && <ActivityIndicatorComponent animating={this.state.loader} />}
       </View>
     );
   }
 }
 
-export default ForgotPasswordScreen;
+const mapStateToProps = state => {
+  return {
+    forgotPasswordError: state.errors.forgotPasswordError
+  };
+};
+
+const mapDispatchToProps = { passwordForgot };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ForgotPasswordScreen);
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     flex: 1
-  },
-  textInputStyle
+  }
 });

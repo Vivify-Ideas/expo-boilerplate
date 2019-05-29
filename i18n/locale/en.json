@@ -20,6 +20,11 @@
     "enterNewPass": "Enter new password",
     "confirmPass": "Confirm password",
     "passwordSuccessfullyChanged": "Password successfully changed",
-    "invalidCredentials": "Invalid credentials"
+    "invalidCredentials": "Invalid credentials",
+    "emailDoesNotExist": "Email does not exist",
+    "sendEmail": "Send email",
+    "forgotPasswordSuccess": "Email with reset password link has been sent to you",
+    "resetPassword": "Reset password",
+    "invalidToken": "Invalid or expired token"
   }
 }

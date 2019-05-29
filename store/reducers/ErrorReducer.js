@@ -1,8 +1,16 @@
-import { GLOBAL_ERROR_SET, SIGNIN_ERROR_SET, SIGNUP_ERRORS_SET } from '../actions/ActionTypes';
+import {
+  GLOBAL_ERROR_SET,
+  SIGNIN_ERROR_SET,
+  SIGNUP_ERRORS_SET,
+  FORGOT_PASSWORD_ERROR_SET,
+  RESET_PASSWORD_ERROR_SET
+} from '../actions/ActionTypes';
 
 const initialState = {
   globalError: false,
   signInError: false,
+  forgotPasswordError: false,
+  resetPasswordError: false,
   signUpErrors: {}
 };
 
@@ -23,6 +31,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         signUpErrors: action.payload
+      };
+    case FORGOT_PASSWORD_ERROR_SET:
+      return {
+        ...state,
+        forgotPasswordError: action.payload
+      };
+    case RESET_PASSWORD_ERROR_SET:
+      return {
+        ...state,
+        resetPasswordError: action.payload
       };
     default:
       return state;

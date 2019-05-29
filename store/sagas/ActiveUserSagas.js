@@ -3,6 +3,7 @@ import { setLoader } from '../actions/LoaderAction';
 import authService from '../../services/AuthService';
 import NavigationService from '../../services/NavigationService';
 import { setSignInError, setGlobalError, setSignUpErrors } from '../actions/ErrorActions';
+import { setForgotPasswordError, setResetPasswordError } from '../actions/UserActions';
 
 export function* userLogin({ payload }) {
   try {
@@ -67,6 +68,38 @@ export function* userLogout() {
     NavigationService.navigate('AuthLoading');
   } catch (error) {
     console.log(error); /*eslint-disable-line*/
+  } finally {
+    yield put(setLoader(false));
+  }
+}
+
+export function* forgotPassword({ payload }) {
+  try {
+    yield put(setLoader(true));
+    yield call(authService.forgotPassword, payload);
+    NavigationService.navigate('ForgotPasswordSuccess');
+  } catch (error) {
+    if (error.response.status === 422) {
+      yield put(setForgotPasswordError(true));
+    } else {
+      yield put(setGlobalError(true));
+    }
+  } finally {
+    yield put(setLoader(false));
+  }
+}
+
+export function* resetPassword({ payload }) {
+  try {
+    yield put(setLoader(true));
+    yield call(authService.resetPassword, payload);
+    NavigationService.navigate('ResetPasswordSuccess');
+  } catch (error) {
+    if (error.response.status === 422) {
+      yield put(setResetPasswordError(true));
+    } else {
+      yield put(setGlobalError(true));
+    }
   } finally {
     yield put(setLoader(false));
   }
