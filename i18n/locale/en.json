@@ -7,14 +7,19 @@
   },
   "auth": {
     "offline": "Please check your Internet connection",
-    "signup": "Sign up",
-    "enterName": "Enter your name",
+    "signUp": "Sign up",
+    "signIn": "Sign in",
+    "enterFirstName": "Enter your first name",
+    "enterLastName": "Enter your last name",
     "enterEmail": "Enter your email",
-    "enterPass": "Enter your password",
+    "enterPassword": "Enter your password",
+    "confirmPassword": "Confirm your password",
+    "passwordsMustMatch": "Passwords must match",
     "changePass": "Change password",
     "haveAccountLogIn": "Already have an account? Log in!",
     "enterNewPass": "Enter new password",
     "confirmPass": "Confirm password",
-    "passwordSuccessfullyChanged": "Password successfully changed"
+    "passwordSuccessfullyChanged": "Password successfully changed",
+    "invalidCredentials": "Invalid credentials"
   }
 }

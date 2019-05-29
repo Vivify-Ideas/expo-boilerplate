@@ -9,9 +9,8 @@ const { ANDROID_GOOGLE_CLIENT_ID, IOS_GOOGLE_CLIENT_ID, FACEBOOK_APP_ID } = conf
 const { CLIENT_ID } = config;
 
 const ENDPOINTS = {
-  LOGIN: '/login',
-  SIGN_UP: '/register',
-  LOGIN_SOCIAL: '/login-social',
+  LOGIN: '/auth/login',
+  SIGN_UP: '/auth/register',
   LOGOUT: '/auth/logout',
   RESET_PASSWORD: '/auth/forgot-password',
   CHANGE_PASSWORD: '/auth/change-password',

@@ -7,8 +7,6 @@ I18n.translations = {
   en
 };
 
-export function $t(key, params = {}) {
+export default function $t(key, params = {}) {
   return I18n.t(key, params);
 }
-
-export default I18n;

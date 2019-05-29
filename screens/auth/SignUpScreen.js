@@ -1,83 +1,35 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Button, Alert } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import $t from 'i18n';
 
-import I18n from '../../i18n';
 import { connect } from 'react-redux';
-import { textInputStyle } from '../../constants/Form';
 import { signUp } from '../../store/actions/UserActions';
+import { SignUpForm } from '../../components/auth/SignUpForm';
 
 class SignUpScreen extends React.Component {
   static navigationOptions = {
-    title: 'Sign up'
+    title: $t('auth.signUp')
   };
 
   static propTypes = {
     navigation: PropTypes.object,
-    signUp: PropTypes.func
+    signUp: PropTypes.func,
+    signUpErrors: PropTypes.object
   };
 
-  state = {
-    name: '',
-    email: '',
-    password: '',
-    loader: false
-  };
-
-  confirmSignUp = () => {
-    Alert.alert('Confirm', 'Are you sure that you want to singup with this data?', [
-      { text: 'Cancel', onPress: () => {}, style: 'cancel' },
-      { text: 'Yes', onPress: () => this.signUp() }
-    ]);
-  };
-
-  signUp = async () => {
-    const signupData = {
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password
-    };
+  signUp = signupData => {
     this.props.signUp(signupData);
   };
 
   render() {
+    const { signUpErrors } = this.props;
+
     return (
       <View style={styles.container}>
         <KeyboardAwareScrollView enableOnAndroid>
-          <TextInput
-            autoCapitalize="words"
-            autoCorrect={false}
-            placeholder={I18n.t('auth.enterName')}
-            onChangeText={name => this.setState({ name })}
-            value={this.state.name}
-            style={styles.textInputStyle}
-          />
-
-          <TextInput
-            keyboardType="email-address"
-            autoCapitalize="none"
-            autoCorrect={false}
-            placeholder={I18n.t('auth.enterEmail')}
-            onChangeText={email => this.setState({ email })}
-            value={this.state.email}
-            style={styles.textInputStyle}
-          />
-
-          <TextInput
-            secureTextEntry={true}
-            placeholder={I18n.t('auth.enterPass')}
-            onChangeText={password => this.setState({ password })}
-            value={this.state.password}
-            style={styles.textInputStyle}
-          />
-
-          <View>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('SignIn')}>
-              <Text>{I18n.t('auth.haveAccountLogIn')}</Text>
-            </TouchableOpacity>
-            <Button title={I18n.t('auth.signup')} onPress={this.confirmSignUp} />
-          </View>
+          <SignUpForm onSubmit={this.signUp} signUpErrors={signUpErrors} />
         </KeyboardAwareScrollView>
       </View>
     );
@@ -86,17 +38,22 @@ class SignUpScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff'
-  },
-  textInputStyle
+    backgroundColor: '#fff',
+    flex: 1
+  }
 });
 
-const mapDispatchToProps = dispatch => ({
-  signUp: user => dispatch(signUp(user))
-});
+const mapStateToProps = state => {
+  return {
+    signUpErrors: state.errors.signUpErrors
+  };
+};
+
+const mapDispatchToProps = {
+  signUp
+};
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(SignUpScreen);

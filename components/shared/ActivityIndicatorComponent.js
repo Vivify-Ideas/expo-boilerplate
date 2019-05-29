@@ -2,7 +2,7 @@ import React from 'react';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 
-const ActivityIndicatorComponent = ({ animating, transparent = false }) => {
+const ActivityIndicatorComponent = ({ animating, transparent = true }) => {
   return (
     <ActivityIndicator
       style={[styles.loading, !transparent && styles.bgColor]}
@@ -20,17 +20,17 @@ ActivityIndicatorComponent.propTypes = {
 
 const backgroundColor = '#ffffff';
 const styles = StyleSheet.create({
-  loading: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
   bgColor: {
     backgroundColor
+  },
+  loading: {
+    alignItems: 'center',
+    bottom: 0,
+    flex: 1,
+    justifyContent: 'center',
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: 0
   }
 });

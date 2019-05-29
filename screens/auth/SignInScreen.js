@@ -1,37 +1,28 @@
 import React from 'react';
-import { StyleSheet, Button, TextInput, View } from 'react-native';
+import { StyleSheet, Button, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
-import I18n from '../../i18n';
-import ActivityIndicatorComponent from '../../components/shared/ActivityIndicatorComponent';
-import { textInputStyle } from '../../constants/Form';
+
 import { login, facebookLogin, googleLogin } from '../../store/actions/UserActions';
+import { SignInForm } from '../../components/auth/SignInForm';
+import $t from '../../i18n';
 
 class SignInScreen extends React.Component {
   static navigationOptions = {
-    title: 'Please sign in'
+    title: $t('auth.signIn')
   };
 
   static propTypes = {
     navigation: PropTypes.object,
     login: PropTypes.func,
     facebookLogin: PropTypes.func,
-    googleLogin: PropTypes.func
+    googleLogin: PropTypes.func,
+    signInError: PropTypes.bool
   };
 
-  state = {
-    email: '',
-    password: '',
-    loader: false
-  };
-
-  signIn = async () => {
-    const signinData = {
-      email: this.state.email,
-      password: this.state.password
-    };
-    this.props.login(signinData);
+  onSubmit = signInData => {
+    this.props.login(signInData);
   };
 
   goToSignUp = () => {
@@ -43,38 +34,28 @@ class SignInScreen extends React.Component {
   };
 
   render() {
+    const { signInError, facebookLogin, googleLogin } = this.props;
+
     return (
       <View style={styles.container}>
         <KeyboardAwareScrollView enableOnAndroid>
-          <TextInput
-            keyboardType="email-address"
-            autoCapitalize="none"
-            autoCorrect={false}
-            placeholder={I18n.t('auth.enterEmail')}
-            onChangeText={email => this.setState({ email })}
-            value={this.state.email}
-            style={styles.textInputStyle}
-          />
+          <SignInForm onSubmit={this.onSubmit} signInError={signInError} />
 
-          <TextInput
-            secureTextEntry={true}
-            placeholder={I18n.t('auth.enterPass')}
-            onChangeText={password => this.setState({ password })}
-            value={this.state.password}
-            style={styles.textInputStyle}
-          />
-
-          <Button title="Sign in!" onPress={this.signIn} />
-          <Button title="Sign in with Facebook!" onPress={this.props.facebookLogin} />
-          <Button title="Sign in with Google!" onPress={this.props.googleLogin} />
+          <Button title="Sign in with Facebook!" onPress={facebookLogin} />
+          <Button title="Sign in with Google!" onPress={googleLogin} />
           <Button title="Sign up!" onPress={this.goToSignUp} />
           <Button title="Forgot password" onPress={this.goToForgotPassword} />
         </KeyboardAwareScrollView>
-        {this.state.loader && <ActivityIndicatorComponent animating={this.state.loader} />}
       </View>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    signInError: state.errors.signInError
+  };
+};
 
 const mapDispatchToProps = {
   login,
@@ -83,7 +64,7 @@ const mapDispatchToProps = {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(SignInScreen);
 
@@ -91,6 +72,5 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     flex: 1
-  },
-  textInputStyle
+  }
 });
