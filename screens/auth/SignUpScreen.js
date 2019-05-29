@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import $t from 'i18n';
 
 import { connect } from 'react-redux';
 import { signUp } from '../../store/actions/UserActions';
@@ -9,7 +10,7 @@ import { SignUpForm } from '../../components/auth/SignUpForm';
 
 class SignUpScreen extends React.Component {
   static navigationOptions = {
-    title: 'Sign up'
+    title: $t('auth.signUp')
   };
 
   static propTypes = {

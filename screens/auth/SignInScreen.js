@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
 
-import ActivityIndicatorComponent from '../../components/shared/ActivityIndicatorComponent';
 import { login, facebookLogin, googleLogin } from '../../store/actions/UserActions';
 import { SignInForm } from '../../components/auth/SignInForm';
+import $t from '../../i18n';
 
 class SignInScreen extends React.Component {
   static navigationOptions = {
-    title: 'Please sign in'
+    title: $t('auth.signIn')
   };
 
   static propTypes = {
@@ -19,12 +19,6 @@ class SignInScreen extends React.Component {
     facebookLogin: PropTypes.func,
     googleLogin: PropTypes.func,
     signInError: PropTypes.bool
-  };
-
-  state = {
-    email: '',
-    password: '',
-    loader: false
   };
 
   onSubmit = signInData => {
@@ -52,7 +46,6 @@ class SignInScreen extends React.Component {
           <Button title="Sign up!" onPress={this.goToSignUp} />
           <Button title="Forgot password" onPress={this.goToForgotPassword} />
         </KeyboardAwareScrollView>
-        {this.state.loader && <ActivityIndicatorComponent animating={this.state.loader} />}
       </View>
     );
   }

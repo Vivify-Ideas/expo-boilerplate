@@ -7,7 +7,8 @@
   },
   "auth": {
     "offline": "Please check your Internet connection",
-    "signup": "Sign up",
+    "signUp": "Sign up",
+    "signIn": "Sign in",
     "enterFirstName": "Enter your first name",
     "enterLastName": "Enter your last name",
     "enterEmail": "Enter your email",
