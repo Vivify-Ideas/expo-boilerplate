@@ -2,6 +2,7 @@ import { call, put } from 'redux-saga/effects';
 import { setLoader } from '../actions/LoaderAction';
 import authService from '../../services/AuthService';
 import NavigationService from '../../services/NavigationService';
+import { setSignInError, setGlobalError, setSignUpErrors } from '../actions/ErrorActions';
 
 export function* userLogin({ payload }) {
   try {
@@ -9,7 +10,11 @@ export function* userLogin({ payload }) {
     yield call(authService.login, payload);
     NavigationService.navigate('AuthLoading');
   } catch (error) {
-    console.log(error); /*eslint-disable-line*/
+    if (error.response.status === 401) {
+      yield put(setSignInError(true));
+    } else {
+      yield put(setGlobalError(true));
+    }
   } finally {
     yield put(setLoader(false));
   }
@@ -45,7 +50,11 @@ export function* userSignUp({ payload }) {
     yield call(authService.signup, payload);
     NavigationService.navigate('AuthLoading');
   } catch (error) {
-    console.log(error); /*eslint-disable-line*/
+    if (error.response.status === 422) {
+      yield put(setSignUpErrors(error.response.data.errors));
+    } else {
+      yield put(setGlobalError(true));
+    }
   } finally {
     yield put(setLoader(false));
   }

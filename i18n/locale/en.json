@@ -18,6 +18,7 @@
     "haveAccountLogIn": "Already have an account? Log in!",
     "enterNewPass": "Enter new password",
     "confirmPass": "Confirm password",
-    "passwordSuccessfullyChanged": "Password successfully changed"
+    "passwordSuccessfullyChanged": "Password successfully changed",
+    "invalidCredentials": "Invalid credentials"
   }
 }

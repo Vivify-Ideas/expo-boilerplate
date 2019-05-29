@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 
 import { TextInputField } from '../shared/FormFields';
 import { signUpValidationRules } from '../../validation /auth';
-import I18n from '../../i18n';
+import $t from 'i18n';
+import ErrorText from '../shared/Text/ErrorText';
 
 export const SignUpForm = props => (
   <Formik
@@ -13,32 +14,29 @@ export const SignUpForm = props => (
     onSubmit={values => props.onSubmit(values)}
     validationSchema={signUpValidationRules}
   >
-    {props => (
+    {({ handleSubmit }) => (
       <View>
         <Field
           name="first_name"
           component={TextInputField}
-          placeholder={I18n.t('auth.enterFirstName')}
+          placeholder={$t('auth.enterFirstName')}
         />
-        <Field
-          name="last_name"
-          component={TextInputField}
-          placeholder={I18n.t('auth.enterLastName')}
-        />
-        <Field name="email" component={TextInputField} placeholder={I18n.t('auth.enterEmail')} />
+        <Field name="last_name" component={TextInputField} placeholder={$t('auth.enterLastName')} />
+        <Field name="email" component={TextInputField} placeholder={$t('auth.enterEmail')} />
+        <ErrorText error={!!props.signUpErrors.email} message={props.signUpErrors.email} />
         <Field
           name="password"
           component={TextInputField}
           secureTextEntry
-          placeholder={I18n.t('auth.enterPassword')}
+          placeholder={$t('auth.enterPassword')}
         />
         <Field
           name="confirm_password"
           component={TextInputField}
           secureTextEntry
-          placeholder={I18n.t('auth.confirmPassword')}
+          placeholder={$t('auth.confirmPassword')}
         />
-        <Button onPress={props.handleSubmit} title="Submit" />
+        <Button onPress={handleSubmit} title="Submit" />
       </View>
     )}
   </Formik>
@@ -46,5 +44,5 @@ export const SignUpForm = props => (
 
 SignUpForm.propTypes = {
   onSubmit: PropTypes.func,
-  handleSubmit: PropTypes.func
+  signUpErrors: PropTypes.object
 };

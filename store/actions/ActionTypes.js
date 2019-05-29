@@ -8,3 +8,7 @@ export const USER_LOGOUT = 'USER_LOGOUT';
 export const SET_ACTIVE_USER = 'SET_ACTIVE_USER';
 
 export const SET_LOADER = 'SET_LOADER';
+
+export const GLOBAL_ERROR_SET = 'GLOBAL_ERROR_SET';
+export const SIGNIN_ERROR_SET = 'SIGNIN_ERROR_SET';
+export const SIGNUP_ERRORS_SET = 'SIGNUP_ERRORS_SET';

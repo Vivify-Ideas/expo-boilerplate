@@ -17,7 +17,8 @@ class SignInScreen extends React.Component {
     navigation: PropTypes.object,
     login: PropTypes.func,
     facebookLogin: PropTypes.func,
-    googleLogin: PropTypes.func
+    googleLogin: PropTypes.func,
+    signInError: PropTypes.bool
   };
 
   state = {
@@ -39,14 +40,15 @@ class SignInScreen extends React.Component {
   };
 
   render() {
+    const { signInError, facebookLogin, googleLogin } = this.props;
+
     return (
       <View style={styles.container}>
         <KeyboardAwareScrollView enableOnAndroid>
-          <SignInForm onSubmit={this.onSubmit} />
+          <SignInForm onSubmit={this.onSubmit} signInError={signInError} />
 
-          <Button title="Sign in!" onPress={this.signIn} />
-          <Button title="Sign in with Facebook!" onPress={this.props.facebookLogin} />
-          <Button title="Sign in with Google!" onPress={this.props.googleLogin} />
+          <Button title="Sign in with Facebook!" onPress={facebookLogin} />
+          <Button title="Sign in with Google!" onPress={googleLogin} />
           <Button title="Sign up!" onPress={this.goToSignUp} />
           <Button title="Forgot password" onPress={this.goToForgotPassword} />
         </KeyboardAwareScrollView>
@@ -56,6 +58,12 @@ class SignInScreen extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    signInError: state.errors.signInError
+  };
+};
+
 const mapDispatchToProps = {
   login,
   facebookLogin,
@@ -63,7 +71,7 @@ const mapDispatchToProps = {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(SignInScreen);
 

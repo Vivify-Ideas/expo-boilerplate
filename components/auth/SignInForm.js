@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 
 import { TextInputField } from '../shared/FormFields';
 import { signInValidationRules } from '../../validation /auth';
-import I18n from '../../i18n';
+import $t from 'i18n';
+import ErrorText from '../shared/Text/ErrorText';
 
 export const SignInForm = props => (
   <Formik
@@ -13,16 +14,17 @@ export const SignInForm = props => (
     onSubmit={values => props.onSubmit(values)}
     validationSchema={signInValidationRules}
   >
-    {props => (
+    {({ handleSubmit }) => (
       <View>
-        <Field name="email" component={TextInputField} placeholder={I18n.t('auth.enterEmail')} />
+        <Field name="email" component={TextInputField} placeholder={$t('auth.enterEmail')} />
         <Field
           name="password"
           component={TextInputField}
           secureTextEntry
-          placeholder={I18n.t('auth.enterPassword')}
+          placeholder={$t('auth.enterPassword')}
         />
-        <Button onPress={props.handleSubmit} title="Submit" />
+        <ErrorText error={!!props.signInError} message={$t('auth.invalidCredentials')} />
+        <Button onPress={handleSubmit} title="Submit" />
       </View>
     )}
   </Formik>
@@ -30,5 +32,5 @@ export const SignInForm = props => (
 
 SignInForm.propTypes = {
   onSubmit: PropTypes.func,
-  handleSubmit: PropTypes.func
+  signInError: PropTypes.bool
 };

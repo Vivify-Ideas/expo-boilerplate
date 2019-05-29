@@ -14,7 +14,8 @@ class SignUpScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
-    signUp: PropTypes.func
+    signUp: PropTypes.func,
+    signUpErrors: PropTypes.object
   };
 
   signUp = signupData => {
@@ -22,10 +23,12 @@ class SignUpScreen extends React.Component {
   };
 
   render() {
+    const { signUpErrors } = this.props;
+
     return (
       <View style={styles.container}>
         <KeyboardAwareScrollView enableOnAndroid>
-          <SignUpForm onSubmit={this.signUp} />
+          <SignUpForm onSubmit={this.signUp} signUpErrors={signUpErrors} />
         </KeyboardAwareScrollView>
       </View>
     );
@@ -39,11 +42,17 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapDispatchToProps = dispatch => ({
-  signUp: user => dispatch(signUp(user))
-});
+const mapStateToProps = state => {
+  return {
+    signUpErrors: state.errors.signUpErrors
+  };
+};
+
+const mapDispatchToProps = {
+  signUp
+};
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(SignUpScreen);

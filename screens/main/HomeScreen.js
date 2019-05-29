@@ -12,9 +12,8 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { MonoText } from '../../components/StyledText';
 import { addHeaderLeftNavigator } from '../../helpers';
-import I18n from '../../i18n';
+import $t from 'i18n';
 import { logout } from '../../store/actions/UserActions';
 
 class HomeScreen extends React.Component {
@@ -48,7 +47,7 @@ class HomeScreen extends React.Component {
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
-            <Text>{I18n.t('helloWorld')}</Text>
+            <Text>{$t('helloWorld')}</Text>
             {isLoggedIn && <Text>{user.email}</Text>}
             <Image
               source={
@@ -79,7 +78,7 @@ class HomeScreen extends React.Component {
           >
             <SafeAreaView style={styles.container}>
               <View>
-                <Text>{I18n.t('helloWorld')}</Text>
+                <Text>{$t('helloWorld')}</Text>
 
                 <Button
                   onPress={() => {
@@ -92,13 +91,7 @@ class HomeScreen extends React.Component {
           </Modal>
         </ScrollView>
 
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
-        </View>
+        <View style={styles.tabBarInfoContainer} />
       </View>
     );
   }
@@ -117,36 +110,17 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    flex: 1
   },
   contentContainer: {
     paddingTop: 30
   },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)'
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4
-  },
+
   tabBarInfoContainer: {
-    position: 'absolute',
     bottom: 0,
     left: 0,
+    position: 'absolute',
     right: 0,
     ...Platform.select({
       ios: {
@@ -163,12 +137,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#fbfbfb',
     paddingVertical: 20
   },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center'
+  welcomeContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+    marginTop: 10
   },
-  navigationFilename: {
-    marginTop: 5
+  welcomeImage: {
+    height: 80,
+    marginLeft: -10,
+    marginTop: 3,
+    resizeMode: 'contain',
+    width: 100
   }
 });
