@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import I18n from '../../i18n';
 import ActivityIndicatorComponent from '../../components/shared/ActivityIndicatorComponent';
 import { textInputStyle } from '../../constants/Form';
-import { login } from '../../store/actions/UserActions';
+import { login, facebookLogin, googleLogin } from '../../store/actions/UserActions';
 
 class SignInScreen extends React.Component {
   static navigationOptions = {
@@ -15,7 +15,9 @@ class SignInScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
-    login: PropTypes.func
+    login: PropTypes.func,
+    facebookLogin: PropTypes.func,
+    googleLogin: PropTypes.func
   };
 
   state = {
@@ -63,6 +65,8 @@ class SignInScreen extends React.Component {
           />
 
           <Button title="Sign in!" onPress={this.signIn} />
+          <Button title="Sign in with Facebook!" onPress={this.props.facebookLogin} />
+          <Button title="Sign in with Google!" onPress={this.props.googleLogin} />
           <Button title="Sign up!" onPress={this.goToSignUp} />
           <Button title="Forgot password" onPress={this.goToForgotPassword} />
         </KeyboardAwareScrollView>
@@ -72,9 +76,11 @@ class SignInScreen extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  login: user => dispatch(login(user))
-});
+const mapDispatchToProps = {
+  login,
+  facebookLogin,
+  googleLogin
+};
 
 export default connect(
   null,
@@ -83,8 +89,8 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    flex: 1
   },
   textInputStyle
 });
