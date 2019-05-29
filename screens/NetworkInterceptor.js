@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import authService from '../services/AuthService';
 import ActivityIndicatorComponent from '../components/shared/ActivityIndicatorComponent';
 import { connect } from 'react-redux';
+import { loaderSelector } from '../store/selectors/LoaderSelector';
 
 class NetworkInterceptor extends Component {
   static propTypes = {
@@ -77,7 +78,7 @@ class NetworkInterceptor extends Component {
 
 const mapStateToProps = state => {
   return {
-    loader: state.loader
+    loader: loaderSelector(state)
   };
 };
 

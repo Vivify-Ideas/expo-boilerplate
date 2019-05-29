@@ -41,8 +41,8 @@ class AuthLoadingScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    flex: 1
   },
 
   loading: {
@@ -50,10 +50,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapDispatchToProps = dispatch => {
-  return {
-    setActiveUser: payload => dispatch(setActiveUser(payload))
-  };
+const mapDispatchToProps = {
+  setActiveUser
 };
 
 export default connect(

@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { login, facebookLogin, googleLogin } from '../../store/actions/UserActions';
 import { SignInForm } from '../../components/auth/SignInForm';
 import $t from '../../i18n';
+import { signInErrorSelector } from '../../store/selectors/ErrorSelector';
 
 class SignInScreen extends React.Component {
   static navigationOptions = {
@@ -53,7 +54,7 @@ class SignInScreen extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    signInError: state.errors.signInError
+    signInError: signInErrorSelector(state)
   };
 };
 

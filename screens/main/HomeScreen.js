@@ -99,9 +99,9 @@ class HomeScreen extends React.Component {
 
 const mapStateToProps = state => ({ ...state });
 
-const mapDispatchToProps = dispatch => ({
-  logout: () => dispatch(logout())
-});
+const mapDispatchToProps = {
+  logout
+};
 
 export default connect(
   mapStateToProps,

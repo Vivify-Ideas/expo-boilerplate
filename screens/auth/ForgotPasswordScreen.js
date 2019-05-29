@@ -6,6 +6,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 import { ForgotPasswordForm } from '../../components/auth/ForgotPasswordForm';
 import { passwordForgot } from '../../store/actions/UserActions';
+import { forgotPasswordErrorSelector } from '../../store/selectors/ErrorSelector';
 
 class ForgotPasswordScreen extends Component {
   static navigationOptions = {
@@ -40,7 +41,7 @@ class ForgotPasswordScreen extends Component {
 
 const mapStateToProps = state => {
   return {
-    forgotPasswordError: state.errors.forgotPasswordError
+    forgotPasswordError: forgotPasswordErrorSelector(state)
   };
 };
 

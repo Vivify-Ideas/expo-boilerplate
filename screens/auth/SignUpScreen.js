@@ -7,6 +7,7 @@ import $t from 'i18n';
 import { connect } from 'react-redux';
 import { signUp } from '../../store/actions/UserActions';
 import { SignUpForm } from '../../components/auth/SignUpForm';
+import { signUpErrorsSelector } from '../../store/selectors/ErrorSelector';
 
 class SignUpScreen extends React.Component {
   static navigationOptions = {
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    signUpErrors: state.errors.signUpErrors
+    signUpErrors: signUpErrorsSelector(state)
   };
 };
 
