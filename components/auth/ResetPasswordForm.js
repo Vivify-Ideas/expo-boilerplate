@@ -10,7 +10,7 @@ import ErrorText from '../shared/Text/ErrorText';
 
 export const ResetPasswordForm = props => (
   <Formik
-    initialValues={{ password: '', confirm_password: '' }}
+    initialValues={{ password: '', password_confirmation: '' }}
     onSubmit={values => props.onSubmit(values)}
     validationSchema={resetPasswordValidationRules}
   >

@@ -15,7 +15,7 @@ export const SignUpForm = props => (
       last_name: '',
       email: '',
       password: '',
-      confirm_password: '\''
+      confirm_password: ''
     }}
     onSubmit={values => props.onSubmit(values)}
     validationSchema={signUpValidationRules}
