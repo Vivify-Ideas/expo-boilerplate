@@ -8,7 +8,9 @@ import {
   FORGOT_PASSWORD,
   FORGOT_PASSWORD_ERROR_SET,
   RESET_PASSWORD,
-  RESET_PASSWORD_ERROR_SET
+  RESET_PASSWORD_ERROR_SET,
+  USER_GET,
+  USER_SET
 } from './ActionTypes';
 
 export const logout = () => {
@@ -74,6 +76,19 @@ export const passwordReset = payload => {
 export const setResetPasswordError = payload => {
   return {
     type: RESET_PASSWORD_ERROR_SET,
+    payload
+  };
+};
+
+export const getUser = () => {
+  return {
+    type: USER_GET
+  };
+};
+
+export const setUser = payload => {
+  return {
+    type: USER_SET,
     payload
   };
 };

@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import { addHeaderLeftNavigator } from '../../helpers';
 import $t from 'i18n';
 import { logout } from '../../store/actions/UserActions';
+import { userSelector } from '../../store/selectors/UserSelector';
 
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -41,14 +42,14 @@ class HomeScreen extends React.Component {
   }
 
   render() {
-    const { isLoggedIn, user } = this.props.user;
+    const { user } = this.props.user;
 
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
             <Text>{$t('helloWorld')}</Text>
-            {isLoggedIn && <Text>{user.email}</Text>}
+            {user && <Text>{user.email}</Text>}
             <Image
               source={
                 __DEV__
@@ -97,7 +98,9 @@ class HomeScreen extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({ ...state });
+const mapStateToProps = state => {
+  return { user: userSelector(state) };
+};
 
 const mapDispatchToProps = {
   logout

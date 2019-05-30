@@ -1,19 +1,15 @@
 import { createSelector } from 'reselect';
 
-const globalErrorStateSelector = state => state.errors.globalError;
-const signInErrorStateSelector = state => state.errors.signInError;
-const forgotPasswordErrorStateSelector = state => state.errors.forgotPasswordError;
-const resetPasswordErrorStateSelector = state => state.errors.resetPasswordError;
-const signUpErrorsStateSelector = state => state.errors.signUpErrors;
+const errorStateSelector = state => state.errorReducer;
 
-export const globalErrorSelector = createSelector(globalErrorStateSelector, loader => loader);
-export const signInErrorSelector = createSelector(signInErrorStateSelector, loader => loader);
+export const globalErrorSelector = createSelector(errorStateSelector, error => error.globalError);
+export const signInErrorSelector = createSelector(errorStateSelector, error => error.signInError);
 export const forgotPasswordErrorSelector = createSelector(
-  forgotPasswordErrorStateSelector,
-  loader => loader
+  errorStateSelector,
+  error => error.forgotPasswordError
 );
 export const resetPasswordErrorSelector = createSelector(
-  resetPasswordErrorStateSelector,
-  loader => loader
+  errorStateSelector,
+  error => error.resetPasswordError
 );
-export const signUpErrorsSelector = createSelector(signUpErrorsStateSelector, loader => loader);
+export const signUpErrorsSelector = createSelector(errorStateSelector, error => error.signUpErrors);

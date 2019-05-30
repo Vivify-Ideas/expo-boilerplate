@@ -3,7 +3,8 @@ import { setLoader } from '../actions/LoaderAction';
 import authService from '../../services/AuthService';
 import NavigationService from '../../services/NavigationService';
 import { setSignInError, setGlobalError, setSignUpErrors } from '../actions/ErrorActions';
-import { setForgotPasswordError, setResetPasswordError } from '../actions/UserActions';
+import { setForgotPasswordError, setResetPasswordError, setUser } from '../actions/UserActions';
+import { profileService } from '../../services/ProfileService';
 
 export function* userLogin({ payload }) {
   try {
@@ -100,6 +101,18 @@ export function* resetPassword({ payload }) {
     } else {
       yield put(setGlobalError(true));
     }
+  } finally {
+    yield put(setLoader(false));
+  }
+}
+
+export function* userGet() {
+  try {
+    yield put(setLoader(true));
+    const { data } = yield call(profileService.getProfile);
+    yield put(setUser(data));
+  } catch (error) {
+    yield put(setGlobalError(true));
   } finally {
     yield put(setLoader(false));
   }
