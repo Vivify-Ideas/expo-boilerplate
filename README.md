@@ -9,16 +9,16 @@ Expo SDK version: **32.0.0**
 - Facebook sign in
 - Google sign in
 - Forgot & reset password
-- Localization
+- Internationalization
 
 ## **TBD**
 
 - Global Error Modal ( Something went wrong )
 - Edit profile
 - Change password
-- Add Sockets
-- Add Chat
-- Add push and inapp notifications
+- Sockets
+- Chat
+- Push and inapp notifications
 
 ## **Code structure and technologies**
 
@@ -57,12 +57,12 @@ Before you can publish the application there are a few things that you need to d
 
 ### **_iOS_**
 
-You will need to set your `bundleIdentifier`, usualy it looks something like this `com.yoursite.applicationame`. Next is `buildNumber` it usualy starts from `1`, but each time you republish your application you need to increase this number. After that you have `infoPlist` which can contain messages which will be displayed when application asks you for some permissions, more about it can be found on this [link](https://developer.apple.com/documentation/bundleresources/information_property_list).
+You will need to set your `bundleIdentifier`, usually it looks something like this `com.yoursite.applicationame`. Next is `buildNumber` it usualy starts from `1`, but each time you republish your application you need to increase this number. After that you have `infoPlist` which can contain messages which will be displayed when application asks you for some permissions, more about it can be found on this [link](https://developer.apple.com/documentation/bundleresources/information_property_list).
 And last but not least, `associatedDomains`, they are used for universal linking, so that application knows which links to intercept and to open in the application, e.g. reset password link, You can read more about it [here](https://developer.apple.com/documentation/uikit/core_app/allowing_apps_and_websites_to_link_to_your_content/enabling_universal_links).
 
 ### **_Android_**
 
-As for **_android_**, you have `package` which is same as `bundleIdentifier` on **_iOS_**. Next to that there are `permissions`, you will need to specifiy all permissions that your application needs, for example `Camera` or `Location`, you can find all the examples for it [here](https://docs.expo.io/versions/latest/sdk/permissions/#android-permissions-equivalents-inside-appjson). And on the end you need to setup your `intentFilters` which have the same function as associatedDomains for **_iOS_**. Heres an example how they should look:
+As for **_android_**, you have `package` which is same as `bundleIdentifier` on **_iOS_**. Next to that there are `permissions`, you will need to specifiy all permissions that your application needs, for example `Camera` or `Location`, you can find all the examples for it [here](https://docs.expo.io/versions/latest/sdk/permissions/#android-permissions-equivalents-inside-appjson). Lastly you need to setup your `intentFilters` which have the same function as `associatedDomains` for **_iOS_**. Heres an example how they should look:
 
 ```
     "intentFilters": [
