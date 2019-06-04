@@ -2,14 +2,15 @@ import { call, put } from 'redux-saga/effects';
 import { setLoader } from '../actions/LoaderAction';
 import authService from '../../services/AuthService';
 import NavigationService from '../../services/NavigationService';
-import { setSignInError, setGlobalError, setSignUpErrors } from '../actions/ErrorActions';
 import {
-  setForgotPasswordError,
-  setResetPasswordError,
-  setUser,
+  setSignInError,
+  setGlobalError,
+  setSignUpErrors,
   changePasswordError,
-  changePasswordSuccess
-} from '../actions/UserActions';
+  setForgotPasswordError,
+  setResetPasswordError
+} from '../actions/ErrorActions';
+import { setUser, setChangePasswordSuccess } from '../actions/UserActions';
 import { profileService } from '../../services/ProfileService';
 
 export function* userLogin({ payload }) {
@@ -128,8 +129,7 @@ export function* passwordChange({ payload }) {
   try {
     yield put(setLoader(true));
     yield call(profileService.changePassword, payload);
-    yield put(changePasswordSuccess(true));
-
+    yield put(setChangePasswordSuccess(true));
     NavigationService.goBack();
   } catch (error) {
     if (error.response.status === 422) {
