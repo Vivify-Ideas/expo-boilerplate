@@ -8,7 +8,8 @@ import {
   FORGOT_PASSWORD,
   RESET_PASSWORD,
   USER_GET,
-  PASSWORD_CHANGE
+  PASSWORD_CHANGE,
+  USER_UPDATE
 } from '../actions/ActionTypes';
 import {
   userLogin,
@@ -19,7 +20,8 @@ import {
   forgotPassword,
   resetPassword,
   userGet,
-  passwordChange
+  passwordChange,
+  updateUser
 } from '../sagas/ActiveUserSagas';
 
 export default function* rootSaga() {
@@ -32,6 +34,7 @@ export default function* rootSaga() {
     takeLatest(FORGOT_PASSWORD, forgotPassword),
     takeLatest(RESET_PASSWORD, resetPassword),
     takeLatest(USER_GET, userGet),
-    takeLatest(PASSWORD_CHANGE, passwordChange)
+    takeLatest(PASSWORD_CHANGE, passwordChange),
+    takeLatest(USER_UPDATE, updateUser)
   ]);
 }

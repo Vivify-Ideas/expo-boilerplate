@@ -11,6 +11,10 @@ class ImageComponent extends Component {
   };
 
   getSourceForImage = () => {
+    if (this.props.source) {
+      return this.props.source;
+    }
+
     if (this.props.path) {
       return { uri: IMAGE_BASE_URL + this.props.path };
     }
@@ -43,6 +47,7 @@ class ImageComponent extends Component {
 ImageComponent.propTypes = {
   path: PropTypes.string,
   uri: PropTypes.string,
+  source: PropTypes.string,
   style: PropTypes.object
 };
 
@@ -50,13 +55,13 @@ export default ImageComponent;
 
 const styles = StyleSheet.create({
   loading: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
+    alignItems: 'center',
     bottom: 0,
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: 0
   }
 });

@@ -10,7 +10,9 @@ import {
   USER_GET,
   USER_SET,
   PASSWORD_CHANGE,
-  PASSWORD_CHANGE_SUCCESS
+  PASSWORD_CHANGE_SUCCESS,
+  USER_UPDATE,
+  USER_UPDATE_SET
 } from './ActionTypes';
 
 export const logout = () => {
@@ -89,6 +91,20 @@ export const changePassword = payload => {
 export const setChangePasswordSuccess = payload => {
   return {
     type: PASSWORD_CHANGE_SUCCESS,
+    payload
+  };
+};
+
+export const updateUser = payload => {
+  return {
+    type: USER_UPDATE,
+    payload
+  };
+};
+
+export const setUpdatedUser = payload => {
+  return {
+    type: USER_UPDATE_SET,
     payload
   };
 };

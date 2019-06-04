@@ -10,7 +10,7 @@ import {
   setForgotPasswordError,
   setResetPasswordError
 } from '../actions/ErrorActions';
-import { setUser, setChangePasswordSuccess } from '../actions/UserActions';
+import { setUser, setChangePasswordSuccess, setUpdatedUser } from '../actions/UserActions';
 import { profileService } from '../../services/ProfileService';
 
 export function* userLogin({ payload }) {
@@ -137,6 +137,19 @@ export function* passwordChange({ payload }) {
     } else {
       yield put(setGlobalError(true));
     }
+  } finally {
+    yield put(setLoader(false));
+  }
+}
+
+export function* updateUser({ payload }) {
+  try {
+    yield put(setLoader(true));
+    const { data } = yield call(profileService.updateUser, payload);
+    yield put(setUpdatedUser(data));
+    NavigationService.goBack();
+  } catch (error) {
+    yield put(setGlobalError(true));
   } finally {
     yield put(setLoader(false));
   }

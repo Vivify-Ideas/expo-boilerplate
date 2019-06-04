@@ -16,6 +16,9 @@ export default class LeftSliderScreen extends React.Component {
           <TouchableOpacity onPress={() => this.props.navigation.navigate('ChangePassword')}>
             <Text>{$t('profile.changePassword.changePassword')}</Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('EditProfile')}>
+            <Text>{$t('profile.updateUser.updateProfile')}</Text>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     );
