@@ -3,10 +3,10 @@ import { StyleSheet, Button, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
+import $t from 'i18n';
 
 import { login, facebookLogin, googleLogin } from '../../store/actions/UserActions';
 import { SignInForm } from '../../components/auth/SignInForm';
-import $t from '../../i18n';
 import { signInErrorSelector } from '../../store/selectors/ErrorSelector';
 
 class SignInScreen extends React.Component {

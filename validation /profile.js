@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import $t from '../i18n';
+import $t from 'i18n';
 
 export const changePasswordValidationRules = Yup.object().shape({
   current_password: Yup.string()
