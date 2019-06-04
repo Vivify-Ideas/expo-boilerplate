@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { passwordReset } from '../../store/actions/UserActions';
 import { ResetPasswordForm } from '../../components/auth/ResetPasswordForm';
+import { resetPasswordErrorSelector } from '../../store/selectors/ErrorSelector';
 
 class ResetPasswordScreen extends Component {
   static propTypes = {
@@ -36,7 +37,7 @@ class ResetPasswordScreen extends Component {
 
 const mapStateToProps = state => {
   return {
-    resetPasswordError: state.errors.resetPasswordError
+    resetPasswordError: resetPasswordErrorSelector(state)
   };
 };
 
