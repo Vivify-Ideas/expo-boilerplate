@@ -12,8 +12,8 @@ const ENDPOINTS = {
   LOGIN: '/auth/login',
   SIGN_UP: '/auth/register',
   LOGOUT: '/auth/logout',
-  RESET_PASSWORD: '/auth/forgot-password',
-  CHANGE_PASSWORD: '/auth/change-password',
+  FORGOT_PASSWORD: '/user/forgot-password',
+  RESET_PASSWORD: '/user/reset-password',
   FACEBOOK: '/auth/social/facebook',
   GOOGLE: '/auth/social/google'
 };
@@ -115,12 +115,12 @@ class AuthService extends ApiService {
     return { ok: true, data };
   };
 
-  resetPassword = email => {
-    return this.apiClient.post(ENDPOINTS.RESET_PASSWORD, { email });
+  forgotPassword = data => {
+    return this.apiClient.post(ENDPOINTS.FORGOT_PASSWORD, data);
   };
 
-  changePassword = data => {
-    return this.apiClient.post(ENDPOINTS.CHANGE_PASSWORD, data);
+  resetPassword = data => {
+    return this.apiClient.post(ENDPOINTS.RESET_PASSWORD, data);
   };
 
   signup = async signupData => {
