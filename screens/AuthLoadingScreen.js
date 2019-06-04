@@ -20,7 +20,6 @@ class AuthLoadingScreen extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console;
     if (prevProps.user.id !== this.props.user.id) {
       this.props.navigation.navigate('MainStack');
     }
