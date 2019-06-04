@@ -3,15 +3,26 @@ import { NetInfo, View, StyleSheet } from 'react-native';
 import NavigationService from '../services/NavigationService';
 import { Linking, Notifications } from 'expo';
 import PropTypes from 'prop-types';
+
 import authService from '../services/AuthService';
 import ActivityIndicatorComponent from '../components/shared/ActivityIndicatorComponent';
 import { connect } from 'react-redux';
 import { loaderSelector } from '../store/selectors/LoaderSelector';
+import PasswordChangedModal from '../components/shared/modal/PasswordChangeModal';
+import { passwordChangedSelector } from '../store/selectors/UserSelector';
+import { setChangePasswordSuccess } from '../store/actions/UserActions';
+import ErrorModal from '../components/shared/modal/ErrorModal';
+import { globalErrorSelector } from '../store/selectors/ErrorSelector';
+import { setGlobalError } from '../store/actions/ErrorActions';
 
 class NetworkInterceptor extends Component {
   static propTypes = {
     children: PropTypes.any,
-    loader: PropTypes.bool
+    loader: PropTypes.bool,
+    globalError: PropTypes.bool,
+    setGlobalError: PropTypes.func,
+    setChangePasswordSuccess: PropTypes.func,
+    passwordChanged: PropTypes.bool
   };
 
   componentDidMount() {
@@ -67,10 +78,24 @@ class NetworkInterceptor extends Component {
   }
 
   render() {
+    const {
+      passwordChanged,
+      setChangePasswordSuccess,
+      globalError,
+      setGlobalError,
+      loader,
+      children
+    } = this.props;
+
     return (
       <View style={styles.container}>
-        {this.props.children}
-        {this.props.loader && <ActivityIndicatorComponent animating={this.props.loader} />}
+        {children}
+        {loader && <ActivityIndicatorComponent animating />}
+        <PasswordChangedModal
+          isVisible={passwordChanged}
+          closeModal={() => setChangePasswordSuccess(false)}
+        />
+        <ErrorModal isVisible={globalError} closeModal={() => setGlobalError(false)} />
       </View>
     );
   }
@@ -78,11 +103,21 @@ class NetworkInterceptor extends Component {
 
 const mapStateToProps = state => {
   return {
-    loader: loaderSelector(state)
+    loader: loaderSelector(state),
+    passwordChanged: passwordChangedSelector(state),
+    globalError: globalErrorSelector(state)
   };
 };
 
-export default connect(mapStateToProps)(NetworkInterceptor);
+const mapDispatchToProps = {
+  setChangePasswordSuccess,
+  setGlobalError
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NetworkInterceptor);
 
 const styles = StyleSheet.create({
   container: {

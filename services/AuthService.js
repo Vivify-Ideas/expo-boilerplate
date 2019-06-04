@@ -12,10 +12,10 @@ const ENDPOINTS = {
   LOGIN: '/auth/login',
   SIGN_UP: '/auth/register',
   LOGOUT: '/auth/logout',
-  FORGOT_PASSWORD: '/user/forgot-password',
-  RESET_PASSWORD: '/user/reset-password',
   FACEBOOK: '/auth/social/facebook',
-  GOOGLE: '/auth/social/google'
+  GOOGLE: '/auth/social/google',
+  FORGOT_PASSWORD: '/user/forgot-password',
+  RESET_PASSWORD: '/user/reset-password'
 };
 
 class AuthService extends ApiService {

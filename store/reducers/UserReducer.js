@@ -1,8 +1,14 @@
-import { SET_ACTIVE_USER, USER_LOGOUT, USER_SET } from '../actions/ActionTypes';
+import {
+  SET_ACTIVE_USER,
+  USER_LOGOUT,
+  USER_SET,
+  PASSWORD_CHANGE_SUCCESS
+} from '../actions/ActionTypes';
 
 const initialState = {
   userToken: {},
-  user: {}
+  user: {},
+  passwordChanged: false
 };
 
 export default (state = initialState, action) => {
@@ -17,6 +23,8 @@ export default (state = initialState, action) => {
       return initialState;
     case USER_SET:
       return { ...state, user: action.payload };
+    case PASSWORD_CHANGE_SUCCESS:
+      return { ...state, passwordChanged: action.payload };
     default:
       return state;
   }

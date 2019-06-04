@@ -11,9 +11,11 @@ import HomeScreen from '../screens/main/HomeScreen';
 import SettingsScreen from '../screens/main/SettingsScreen';
 import LeftSliderScreen from '../screens/main/LeftSliderScreen';
 import { addHeaderLeftNavigator } from '../helpers';
+import ChangePassword from '../screens/main/profile/ChangePassword';
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen
+  Home: HomeScreen,
+  ChangePassword
 });
 
 /* eslint-disable react/prop-types, react/display-name */

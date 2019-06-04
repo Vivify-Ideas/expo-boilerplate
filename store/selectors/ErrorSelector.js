@@ -13,3 +13,7 @@ export const resetPasswordErrorSelector = createSelector(
   error => error.resetPasswordError
 );
 export const signUpErrorsSelector = createSelector(errorStateSelector, error => error.signUpErrors);
+export const changePasswordErrorSelector = createSelector(
+  errorStateSelector,
+  error => error.changePasswordError
+);

@@ -6,11 +6,11 @@ import {
   USER_FACEBOOK_LOGIN,
   USER_GOOGLE_LOGIN,
   FORGOT_PASSWORD,
-  FORGOT_PASSWORD_ERROR_SET,
   RESET_PASSWORD,
-  RESET_PASSWORD_ERROR_SET,
   USER_GET,
-  USER_SET
+  USER_SET,
+  PASSWORD_CHANGE,
+  PASSWORD_CHANGE_SUCCESS
 } from './ActionTypes';
 
 export const logout = () => {
@@ -59,23 +59,9 @@ export const passwordForgot = payload => {
   };
 };
 
-export const setForgotPasswordError = payload => {
-  return {
-    type: FORGOT_PASSWORD_ERROR_SET,
-    payload
-  };
-};
-
 export const passwordReset = payload => {
   return {
     type: RESET_PASSWORD,
-    payload
-  };
-};
-
-export const setResetPasswordError = payload => {
-  return {
-    type: RESET_PASSWORD_ERROR_SET,
     payload
   };
 };
@@ -89,6 +75,20 @@ export const getUser = () => {
 export const setUser = payload => {
   return {
     type: USER_SET,
+    payload
+  };
+};
+
+export const changePassword = payload => {
+  return {
+    type: PASSWORD_CHANGE,
+    payload
+  };
+};
+
+export const setChangePasswordSuccess = payload => {
+  return {
+    type: PASSWORD_CHANGE_SUCCESS,
     payload
   };
 };

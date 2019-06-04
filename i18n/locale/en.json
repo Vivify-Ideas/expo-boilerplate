@@ -27,5 +27,23 @@
     "resetPassword": "Reset password",
     "invalidToken": "Invalid or expired token",
     "passwordResetSucces": "Your password has been successfully reseted"
+  },
+  "error": {
+    "somethingWrong": "Something went wrong",
+    "doYouWantToRestart": "Do you want to restart application",
+    "restart": "Restart",
+    "cancel": "Cancel"
+  },
+  "profile": {
+    "changePassword": {
+      "changePassword": "Change password",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmNewPassword": "Confirm new password",
+      "change": "Change",
+      "invalidOldPassword": "Invalid old password",
+      "passwordChanged": "Password Changed",
+      "passwordChangedSuccess": "Password has been changed"
+    }
   }
 }
