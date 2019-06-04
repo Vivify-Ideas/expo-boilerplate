@@ -7,7 +7,8 @@ import {
   USER_FACEBOOK_LOGIN,
   FORGOT_PASSWORD,
   RESET_PASSWORD,
-  USER_GET
+  USER_GET,
+  PASSWORD_CHANGE
 } from '../actions/ActionTypes';
 import {
   userLogin,
@@ -17,7 +18,8 @@ import {
   userGoogleLogin,
   forgotPassword,
   resetPassword,
-  userGet
+  userGet,
+  passwordChange
 } from '../sagas/ActiveUserSagas';
 
 export default function* rootSaga() {
@@ -29,6 +31,7 @@ export default function* rootSaga() {
     takeLatest(USER_GOOGLE_LOGIN, userGoogleLogin),
     takeLatest(FORGOT_PASSWORD, forgotPassword),
     takeLatest(RESET_PASSWORD, resetPassword),
-    takeLatest(USER_GET, userGet)
+    takeLatest(USER_GET, userGet),
+    takeLatest(PASSWORD_CHANGE, passwordChange)
   ]);
 }

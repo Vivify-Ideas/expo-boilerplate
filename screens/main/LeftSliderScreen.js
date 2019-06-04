@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Button, View, SafeAreaView } from 'react-native';
+import { StyleSheet, Button, View, SafeAreaView, TouchableOpacity, Text } from 'react-native';
 import PropTypes from 'prop-types';
+import $t from 'i18n';
 
 export default class LeftSliderScreen extends React.Component {
   static propTypes = {
@@ -12,6 +13,9 @@ export default class LeftSliderScreen extends React.Component {
       <SafeAreaView style={styles.container}>
         <View>
           <Button onPress={() => this.props.navigation.closeDrawer()} title="Close me" />
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('ChangePassword')}>
+            <Text>{$t('profile.changePassword.changePassword')}</Text>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     );

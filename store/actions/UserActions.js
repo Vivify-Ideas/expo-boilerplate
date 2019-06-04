@@ -10,7 +10,10 @@ import {
   RESET_PASSWORD,
   RESET_PASSWORD_ERROR_SET,
   USER_GET,
-  USER_SET
+  USER_SET,
+  PASSWORD_CHANGE,
+  PASSWORD_CHANGE_ERROR,
+  PASSWORD_CHANGE_SUCCESS
 } from './ActionTypes';
 
 export const logout = () => {
@@ -89,6 +92,27 @@ export const getUser = () => {
 export const setUser = payload => {
   return {
     type: USER_SET,
+    payload
+  };
+};
+
+export const changePassword = payload => {
+  return {
+    type: PASSWORD_CHANGE,
+    payload
+  };
+};
+
+export const changePasswordError = payload => {
+  return {
+    type: PASSWORD_CHANGE_ERROR,
+    payload
+  };
+};
+
+export const changePasswordSuccess = payload => {
+  return {
+    type: PASSWORD_CHANGE_SUCCESS,
     payload
   };
 };

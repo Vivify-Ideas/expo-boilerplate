@@ -3,7 +3,13 @@ import { setLoader } from '../actions/LoaderAction';
 import authService from '../../services/AuthService';
 import NavigationService from '../../services/NavigationService';
 import { setSignInError, setGlobalError, setSignUpErrors } from '../actions/ErrorActions';
-import { setForgotPasswordError, setResetPasswordError, setUser } from '../actions/UserActions';
+import {
+  setForgotPasswordError,
+  setResetPasswordError,
+  setUser,
+  changePasswordError,
+  changePasswordSuccess
+} from '../actions/UserActions';
 import { profileService } from '../../services/ProfileService';
 
 export function* userLogin({ payload }) {
@@ -113,6 +119,24 @@ export function* userGet() {
     yield put(setUser(data));
   } catch (error) {
     yield put(setGlobalError(true));
+  } finally {
+    yield put(setLoader(false));
+  }
+}
+
+export function* passwordChange({ payload }) {
+  try {
+    yield put(setLoader(true));
+    yield call(profileService.changePassword, payload);
+    yield put(changePasswordSuccess(true));
+
+    NavigationService.goBack();
+  } catch (error) {
+    if (error.response.status === 422) {
+      yield put(changePasswordError(true));
+    } else {
+      yield put(setGlobalError(true));
+    }
   } finally {
     yield put(setLoader(false));
   }

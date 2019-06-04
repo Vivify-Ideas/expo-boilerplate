@@ -27,5 +27,15 @@
     "resetPassword": "Reset password",
     "invalidToken": "Invalid or expired token",
     "passwordResetSucces": "Your password has been successfully reseted"
+  },
+  "profile": {
+    "changePassword": {
+      "changePassword": "Change password",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmNewPassword": "Confirm new password",
+      "change": "Change",
+      "invalidOldPassword": "Invalid old password"
+    }
   }
 }
