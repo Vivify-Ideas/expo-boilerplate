@@ -3,14 +3,11 @@ import { TouchableOpacity, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import $t from 'i18n';
 
-import ModalWrapper from './modalParts/Modal';
-import ModalHeader from './modalParts/ModalHeader';
-import ModalBody from './modalParts/ModalBody';
-import ModalFooter from './modalParts/ModalFooter';
+import { Modal, ModalHeader, ModalBody, ModalFooter } from './baseModal';
 
 const ImagePickerModal = ({ isVisible, closeModal, galleryImport, openCamera }) => {
   return (
-    <ModalWrapper isVisible={isVisible} onRequestClose={closeModal}>
+    <Modal isVisible={isVisible} onRequestClose={closeModal}>
       <ModalHeader>
         <Text>{$t('profile.updateUser.importImage')}</Text>
       </ModalHeader>
@@ -27,7 +24,7 @@ const ImagePickerModal = ({ isVisible, closeModal, galleryImport, openCamera }) 
           <Text>{$t('common.cancel')}</Text>
         </TouchableOpacity>
       </ModalFooter>
-    </ModalWrapper>
+    </Modal>
   );
 };
 
