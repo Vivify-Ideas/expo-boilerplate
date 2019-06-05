@@ -43,7 +43,7 @@ class Picture extends Component {
 
 Picture.propTypes = {
   uri: PropTypes.string,
-  source: PropTypes.string,
+  source: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.object]),
   style: PropTypes.object
 };
 

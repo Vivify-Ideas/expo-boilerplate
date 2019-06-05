@@ -3,14 +3,11 @@ import { TouchableOpacity, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import $t from 'i18n';
 
-import { Modal, ModalHeader, ModalBody, ModalFooter } from './baseModal';
+import { Modal, ModalBody, ModalFooter } from './baseModal';
 
 const NoPermissionsForCameraModal = ({ isVisible, closeModal }) => {
   return (
     <Modal isVisible={isVisible} closeModal={closeModal}>
-      <ModalHeader>
-        <Text>{$t('profile.updateUser.noPermissions')}</Text>
-      </ModalHeader>
       <ModalBody>
         <Text>{$t('profile.updateUser.noPermissions')}</Text>
       </ModalBody>

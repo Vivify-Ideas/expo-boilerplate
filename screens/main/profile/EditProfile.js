@@ -86,7 +86,7 @@ class EditProfile extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this.openImagePickerModal}>
-          {user.avatar !== '' ? (
+          {image !== '' || user.avatar !== null ? (
             <Picture source={image} uri={user.avatar} />
           ) : (
             <Picture source={defaultAvatar} />
