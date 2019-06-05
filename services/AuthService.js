@@ -1,8 +1,11 @@
-import ApiService from './ApiService';
 import { AsyncStorage, Platform } from 'react-native';
 import { Facebook, Google } from 'expo';
+
+import ApiService from './ApiService';
 import config from '../config';
 import { askForNotificationsPermission } from '../services/PermissionsService';
+// import notificationService from './NotificationService';
+import { OS_TYPES } from '../constants';
 
 const { ANDROID_GOOGLE_CLIENT_ID, IOS_GOOGLE_CLIENT_ID, FACEBOOK_APP_ID } = config;
 
@@ -54,6 +57,7 @@ class AuthService extends ApiService {
     if (expoPushToken) {
       await AsyncStorage.setItem('expoPushToken', expoPushToken);
       // TODO this token need to be saved on BE
+      // notificationService.sendExpoTokenToServer(expoPushToken);
     }
   };
 
@@ -84,7 +88,7 @@ class AuthService extends ApiService {
   loginWithGoogle = async () => {
     return await this.googleLogin(
       Google.logInAsync({
-        clientId: Platform.OS == 'ios' ? IOS_GOOGLE_CLIENT_ID : ANDROID_GOOGLE_CLIENT_ID,
+        clientId: Platform.OS == OS_TYPES.IOS ? IOS_GOOGLE_CLIENT_ID : ANDROID_GOOGLE_CLIENT_ID,
         scopes: ['profile', 'email']
       })
     );

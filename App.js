@@ -4,6 +4,8 @@ import { AppLoading, Asset, Font, Icon } from 'expo';
 import Sentry from 'sentry-expo';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
+import { InAppNotificationProvider } from 'react-native-in-app-notification';
+
 import store from './store';
 import NavigationService from './services/NavigationService';
 import AppNavigator from './navigation/AppNavigator';
@@ -37,16 +39,18 @@ export default class App extends React.Component {
     } else {
       return (
         <Provider store={store}>
-          <NetworkInterceptor>
-            <View style={styles.container}>
-              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-              <AppNavigator
-                ref={navigatorRef => {
-                  NavigationService.setTopLevelNavigator(navigatorRef);
-                }}
-              />
-            </View>
-          </NetworkInterceptor>
+          <InAppNotificationProvider height={150}>
+            <NetworkInterceptor>
+              <View style={styles.container}>
+                {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+                <AppNavigator
+                  ref={navigatorRef => {
+                    NavigationService.setTopLevelNavigator(navigatorRef);
+                  }}
+                />
+              </View>
+            </NetworkInterceptor>
+          </InAppNotificationProvider>
         </Provider>
       );
     }
@@ -82,7 +86,7 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    flex: 1
   }
 });

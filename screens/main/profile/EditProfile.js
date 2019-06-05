@@ -8,7 +8,7 @@ import { ImagePicker, Permissions } from 'expo';
 import { updateUser } from '../../../store/actions/UserActions';
 import { userSelector } from '../../../store/selectors/UserSelector';
 import { UpdateProfileForm } from '../../../components/profile/UpdateProfileForm';
-import ImageComponent from '../../../components/shared/ImageComponent';
+import Picture from '../../../components/shared/Picture';
 import NoPermissionsForCameraModal from '../../../components/shared/modal/NoPermissionsForCameraModal';
 import ImagePickerModal from '../../../components/shared/modal/ImagePickerModal';
 import { PERMISSIONS_STATUS } from '../../../constants';
@@ -85,7 +85,7 @@ class EditProfile extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this.openImagePickerModal}>
-          <ImageComponent source={image} path={user.avatar} />
+          <Picture source={image} uri={user.avatar} />
         </TouchableOpacity>
         <KeyboardAwareScrollView enableOnAndroid>
           <UpdateProfileForm onSubmit={this.handleSubmit} user={user} />
