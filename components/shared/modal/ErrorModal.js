@@ -8,7 +8,7 @@ import NavigationService from '../../../services/NavigationService';
 
 const ErrorModal = ({ isVisible, closeModal }) => {
   return (
-    <Modal isVisible={isVisible} onRequestClose={closeModal}>
+    <Modal isVisible={isVisible} closeModal={closeModal}>
       <ModalHeader>
         <Text>{$t('error.somethingWrong')}</Text>
       </ModalHeader>

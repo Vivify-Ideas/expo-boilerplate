@@ -15,6 +15,7 @@ import { profileService } from '../../services/ProfileService';
 
 export function* userLogin({ payload }) {
   try {
+    yield put(setSignInError(false));
     yield put(setLoader(true));
     yield call(authService.login, payload);
     NavigationService.navigate('AuthLoading');
@@ -55,6 +56,7 @@ export function* userGoogleLogin() {
 
 export function* userSignUp({ payload }) {
   try {
+    yield put(setSignUpErrors(false));
     yield put(setLoader(true));
     yield call(authService.signup, payload);
     NavigationService.navigate('AuthLoading');
@@ -83,6 +85,7 @@ export function* userLogout() {
 
 export function* forgotPassword({ payload }) {
   try {
+    yield put(setForgotPasswordError(false));
     yield put(setLoader(true));
     yield call(authService.forgotPassword, payload);
     NavigationService.navigate('ForgotPasswordSuccess');

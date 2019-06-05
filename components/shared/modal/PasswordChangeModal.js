@@ -7,7 +7,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from './baseModal';
 
 const PasswordChangedModal = ({ isVisible, closeModal }) => {
   return (
-    <Modal isVisible={isVisible} onRequestClose={closeModal}>
+    <Modal isVisible={isVisible} closeModal={closeModal}>
       <ModalHeader>
         <Text>{$t('profile.changePassword.passwordChanged')}</Text>
       </ModalHeader>

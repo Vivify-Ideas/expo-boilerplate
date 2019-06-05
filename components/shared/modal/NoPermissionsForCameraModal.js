@@ -7,7 +7,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from './baseModal';
 
 const NoPermissionsForCameraModal = ({ isVisible, closeModal }) => {
   return (
-    <Modal isVisible={isVisible} onRequestClose={closeModal}>
+    <Modal isVisible={isVisible} closeModal={closeModal}>
       <ModalHeader>
         <Text>{$t('profile.updateUser.noPermissions')}</Text>
       </ModalHeader>
