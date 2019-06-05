@@ -42,7 +42,6 @@ class Picture extends Component {
 }
 
 Picture.propTypes = {
-  path: PropTypes.string,
   uri: PropTypes.string,
   source: PropTypes.string,
   style: PropTypes.object

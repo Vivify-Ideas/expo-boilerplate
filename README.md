@@ -13,12 +13,12 @@ Expo SDK version: **32.0.0**
 - Global Error Modal ( Something went wrong )
 - Edit profile
 - Change password
+- Push and inapp notifications
 
 ## **TBD**
 
 - Sockets
 - Chat
-- Push and inapp notifications
 
 ## **Code structure and technologies**
 
