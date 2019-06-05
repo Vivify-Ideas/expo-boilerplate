@@ -56,7 +56,7 @@ export function* userGoogleLogin() {
 
 export function* userSignUp({ payload }) {
   try {
-    yield put(setSignUpErrors(false));
+    yield put(setSignUpErrors({}));
     yield put(setLoader(true));
     yield call(authService.signup, payload);
     NavigationService.navigate('AuthLoading');

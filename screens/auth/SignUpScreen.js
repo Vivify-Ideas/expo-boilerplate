@@ -23,7 +23,7 @@ class SignUpScreen extends React.Component {
   };
 
   componentWillUnmount() {
-    this.props.setSignUpErrors(false);
+    this.props.setSignUpErrors({});
   }
 
   signUp = signupData => {
