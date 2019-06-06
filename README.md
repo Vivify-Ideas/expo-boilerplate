@@ -1,6 +1,6 @@
 # **_VivifyIdeas Expo boilerplate_**
 
-Expo SDK version: **32.0.0**
+Expo SDK version: **33.0.0**
 
 ## **Built in functions**
 
