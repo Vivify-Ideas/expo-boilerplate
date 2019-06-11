@@ -10,12 +10,12 @@ Expo SDK version: **32.0.0**
 - Google sign in
 - Forgot & reset password
 - Internationalization
-
-## **TBD**
-
 - Global Error Modal ( Something went wrong )
 - Edit profile
 - Change password
+
+## **TBD**
+
 - Sockets
 - Chat
 - Push and inapp notifications

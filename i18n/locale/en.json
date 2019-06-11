@@ -3,7 +3,8 @@
   "common": {
     "ok": "OK",
     "success": "success",
-    "send": "Send"
+    "send": "Send",
+    "cancel": "Cancel"
   },
   "auth": {
     "offline": "Please check your Internet connection",
@@ -44,6 +45,16 @@
       "invalidOldPassword": "Invalid old password",
       "passwordChanged": "Password Changed",
       "passwordChangedSuccess": "Password has been changed"
+    },
+    "updateUser": {
+      "updateProfile": "Update profile",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "update": "Update",
+      "importImage": "Import image",
+      "importFromGallery": "Import from gallery",
+      "takePicture": "Take picture",
+      "noPermissions": "No permissions"
     }
   }
 }

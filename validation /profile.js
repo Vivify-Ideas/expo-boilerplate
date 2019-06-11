@@ -13,3 +13,8 @@ export const changePasswordValidationRules = Yup.object().shape({
     .min(8)
     .oneOf([Yup.ref('new_password'), null], $t('auth.passwordsMustMatch'))
 });
+
+export const updateProfileValidationRules = Yup.object().shape({
+  first_name: Yup.string().required(),
+  last_name: Yup.string().required()
+});
