@@ -6,6 +6,7 @@ import $t from 'i18n';
 
 import { connect } from 'react-redux';
 import { signUp } from '../../store/actions/UserActions';
+import { setSignUpErrors } from '../../store/actions/ErrorActions';
 import { SignUpForm } from '../../components/auth/SignUpForm';
 import { signUpErrorsSelector } from '../../store/selectors/ErrorSelector';
 
@@ -17,8 +18,13 @@ class SignUpScreen extends React.Component {
   static propTypes = {
     navigation: PropTypes.object,
     signUp: PropTypes.func,
-    signUpErrors: PropTypes.object
+    signUpErrors: PropTypes.object,
+    setSignUpErrors: PropTypes.func
   };
+
+  componentWillUnmount() {
+    this.props.setSignUpErrors({});
+  }
 
   signUp = signupData => {
     this.props.signUp(signupData);
@@ -51,7 +57,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  signUp
+  signUp,
+  setSignUpErrors
 };
 
 export default connect(

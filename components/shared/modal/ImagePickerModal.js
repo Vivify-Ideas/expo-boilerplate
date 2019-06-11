@@ -7,7 +7,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from './baseModal';
 
 const ImagePickerModal = ({ isVisible, closeModal, galleryImport, openCamera }) => {
   return (
-    <Modal isVisible={isVisible} onRequestClose={closeModal}>
+    <Modal isVisible={isVisible} closeModal={closeModal}>
       <ModalHeader>
         <Text>{$t('profile.updateUser.importImage')}</Text>
       </ModalHeader>

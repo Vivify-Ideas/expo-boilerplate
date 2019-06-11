@@ -1,27 +1,24 @@
 import React, { Component, Fragment } from 'react';
 import { Image, ActivityIndicator, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
+
 import config from '../../config';
 
 const { IMAGE_BASE_URL } = config;
 
-class ImageComponent extends Component {
+class Picture extends Component {
   state = {
     loader: true
   };
 
   getSourceForImage = () => {
-    if (this.props.source) {
-      return this.props.source;
+    const { source, uri } = this.props;
+
+    if (source) {
+      return source;
     }
 
-    if (this.props.path) {
-      return { uri: IMAGE_BASE_URL + this.props.path };
-    }
-
-    return this.props.uri
-      ? { uri: this.props.uri }
-      : { uri: 'https://picsum.photos/400/400/?random' };
+    return uri.match(/^https?/) ? { uri } : { uri: IMAGE_BASE_URL + uri };
   };
 
   getStyle() {
@@ -44,14 +41,13 @@ class ImageComponent extends Component {
   }
 }
 
-ImageComponent.propTypes = {
-  path: PropTypes.string,
+Picture.propTypes = {
   uri: PropTypes.string,
-  source: PropTypes.string,
+  source: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.object]),
   style: PropTypes.object
 };
 
-export default ImageComponent;
+export default Picture;
 
 const styles = StyleSheet.create({
   loading: {

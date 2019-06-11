@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { NetInfo, View, StyleSheet } from 'react-native';
+import { NetInfo, View, StyleSheet, Platform } from 'react-native';
 import NavigationService from '../services/NavigationService';
 import { Linking, Notifications } from 'expo';
 import PropTypes from 'prop-types';
+import { withInAppNotification } from 'react-native-in-app-notification';
 
 import authService from '../services/AuthService';
 import ActivityIndicatorComponent from '../components/shared/ActivityIndicatorComponent';
@@ -14,6 +15,8 @@ import { setChangePasswordSuccess } from '../store/actions/UserActions';
 import ErrorModal from '../components/shared/modal/ErrorModal';
 import { globalErrorSelector } from '../store/selectors/ErrorSelector';
 import { setGlobalError } from '../store/actions/ErrorActions';
+import { OS_TYPES, DEFAULT, NOTIFICATION, NOTIFICATION_ORIGIN } from '../constants';
+import { notificationHandleService } from '../services/NotificationHandleService';
 
 class NetworkInterceptor extends Component {
   static propTypes = {
@@ -22,18 +25,34 @@ class NetworkInterceptor extends Component {
     globalError: PropTypes.bool,
     setGlobalError: PropTypes.func,
     setChangePasswordSuccess: PropTypes.func,
-    passwordChanged: PropTypes.bool
+    passwordChanged: PropTypes.bool,
+    showNotification: PropTypes.func
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this._connectionInfo();
     this._setUrlEventListener();
+
+    if (Platform.OS === OS_TYPES.ANDROID) {
+      Notifications.createChannelAndroidAsync(DEFAULT, {
+        name: NOTIFICATION,
+        sound: true
+      });
+    }
     this._notificationSubscription = Notifications.addListener(this._handleNotification);
   }
 
-  // handle push notifications
-  // _handleNotification = notification => {
-  // };
+  _handleNotification = notification => {
+    if (notification.origin === NOTIFICATION_ORIGIN.SELECTED) {
+      notificationHandleService.handleOnClick(notification);
+    } else {
+      notificationHandleService.showInApp(
+        notification,
+        notification.notificationId,
+        this.props.showNotification
+      );
+    }
+  };
 
   _connectionInfo = () => {
     NetInfo.isConnected.addEventListener('connectionChange', connectionInfo => {
@@ -117,7 +136,7 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(NetworkInterceptor);
+)(withInAppNotification(NetworkInterceptor));
 
 const styles = StyleSheet.create({
   container: {

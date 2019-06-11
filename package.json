@@ -34,6 +34,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-i18n": "2.0.12",
     "react-native-keyboard-aware-scroll-view": "^0.7.3",
+    "react-native-in-app-notification": "git+https://git@github.com/AlexSensei/react-native-in-app-notification.git",
     "react-navigation": "^3.9.1",
     "react-redux": "^5.0.7",
     "redux": "^4.0.1",

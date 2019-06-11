@@ -10,7 +10,7 @@ import ErrorText from '../shared/Text/ErrorText';
 
 export const ChangePasswordForm = props => (
   <Formik
-    initialValues={{ current_password: '', new_password: '', password_confirmation: '' }}
+    initialValues={{ current_password: '', new_password: '', new_password_confirmation: '' }}
     onSubmit={values => props.onSubmit(values)}
     validationSchema={changePasswordValidationRules}
   >
