@@ -1,6 +1,6 @@
 # **_VivifyIdeas Expo boilerplate_**
 
-Expo SDK version: **32.0.0**
+Expo SDK version: **33.0.0**
 
 ## **Built in functions**
 
@@ -41,7 +41,7 @@ For state management we use [React Redux](https://github.com/reduxjs/react-redux
     ├──── selectors
     └──── sagas
 
-For localization we have `$t` wrapper around [I18n](https://github.com/AlexanderZaytsev/react-native-i18n) library.
+For localization we have `$t` wrapper around [I18n-js](https://github.com/fnando/i18n-js) library.
 
 To use it all you need to do is:
 
