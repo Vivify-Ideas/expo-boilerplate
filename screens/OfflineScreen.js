@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, BackHandler } from 'react-native';
-import I18n from '../i18n';
+import $t from 'i18n';
 
 class OfflineScreen extends Component {
   componentDidMount() {
@@ -14,7 +14,7 @@ class OfflineScreen extends Component {
   render() {
     return (
       <View>
-        <Text>{I18n.t('auth.offline')}</Text>
+        <Text>{$t('auth.offline')}</Text>
       </View>
     );
   }
