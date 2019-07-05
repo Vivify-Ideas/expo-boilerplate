@@ -43,6 +43,7 @@
     "passwordsMustMatch": "Passwords must match.",
     "passwordMinCharacters": "Password must be at least 8 characters.",
     "confirmPasswordMinCharacters": "Password confirmation must be at least 8 characters.",
+    "currentPasswordMinCharacters": "Current password must be at least 8 characters.",
     "newPasswordMinCharacters": "New assword must be at least 8 characters.",
     "newPasswordConfirmationMinCharacters": "New password confirmation must be at least 8 characters."
   },

@@ -36,7 +36,9 @@ export function* userFacebookLogin() {
     yield call(authService.loginWithFacebook);
     NavigationService.navigate('AuthLoading');
   } catch (error) {
-    console.log(error); /*eslint-disable-line*/
+    if (error.message !== 'cancel') {
+      console.log(error); /*eslint-disable-line*/
+    }
   } finally {
     yield put(setLoader(false));
   }
@@ -48,7 +50,9 @@ export function* userGoogleLogin() {
     yield call(authService.loginWithGoogle);
     NavigationService.navigate('AuthLoading');
   } catch (error) {
-    console.log({ error }); /*eslint-disable-line*/
+    if (error.message !== 'cancel') {
+      console.log(error); /*eslint-disable-line*/
+    }
   } finally {
     yield put(setLoader(false));
   }
