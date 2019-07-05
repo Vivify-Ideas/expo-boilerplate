@@ -37,6 +37,7 @@ For state management we use [React Redux](https://github.com/reduxjs/react-redux
     ├── store
     ├──── actions
     ├──── index.js
+    ├──── reducer
     ├──── selectors
     └──── sagas
 
@@ -53,6 +54,8 @@ $t('common.ok');
 For notifications we use expo notifications. Their setup is located in `NetworkInterceptor.js`. Since the **_iOS_** doesnt support inapp notifications, we use [React Native In App Notifications](https://github.com/AlexSensei/react-native-in-app-notification).
 
 All handling of notifications is done in `NotificationHandleService.js`. It has two main methods, `showInApp` which will trigger the `In App Notification` to be shown, and `handleOnClick` which handles the logic when you click on notification.
+
+The whole application is wrapped in `InAppNotificationProvider` which, as props takes styles for `In APp notifications` you can see them all [here](https://github.com/AlexSensei/react-native-in-app-notification).
 
 ## **Going to production**
 
