@@ -21,7 +21,7 @@
     "enterNewPass": "Enter new password",
     "confirmPass": "Confirm password",
     "passwordSuccessfullyChanged": "Password successfully changed",
-    "invalidCredentials": "Invalid credentials",
+    "invalidCredentials": "Email/password combination is incorrect.",
     "emailDoesNotExist": "Email does not exist",
     "sendEmail": "Send email",
     "forgotPasswordSuccess": "Email with reset password link has been sent to you",
@@ -29,11 +29,31 @@
     "invalidToken": "Invalid or expired token",
     "passwordResetSucces": "Your password has been successfully reseted"
   },
+  "validation": {
+    "firstNameIsRequired": "First name is required.",
+    "lastNameIsRequired": "Last name is required.",
+    "emailIsRequired": "Email is required.",
+    "passwordIsRequired": "Password is required.",
+    "confirmPasswordIsRequired": "Confirm password is required.",
+    "currentPasswordIsRequired": "Current password is required.",
+    "newPasswordIsRequired": "New password is required.",
+    "newPasswordConfirmationIsRequired": "New password confirmation is required",
+
+    "mustBeValidEmail": "Email must be a valid email format.",
+    "passwordsMustMatch": "Passwords must match.",
+    "passwordMinCharacters": "Password must be at least 8 characters.",
+    "confirmPasswordMinCharacters": "Password confirmation must be at least 8 characters.",
+    "currentPasswordMinCharacters": "Current password must be at least 8 characters.",
+    "newPasswordMinCharacters": "New assword must be at least 8 characters.",
+    "newPasswordConfirmationMinCharacters": "New password confirmation must be at least 8 characters."
+  },
   "error": {
     "somethingWrong": "Something went wrong",
     "doYouWantToRestart": "Do you want to restart application",
     "restart": "Restart",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "socialLoginError": "Social login error",
+    "close": "Close"
   },
   "profile": {
     "changePassword": {
@@ -42,7 +62,7 @@
       "newPassword": "New password",
       "confirmNewPassword": "Confirm new password",
       "change": "Change",
-      "invalidOldPassword": "Invalid old password",
+      "invalidOldPassword": "Old password is incorrect.",
       "passwordChanged": "Password Changed",
       "passwordChangedSuccess": "Password has been changed"
     },

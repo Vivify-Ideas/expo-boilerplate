@@ -4,7 +4,8 @@ import {
   SIGNUP_ERRORS_SET,
   PASSWORD_CHANGE_ERROR,
   RESET_PASSWORD_ERROR_SET,
-  FORGOT_PASSWORD_ERROR_SET
+  FORGOT_PASSWORD_ERROR_SET,
+  SOCIAL_LOGIN_ERROR_SET
 } from './ActionTypes';
 
 export const setGlobalError = payload => {
@@ -45,6 +46,13 @@ export const setForgotPasswordError = payload => {
 export const changePasswordError = payload => {
   return {
     type: PASSWORD_CHANGE_ERROR,
+    payload
+  };
+};
+
+export const setSocialLoginError = payload => {
+  return {
+    type: SOCIAL_LOGIN_ERROR_SET,
     payload
   };
 };
