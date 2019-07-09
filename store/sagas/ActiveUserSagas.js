@@ -8,7 +8,8 @@ import {
   setSignUpErrors,
   changePasswordError,
   setForgotPasswordError,
-  setResetPasswordError
+  setResetPasswordError,
+  setSocialLoginError
 } from '../actions/ErrorActions';
 import { setUser, setChangePasswordSuccess, setUpdatedUser } from '../actions/UserActions';
 import { profileService } from '../../services/ProfileService';
@@ -37,7 +38,11 @@ export function* userFacebookLogin() {
     NavigationService.navigate('AuthLoading');
   } catch (error) {
     if (error.message !== 'cancel') {
-      console.log(error); /*eslint-disable-line*/
+      if (error.response.status === 422) {
+        yield put(setSocialLoginError(error.response.data.error));
+      } else {
+        yield put(setGlobalError(true));
+      }
     }
   } finally {
     yield put(setLoader(false));
@@ -51,7 +56,11 @@ export function* userGoogleLogin() {
     NavigationService.navigate('AuthLoading');
   } catch (error) {
     if (error.message !== 'cancel') {
-      console.log(error); /*eslint-disable-line*/
+      if (error.response.status === 422) {
+        yield put(setSocialLoginError(error.response.data.error));
+      } else {
+        yield put(setGlobalError(true));
+      }
     }
   } finally {
     yield put(setLoader(false));

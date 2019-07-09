@@ -36,7 +36,7 @@
     "passwordIsRequired": "Password is required.",
     "confirmPasswordIsRequired": "Confirm password is required.",
     "currentPasswordIsRequired": "Current password is required.",
-    "newPasswordIsRequired": "New password is required",
+    "newPasswordIsRequired": "New password is required.",
     "newPasswordConfirmationIsRequired": "New password confirmation is required",
 
     "mustBeValidEmail": "Email must be a valid email format.",
@@ -51,7 +51,9 @@
     "somethingWrong": "Something went wrong",
     "doYouWantToRestart": "Do you want to restart application",
     "restart": "Restart",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "socialLoginError": "Social login error",
+    "close": "Close"
   },
   "profile": {
     "changePassword": {
