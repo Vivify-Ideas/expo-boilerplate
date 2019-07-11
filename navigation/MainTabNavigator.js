@@ -13,6 +13,7 @@ import LeftSliderScreen from '../screens/main/LeftSliderScreen';
 import { addHeaderLeftNavigator } from '../helpers';
 import ChangePassword from '../screens/main/profile/ChangePassword';
 import EditProfile from '../screens/main/profile/EditProfile';
+import CreateConversation from '../screens/main/chat/CreateConversation';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -52,9 +53,27 @@ SettingsStack.navigationOptions = {
   )
 };
 
+const ChatStack = createStackNavigator({
+  CreateChat: {
+    screen: CreateConversation,
+    navigationOptions: ({ navigation }) => {
+      const headerLeftNav = addHeaderLeftNavigator(navigation);
+      return { ...headerLeftNav, title: 'Chat' };
+    }
+  }
+});
+
+ChatStack.navigationOptions = {
+  tabBarLabel: 'Chat',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-chatboxes' : 'chatboxes'} />
+  )
+};
+
 const BottomTabNavigator = createBottomTabNavigator({
   HomeStack,
-  SettingsStack
+  SettingsStack,
+  ChatStack
 });
 
 export default createDrawerNavigator(

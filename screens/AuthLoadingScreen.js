@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setActiveUser, getUser } from '../store/actions/UserActions';
 import authService from '../services/AuthService';
-import { userSelector } from '../store/selectors/UserSelector';
+import { userSelector } from '../store/selectors/ActiveUserSelector';
 
 class AuthLoadingScreen extends React.Component {
   static propTypes = {

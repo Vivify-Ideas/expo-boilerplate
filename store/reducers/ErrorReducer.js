@@ -4,7 +4,8 @@ import {
   SIGNUP_ERRORS_SET,
   FORGOT_PASSWORD_ERROR_SET,
   RESET_PASSWORD_ERROR_SET,
-  PASSWORD_CHANGE_ERROR
+  PASSWORD_CHANGE_ERROR,
+  SOCIAL_LOGIN_ERROR_SET
 } from '../actions/ActionTypes';
 
 const initialState = {
@@ -13,7 +14,8 @@ const initialState = {
   forgotPasswordError: false,
   resetPasswordError: false,
   signUpErrors: {},
-  changePasswordError: false
+  changePasswordError: false,
+  socialLoginError: ''
 };
 
 export default (state = initialState, action) => {
@@ -48,6 +50,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         changePasswordError: action.payload
+      };
+    case SOCIAL_LOGIN_ERROR_SET:
+      return {
+        ...state,
+        socialLoginError: action.payload
       };
     default:
       return state;

@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux';
 
-import userReducer from './UserReducer';
+import activeUserReducer from './ActiveUserReducer';
 import loaderReducer from './LoaderReducer';
 import errorReducer from './ErrorReducer';
+import userReducer from './UserReducer';
 
 export default combineReducers({
-  userReducer,
+  activeUserReducer,
   loaderReducer,
-  errorReducer
+  errorReducer,
+  userReducer
 });

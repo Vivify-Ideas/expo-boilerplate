@@ -10,13 +10,14 @@ import ActivityIndicatorComponent from '../components/shared/ActivityIndicatorCo
 import { connect } from 'react-redux';
 import { loaderSelector } from '../store/selectors/LoaderSelector';
 import PasswordChangedModal from '../components/shared/modal/PasswordChangeModal';
-import { passwordChangedSelector } from '../store/selectors/UserSelector';
+import { passwordChangedSelector } from '../store/selectors/ActiveUserSelector';
 import { setChangePasswordSuccess } from '../store/actions/UserActions';
 import ErrorModal from '../components/shared/modal/ErrorModal';
-import { globalErrorSelector } from '../store/selectors/ErrorSelector';
-import { setGlobalError } from '../store/actions/ErrorActions';
+import { globalErrorSelector, socialLoginErrorSelector } from '../store/selectors/ErrorSelector';
+import { setGlobalError, setSocialLoginError } from '../store/actions/ErrorActions';
 import { OS_TYPES, DEFAULT, NOTIFICATION, NOTIFICATION_ORIGIN } from '../constants';
 import { notificationHandleService } from '../services/NotificationHandleService';
+import SocialLoginErrorModal from '../components/shared/modal/SocialLoginErrorModal';
 
 class NetworkInterceptor extends Component {
   static propTypes = {
@@ -26,7 +27,9 @@ class NetworkInterceptor extends Component {
     setGlobalError: PropTypes.func,
     setChangePasswordSuccess: PropTypes.func,
     passwordChanged: PropTypes.bool,
-    showNotification: PropTypes.func
+    showNotification: PropTypes.func,
+    socialLoginError: PropTypes.string,
+    setSocialLoginError: PropTypes.func
   };
 
   async componentDidMount() {
@@ -103,7 +106,9 @@ class NetworkInterceptor extends Component {
       globalError,
       setGlobalError,
       loader,
-      children
+      children,
+      socialLoginError,
+      setSocialLoginError
     } = this.props;
 
     return (
@@ -115,6 +120,10 @@ class NetworkInterceptor extends Component {
           closeModal={() => setChangePasswordSuccess(false)}
         />
         <ErrorModal isVisible={globalError} closeModal={() => setGlobalError(false)} />
+        <SocialLoginErrorModal
+          error={socialLoginError}
+          closeModal={() => setSocialLoginError('')}
+        />
       </View>
     );
   }
@@ -124,13 +133,15 @@ const mapStateToProps = state => {
   return {
     loader: loaderSelector(state),
     passwordChanged: passwordChangedSelector(state),
-    globalError: globalErrorSelector(state)
+    globalError: globalErrorSelector(state),
+    socialLoginError: socialLoginErrorSelector(state)
   };
 };
 
 const mapDispatchToProps = {
   setChangePasswordSuccess,
-  setGlobalError
+  setGlobalError,
+  setSocialLoginError
 };
 
 export default connect(

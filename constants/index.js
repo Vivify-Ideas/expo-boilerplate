@@ -11,3 +11,6 @@ export const NOTIFICATION_ORIGIN = {
 export const APP_STATE = {
   BACKGROUND: 'background'
 };
+
+export const DEBOUNCE_TIMER = 750;
+export const USERS_SEARCH_SIZE = 5;

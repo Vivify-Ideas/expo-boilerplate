@@ -6,7 +6,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { ImagePicker, Permissions } from 'expo';
 
 import { updateUser } from '../../../store/actions/UserActions';
-import { userSelector } from '../../../store/selectors/UserSelector';
+import { userSelector } from '../../../store/selectors/ActiveUserSelector';
 import { UpdateProfileForm } from '../../../components/profile/UpdateProfileForm';
 import Picture from '../../../components/shared/Picture';
 import NoPermissionsForCameraModal from '../../../components/shared/modal/NoPermissionsForCameraModal';

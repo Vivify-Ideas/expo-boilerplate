@@ -1,6 +1,6 @@
 import { AsyncStorage, Platform } from 'react-native';
-import { Facebook, Google } from 'expo';
-
+import { Google } from 'expo';
+import * as Facebook from 'expo-facebook';
 import ApiService from './ApiService';
 import config from '../config';
 import { askForNotificationsPermission } from '../services/PermissionsService';

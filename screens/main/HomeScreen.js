@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import { addHeaderLeftNavigator } from '../../helpers';
 import $t from 'i18n';
 import { logout } from '../../store/actions/UserActions';
-import { userSelector } from '../../store/selectors/UserSelector';
+import { userSelector } from '../../store/selectors/ActiveUserSelector';
 
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
