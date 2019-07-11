@@ -1,6 +1,9 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View, YellowBox } from 'react-native';
-import { AppLoading, Asset, Font, Icon } from 'expo';
+import { AppLoading } from 'expo';
+import { Asset } from 'expo-asset';
+import * as Font from 'expo-font';
+import * as Icon from '@expo/vector-icons';
 import Sentry from 'sentry-expo';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
