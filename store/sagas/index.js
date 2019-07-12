@@ -10,7 +10,8 @@ import {
   USER_GET,
   PASSWORD_CHANGE,
   USER_UPDATE,
-  USER_SEARCH_GET
+  USER_SEARCH_GET,
+  CHAT_CREATE
 } from '../actions/ActionTypes';
 import {
   userLogin,
@@ -25,6 +26,7 @@ import {
   updateUser
 } from '../sagas/ActiveUserSagas';
 import { userSearchGet } from './UserSagas';
+import { handleChatCreate } from './ChatSagas';
 
 export default function* rootSaga() {
   yield all([
@@ -38,6 +40,7 @@ export default function* rootSaga() {
     takeLatest(USER_GET, userGet),
     takeLatest(PASSWORD_CHANGE, passwordChange),
     takeLatest(USER_UPDATE, updateUser),
-    takeLatest(USER_SEARCH_GET, userSearchGet)
+    takeLatest(USER_SEARCH_GET, userSearchGet),
+    takeLatest(CHAT_CREATE, handleChatCreate)
   ]);
 }

@@ -6,7 +6,10 @@ import debounce from 'lodash/debounce';
 import $t from 'i18n';
 
 import { usersSelector } from '../../../store/selectors/UserSelector';
+import { userSelector } from '../../../store/selectors/ActiveUserSelector';
+
 import { getUserSearch, setUserSearch } from '../../../store/actions/UserActions';
+import { createChat } from '../../../store/actions/ChatActions';
 import SuggestedParticipantsList from '../../../components/chat/SuggestedParticipantsList';
 import ChatParticipantsList from '../../../components/chat/ChatParticipantsList';
 import { DEBOUNCE_TIMER, USERS_SEARCH_SIZE } from '../../../constants';
@@ -16,7 +19,9 @@ class CreateConversation extends React.Component {
     navigation: PropTypes.object,
     users: PropTypes.array,
     setUserSearch: PropTypes.func,
-    getUserSearch: PropTypes.func
+    getUserSearch: PropTypes.func,
+    user: PropTypes.object,
+    createChat: PropTypes.func
   };
 
   state = {
@@ -61,18 +66,20 @@ class CreateConversation extends React.Component {
     });
   };
 
-  // getUsers = () => {
-  //   const participantsIds = this.state.participants.map(participant => participant.id);
+  getUsers = () => {
+    //Filter users so you cant add two same to chat and you cant add yourself to chat
+    const participantsIds = this.state.participants.map(participant => participant.id);
 
-  //   return this.state.filter
-  //     ? this.props.filteredUsers.filter(
-  //       user => !participantsIds.includes(user.id) && user.id !== this.props.user.profile.id
-  //     )
-  //     : [];
-  // };
+    return this.state.filter
+      ? this.props.users.filter(
+        user => !participantsIds.includes(user.id) && user.id !== this.props.user.id
+      )
+      : [];
+  };
 
   createChat = () => {
-    //
+    const participantsIds = this.state.participants.map(participant => participant.id);
+    this.props.createChat({ users: participantsIds });
   };
 
   isSubmitDisabled = () => this.state.participants.length === 0;
@@ -90,13 +97,13 @@ class CreateConversation extends React.Component {
           autoCorrect={false}
           placeholder={$t('chat.enterParticipant')}
         />
-        <SuggestedParticipantsList users={this.props.users} addParticipant={this.addParticipant} />
+        <SuggestedParticipantsList users={this.getUsers()} addParticipant={this.addParticipant} />
         {this.state.filter !== '' && <View style={styles.listBackground} />}
         <ChatParticipantsList
           users={this.state.participants}
           removeParticipant={this.removeParticipant}
         />
-        <TouchableOpacity>
+        <TouchableOpacity onPress={this.createChat}>
           <Text>{$t('chat.startConversation')}</Text>
         </TouchableOpacity>
       </View>
@@ -104,10 +111,11 @@ class CreateConversation extends React.Component {
   }
 }
 
-const mapDispatchToProps = { getUserSearch, setUserSearch };
+const mapDispatchToProps = { getUserSearch, setUserSearch, createChat };
 
 const mapStateToProps = state => {
   return {
+    user: userSelector(state),
     users: usersSelector(state)
   };
 };
