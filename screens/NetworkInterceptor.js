@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { NetInfo, View, StyleSheet, Platform } from 'react-native';
 import NavigationService from '../services/NavigationService';
 import { Linking, Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
 import PropTypes from 'prop-types';
 import { withInAppNotification } from 'react-native-in-app-notification';
 
@@ -33,6 +34,7 @@ class NetworkInterceptor extends Component {
   };
 
   async componentDidMount() {
+    await Permissions.askAsync(Permissions.NOTIFICATIONS);
     this._connectionInfo();
     this._setUrlEventListener();
 

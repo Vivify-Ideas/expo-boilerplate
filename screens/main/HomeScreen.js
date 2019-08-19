@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import { addHeaderLeftNavigator } from '../../helpers';
 import $t from 'i18n';
 import { logout } from '../../store/actions/UserActions';

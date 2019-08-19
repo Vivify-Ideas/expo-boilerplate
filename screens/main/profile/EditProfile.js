@@ -3,7 +3,8 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { ImagePicker, Permissions } from 'expo';
+import { ImagePicker } from 'expo';
+import * as Permissions from 'expo-permissions';
 
 import { updateUser } from '../../../store/actions/UserActions';
 import { userSelector } from '../../../store/selectors/UserSelector';
@@ -53,7 +54,7 @@ class EditProfile extends Component {
 
   openCamera = async () => {
     const result = await ImagePicker.launchCameraAsync({
-      mediaTypes: 'Images',
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 4]
     });
@@ -63,6 +64,7 @@ class EditProfile extends Component {
 
   openImagePicker = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 4]
     });

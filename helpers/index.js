@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from 'expo';
+import * as Icon from '@expo/vector-icons';
 
 export const addHeaderLeftNavigator = navigation => {
   const styles = {
