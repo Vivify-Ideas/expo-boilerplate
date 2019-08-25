@@ -36,6 +36,7 @@
     "expo-permissions": "~6.0.0",
     "formik": "^1.5.7",
     "i18n-js": "^3.3.0",
+    "immer": "^3.2.0",
     "prop-types": "^15.6.2",
     "react": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-34.0.0.tar.gz",
@@ -63,5 +64,8 @@
     "lint-staged": "^7.3.0",
     "prettier": "1.14.3",
     "react-native-dotenv": "^0.2.0"
+  },
+  "prettier": {
+    "singleQuote": true
   }
 }
