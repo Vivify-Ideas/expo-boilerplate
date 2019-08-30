@@ -1,3 +1,4 @@
+import produce from 'immer';
 import {
   GLOBAL_ERROR_SET,
   SIGNIN_ERROR_SET,
@@ -18,45 +19,30 @@ const initialState = {
   socialLoginError: ''
 };
 
-export default (state = initialState, action) => {
-  /*eslint-disable indent */
-  switch (action.type) {
-    case GLOBAL_ERROR_SET:
-      return {
-        ...state,
-        globalError: action.payload
-      };
-    case SIGNIN_ERROR_SET:
-      return {
-        ...state,
-        signInError: action.payload
-      };
-    case SIGNUP_ERRORS_SET:
-      return {
-        ...state,
-        signUpErrors: action.payload
-      };
-    case FORGOT_PASSWORD_ERROR_SET:
-      return {
-        ...state,
-        forgotPasswordError: action.payload
-      };
-    case RESET_PASSWORD_ERROR_SET:
-      return {
-        ...state,
-        resetPasswordError: action.payload
-      };
-    case PASSWORD_CHANGE_ERROR:
-      return {
-        ...state,
-        changePasswordError: action.payload
-      };
-    case SOCIAL_LOGIN_ERROR_SET:
-      return {
-        ...state,
-        socialLoginError: action.payload
-      };
-    default:
-      return state;
-  }
-};
+export default (state = initialState, action) =>
+  produce(state, draft => {
+    /*eslint-disable indent */
+    switch (action.type) {
+      case GLOBAL_ERROR_SET:
+        draft.globalError = action.payload;
+        break;
+      case SIGNIN_ERROR_SET:
+        draft.signInError = action.payload;
+        break;
+      case SIGNUP_ERRORS_SET:
+        draft.signUpErrors = action.payload;
+        break;
+      case FORGOT_PASSWORD_ERROR_SET:
+        draft.forgotPasswordError = action.payload;
+        break;
+      case RESET_PASSWORD_ERROR_SET:
+        draft.resetPasswordError = action.payload;
+        break;
+      case PASSWORD_CHANGE_ERROR:
+        draft.changePasswordError = action.payload;
+        break;
+      case SOCIAL_LOGIN_ERROR_SET:
+        draft.socialLoginError = action.payload;
+        break;
+    }
+  });
