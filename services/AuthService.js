@@ -1,5 +1,5 @@
 import { AsyncStorage, Platform } from 'react-native';
-import { Google } from 'expo';
+import * as Google from 'expo-google-app-auth';
 import * as Facebook from 'expo-facebook';
 import ApiService from './ApiService';
 import config from '../config';
