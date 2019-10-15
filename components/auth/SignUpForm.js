@@ -4,7 +4,7 @@ import { Formik, Field } from 'formik';
 import PropTypes from 'prop-types';
 
 import { TextInputField } from '../shared/FormFields';
-import { signUpValidationRules } from '../../validation /auth';
+import { signUpValidationRules } from '../../validation/auth';
 import $t from 'i18n';
 import ErrorText from '../shared/Text/ErrorText';
 
