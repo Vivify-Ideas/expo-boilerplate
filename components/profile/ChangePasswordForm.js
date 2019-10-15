@@ -4,13 +4,17 @@ import { Formik, Field } from 'formik';
 import PropTypes from 'prop-types';
 
 import { TextInputField } from '../shared/FormFields';
-import { changePasswordValidationRules } from '../../validation /profile';
+import { changePasswordValidationRules } from '../../validation/profile';
 import $t from 'i18n';
 import ErrorText from '../shared/Text/ErrorText';
 
 export const ChangePasswordForm = props => (
   <Formik
-    initialValues={{ current_password: '', new_password: '', new_password_confirmation: '' }}
+    initialValues={{
+      current_password: '',
+      new_password: '',
+      new_password_confirmation: ''
+    }}
     onSubmit={values => props.onSubmit(values)}
     validationSchema={changePasswordValidationRules}
   >

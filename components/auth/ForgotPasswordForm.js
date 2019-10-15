@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import $t from 'i18n';
 
 import { TextInputField } from '../shared/FormFields';
-import { forgotPasswordValidationRules } from '../../validation /auth';
+import { forgotPasswordValidationRules } from '../../validation/auth';
 import ErrorText from '../shared/Text/ErrorText';
 
 export const ForgotPasswordForm = props => (
