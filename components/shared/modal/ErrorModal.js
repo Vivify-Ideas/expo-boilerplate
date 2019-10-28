@@ -6,6 +6,11 @@ import $t from 'i18n';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from './baseModal';
 
 const ErrorModal = ({ isVisible, closeModal }) => {
+  const _restartApp = () => {
+    closeModal();
+    Updates.reload();
+  };
+
   return (
     <Modal isVisible={isVisible} closeModal={closeModal}>
       <ModalHeader>
@@ -18,12 +23,7 @@ const ErrorModal = ({ isVisible, closeModal }) => {
         <TouchableOpacity onPress={closeModal}>
           <Text>{$t('error.cancel')}</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            closeModal();
-            Updates.reload();
-          }}
-        >
+        <TouchableOpacity onPress={_restartApp}>
           <Text>{$t('error.restart')}</Text>
         </TouchableOpacity>
       </ModalFooter>
