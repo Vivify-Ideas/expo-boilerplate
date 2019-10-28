@@ -1,10 +1,9 @@
 import React from 'react';
+import { Updates } from 'expo';
 import { TouchableOpacity, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import $t from 'i18n';
-
 import { Modal, ModalHeader, ModalBody, ModalFooter } from './baseModal';
-import NavigationService from '../../../services/NavigationService';
 
 const ErrorModal = ({ isVisible, closeModal }) => {
   return (
@@ -19,7 +18,12 @@ const ErrorModal = ({ isVisible, closeModal }) => {
         <TouchableOpacity onPress={closeModal}>
           <Text>{$t('error.cancel')}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => NavigationService.navigate('AuthLoading')}>
+        <TouchableOpacity
+          onPress={() => {
+            closeModal();
+            Updates.reload();
+          }}
+        >
           <Text>{$t('error.restart')}</Text>
         </TouchableOpacity>
       </ModalFooter>
