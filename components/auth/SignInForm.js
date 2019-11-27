@@ -8,10 +8,10 @@ import { signInValidationRules } from '../../validation/auth';
 import $t from 'i18n';
 import ErrorText from '../shared/Text/ErrorText';
 
-export const SignInForm = props => (
+export const SignInForm = ({ onSubmit, signInError }) => (
   <Formik
     initialValues={{ email: '', password: '' }}
-    onSubmit={values => props.onSubmit(values)}
+    onSubmit={onSubmit}
     validationSchema={signInValidationRules}
   >
     {({ handleSubmit }) => (
@@ -23,7 +23,7 @@ export const SignInForm = props => (
           secureTextEntry
           placeholder={$t('auth.enterPassword')}
         />
-        <ErrorText error={!!props.signInError} message={$t('auth.invalidCredentials')} />
+        <ErrorText error={!!signInError} message={$t('auth.invalidCredentials')} />
         <TouchableOpacity onPress={handleSubmit}>
           <Text>{$t('auth.signIn')}</Text>
         </TouchableOpacity>

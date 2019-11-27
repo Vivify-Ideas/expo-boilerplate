@@ -8,10 +8,10 @@ import { resetPasswordValidationRules } from '../../validation/auth';
 import $t from 'i18n';
 import ErrorText from '../shared/Text/ErrorText';
 
-export const ResetPasswordForm = props => (
+export const ResetPasswordForm = ({ onSubmit, resetPasswordError }) => (
   <Formik
     initialValues={{ password: '', password_confirmation: '' }}
-    onSubmit={values => props.onSubmit(values)}
+    onSubmit={onSubmit}
     validationSchema={resetPasswordValidationRules}
   >
     {({ handleSubmit }) => (
@@ -28,7 +28,7 @@ export const ResetPasswordForm = props => (
           secureTextEntry
           placeholder={$t('auth.confirmPassword')}
         />
-        <ErrorText error={!!props.resetPasswordError} message={$t('auth.invalidToken')} />
+        <ErrorText error={!!resetPasswordError} message={$t('auth.invalidToken')} />
         <TouchableOpacity onPress={handleSubmit}>
           <Text>{$t('auth.resetPassword')}</Text>
         </TouchableOpacity>

@@ -1,73 +1,55 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, Button, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import $t from 'i18n';
 
 import { login, facebookLogin, googleLogin } from '../../store/actions/UserActions';
 import { SignInForm } from '../../components/auth/SignInForm';
 import { signInErrorSelector } from '../../store/selectors/ErrorSelector';
 
-class SignInScreen extends React.Component {
-  static navigationOptions = {
-    title: $t('auth.signIn')
+const SignInScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+
+  //actions
+  const handleLogin = useCallback(data => dispatch(login(data)));
+  const handleFacebookLogin = data => dispatch(facebookLogin(data));
+  const handleGoogleLogin = data => dispatch(googleLogin(data));
+  //state
+  const signInError = useSelector(signInErrorSelector());
+
+  const goToSignUp = () => {
+    navigation.navigate('SignUp');
   };
 
-  static propTypes = {
-    navigation: PropTypes.object,
-    login: PropTypes.func,
-    facebookLogin: PropTypes.func,
-    googleLogin: PropTypes.func,
-    signInError: PropTypes.bool
+  const goToForgotPassword = () => {
+    navigation.navigate('ForgotPassword');
   };
 
-  onSubmit = signInData => {
-    this.props.login(signInData);
-  };
+  return (
+    <View style={styles.container}>
+      <KeyboardAwareScrollView enableOnAndroid>
+        <SignInForm onSubmit={handleLogin} signInError={signInError} />
 
-  goToSignUp = () => {
-    this.props.navigation.navigate('SignUp');
-  };
-
-  goToForgotPassword = () => {
-    this.props.navigation.navigate('ForgotPassword');
-  };
-
-  render() {
-    const { signInError, facebookLogin, googleLogin } = this.props;
-
-    return (
-      <View style={styles.container}>
-        <KeyboardAwareScrollView enableOnAndroid>
-          <SignInForm onSubmit={this.onSubmit} signInError={signInError} />
-
-          <Button title="Sign in with Facebook!" onPress={facebookLogin} />
-          <Button title="Sign in with Google!" onPress={googleLogin} />
-          <Button title="Sign up!" onPress={this.goToSignUp} />
-          <Button title="Forgot password" onPress={this.goToForgotPassword} />
-        </KeyboardAwareScrollView>
-      </View>
-    );
-  }
-}
-
-const mapStateToProps = state => {
-  return {
-    signInError: signInErrorSelector(state)
-  };
+        <Button title="Sign in with Facebook!" onPress={handleFacebookLogin} />
+        <Button title="Sign in with Google!" onPress={handleGoogleLogin} />
+        <Button title="Sign up!" onPress={goToSignUp} />
+        <Button title="Forgot password" onPress={goToForgotPassword} />
+      </KeyboardAwareScrollView>
+    </View>
+  );
 };
 
-const mapDispatchToProps = {
-  login,
-  facebookLogin,
-  googleLogin
+SignInScreen.propTypes = {
+  navigation: PropTypes.object
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SignInScreen);
+SignInScreen.navigationOptions = {
+  title: $t('auth.signIn')
+};
+
+export default SignInScreen;
 
 const styles = StyleSheet.create({
   container: {

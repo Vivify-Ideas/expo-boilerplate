@@ -8,16 +8,16 @@ import { TextInputField } from '../shared/FormFields';
 import { forgotPasswordValidationRules } from '../../validation/auth';
 import ErrorText from '../shared/Text/ErrorText';
 
-export const ForgotPasswordForm = props => (
+export const ForgotPasswordForm = ({ onSubmit, forgotPasswordError }) => (
   <Formik
     initialValues={{ email: '' }}
-    onSubmit={values => props.onSubmit(values)}
+    onSubmit={onSubmit}
     validationSchema={forgotPasswordValidationRules}
   >
     {({ handleSubmit }) => (
       <View>
         <Field name="email" component={TextInputField} placeholder={$t('auth.enterEmail')} />
-        <ErrorText error={!!props.forgotPasswordError} message={$t('auth.emailDoesNotExist')} />
+        <ErrorText error={!!forgotPasswordError} message={$t('auth.emailDoesNotExist')} />
         <TouchableOpacity onPress={handleSubmit}>
           <Text>{$t('auth.sendEmail')}</Text>
         </TouchableOpacity>

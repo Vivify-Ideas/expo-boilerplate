@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   Platform,
@@ -10,107 +10,73 @@ import {
   Modal,
   SafeAreaView
 } from 'react-native';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { addHeaderLeftNavigator } from '../../helpers';
 import $t from 'i18n';
 import { logout } from '../../store/actions/UserActions';
 import { userSelector } from '../../store/selectors/UserSelector';
 
-class HomeScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    const headerLeftNav = addHeaderLeftNavigator(navigation);
-    return { ...headerLeftNav, title: 'Home' };
+const HomeScreen = () => {
+  const dispatch = useDispatch();
+  //actions
+  const handleLogout = () => dispatch(logout());
+  //state
+  const user = useSelector(userSelector());
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const _signOutAsync = async () => {
+    handleLogout();
   };
 
-  static propTypes = {
-    navigation: PropTypes.object,
-    user: PropTypes.object,
-    logout: PropTypes.func
-  };
-
-  state = {
-    modalVisible: false
-  };
-
-  _signOutAsync = async () => {
-    this.props.logout();
-  };
-
-  _setModalVisible(visible) {
-    this.setState({ modalVisible: visible });
-  }
-
-  render() {
-    const { user } = this.props.user;
-
-    return (
-      <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Text>{$t('helloWorld')}</Text>
-            {user && <Text>{user.email}</Text>}
-            <Image
-              source={
-                __DEV__
-                  ? require('../../assets/images/robot-dev.png')
-                  : require('../../assets/images/robot-prod.png')
-              }
-              style={styles.welcomeImage}
-            />
-          </View>
-
-          <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
-
-          <Button
-            onPress={() => {
-              this._setModalVisible(true);
-            }}
-            title="Show Modal"
+  return (
+    <View style={styles.container}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+        <View style={styles.welcomeContainer}>
+          <Text>{$t('helloWorld')}</Text>
+          {user && <Text>{user.email}</Text>}
+          <Image
+            source={
+              __DEV__
+                ? require('../../assets/images/robot-dev.png')
+                : require('../../assets/images/robot-prod.png')
+            }
+            style={styles.welcomeImage}
           />
+        </View>
 
-          <Modal
-            animationType="slide"
-            transparent={false}
-            visible={this.state.modalVisible}
-            onRequestClose={() => {
-              alert('Modal has been closed.');
-            }}
-          >
-            <SafeAreaView style={styles.container}>
-              <View>
-                <Text>{$t('helloWorld')}</Text>
+        <Button title="Actually, sign me out :)" onPress={_signOutAsync} />
 
-                <Button
-                  onPress={() => {
-                    this._setModalVisible(!this.state.modalVisible);
-                  }}
-                  title="Hide Modal"
-                />
-              </View>
-            </SafeAreaView>
-          </Modal>
-        </ScrollView>
+        <Button onPress={() => setModalVisible(true)} title="Show Modal" />
 
-        <View style={styles.tabBarInfoContainer} />
-      </View>
-    );
-  }
-}
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={modalVisible}
+          onRequestClose={() => alert('Modal has been closed.')}
+        >
+          <SafeAreaView style={styles.container}>
+            <View>
+              <Text>{$t('helloWorld')}</Text>
 
-const mapStateToProps = state => {
-  return { user: userSelector(state) };
+              <Button onPress={() => setModalVisible(!modalVisible)} title="Hide Modal" />
+            </View>
+          </SafeAreaView>
+        </Modal>
+      </ScrollView>
+
+      <View style={styles.tabBarInfoContainer} />
+    </View>
+  );
 };
 
-const mapDispatchToProps = {
-  logout
+HomeScreen.navigationOptions = ({ navigation }) => {
+  const headerLeftNav = addHeaderLeftNavigator(navigation);
+  return { ...headerLeftNav, title: 'Home' };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HomeScreen);
+export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {

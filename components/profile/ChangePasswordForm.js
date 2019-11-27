@@ -8,14 +8,14 @@ import { changePasswordValidationRules } from '../../validation/profile';
 import $t from 'i18n';
 import ErrorText from '../shared/Text/ErrorText';
 
-export const ChangePasswordForm = props => (
+export const ChangePasswordForm = ({ onSubmit, invalidOldPasswordError }) => (
   <Formik
     initialValues={{
       current_password: '',
       new_password: '',
       new_password_confirmation: ''
     }}
-    onSubmit={values => props.onSubmit(values)}
+    onSubmit={onSubmit}
     validationSchema={changePasswordValidationRules}
   >
     {({ handleSubmit }) => (
@@ -27,7 +27,7 @@ export const ChangePasswordForm = props => (
           placeholder={$t('profile.changePassword.currentPassword')}
         />
         <ErrorText
-          error={!!props.invalidOldPasswordError}
+          error={!!invalidOldPasswordError}
           message={$t('profile.changePassword.invalidOldPassword')}
         />
         <Field

@@ -1,38 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ActivityIndicator, View, StyleSheet, StatusBar } from 'react-native';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { setActiveUser, getUser } from '../store/actions/UserActions';
 import authService from '../services/AuthService';
 import { userSelector } from '../store/selectors/UserSelector';
 
-class AuthLoadingScreen extends React.Component {
-  static propTypes = {
-    navigation: PropTypes.object,
-    onLogin: PropTypes.func,
-    setActiveUser: PropTypes.func,
-    getUser: PropTypes.func,
-    user: PropTypes.object
-  };
+const AuthLoadingScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
 
-  componentDidMount() {
-    this._bootstrapAsync();
-  }
+  //actions
+  const handleGetUser = () => dispatch(getUser());
+  const handleSetActiveUser = data => dispatch(setActiveUser(data));
+  //stata
+  const user = useSelector(userSelector());
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.user.id !== this.props.user.id) {
-      this.props.navigation.navigate('MainStack');
-    }
-  }
+  useEffect(() => {
+    _bootstrapAsync();
+  }, []);
+
+  useEffect(
+    () => {
+      if (user.id) {
+        navigation.navigate('MainStack');
+      }
+    },
+    [user.id]
+  );
 
   // Fetch the token from storage then navigate to our appropriate place
-  _bootstrapAsync = async () => {
+  const _bootstrapAsync = async () => {
     const user = await authService.getUser();
     if (user) {
-      this.props.setActiveUser(user);
-      this.props.getUser();
+      handleSetActiveUser(user);
+      handleGetUser();
     } else {
-      this.props.navigation.navigate('AuthStack');
+      navigation.navigate('AuthStack');
     }
 
     // This will switch to the Main screen or Auth screen and this loading
@@ -40,15 +44,19 @@ class AuthLoadingScreen extends React.Component {
   };
 
   // Render any loading content that you like here
-  render() {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator style={styles.loading} />
-        <StatusBar barStyle="default" />
-      </View>
-    );
-  }
-}
+  return (
+    <View style={styles.container}>
+      <ActivityIndicator style={styles.loading} />
+      <StatusBar barStyle="default" />
+    </View>
+  );
+};
+
+AuthLoadingScreen.propTypes = {
+  navigation: PropTypes.object
+};
+
+export default AuthLoadingScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -60,19 +68,3 @@ const styles = StyleSheet.create({
     marginTop: 30
   }
 });
-
-const mapDispatchToProps = {
-  setActiveUser,
-  getUser
-};
-
-const mapStateToProps = state => {
-  return {
-    user: userSelector(state)
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AuthLoadingScreen);

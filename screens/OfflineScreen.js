@@ -1,22 +1,19 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, BackHandler } from 'react-native';
 import $t from 'i18n';
 
-class OfflineScreen extends Component {
-  componentDidMount() {
-    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => true);
-  }
+const OfflineScreen = () => {
+  var backHandler = null;
 
-  componentWillUnmount() {
-    this.backHandler.remove();
-  }
+  useEffect(() => {
+    backHandler = BackHandler.addEventListener('hardwareBackPress', () => true);
+    return () => backHandler.remove();
+  }, []);
 
-  render() {
-    return (
-      <View>
-        <Text>{$t('auth.offline')}</Text>
-      </View>
-    );
-  }
-}
+  return (
+    <View>
+      <Text>{$t('auth.offline')}</Text>
+    </View>
+  );
+};
 export default OfflineScreen;

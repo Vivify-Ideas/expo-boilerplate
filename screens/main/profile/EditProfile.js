@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { ImagePicker } from 'expo';
 import * as Permissions from 'expo-permissions';
@@ -15,113 +15,90 @@ import ImagePickerModal from '../../../components/shared/modal/ImagePickerModal'
 import { PERMISSIONS_STATUS } from '../../../constants';
 import defaultAvatar from '../../../assets/images/robot-dev.png';
 
-class EditProfile extends Component {
-  static propTypes = {
-    navigation: PropTypes.object,
-    updateUser: PropTypes.func,
-    user: PropTypes.object
+const EditProfile = () => {
+  const dispatch = useDispatch();
+
+  //actions
+  const handleUserUpdate = data => dispatch(updateUser(data));
+  //state
+  const user = useSelector(userSelector());
+
+  const [image, setImage] = useState('');
+  const [imagePickerModalVisible, toggleImagePicker] = useState(false);
+  const [permissionsModalVisible, togglePermissionsModal] = useState(false);
+
+  const handleSubmit = updateUserData => {
+    handleUserUpdate({ ...updateUserData, avatar: image });
   };
 
-  state = {
-    image: '',
-    imagePickerModalVisible: false,
-    permissionsModalVisible: false
-  };
-
-  handleSubmit = updateUserData => {
-    this.props.updateUser({ ...updateUserData, avatar: this.state.image });
-  };
-
-  openImagePickerModal = async () => {
+  const openImagePickerModal = async () => {
     const cameraRollPermissions = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     const hasCameraRollPermission = cameraRollPermissions.status === PERMISSIONS_STATUS.GRANTED;
     const cameraPermissions = await Permissions.askAsync(Permissions.CAMERA);
     const hasCameraPermission = cameraPermissions.status === PERMISSIONS_STATUS.GRANTED;
 
-    this.setState({
-      imagePickerModalVisible: hasCameraPermission && hasCameraRollPermission,
-      permissionsModalVisible: !(hasCameraPermission && hasCameraRollPermission)
-    });
+    toggleImagePicker(hasCameraPermission && hasCameraRollPermission);
+    togglePermissionsModal(!(hasCameraPermission && hasCameraRollPermission));
   };
 
-  closePermissionsModal = () => {
-    this.setState({ permissionsModalVisible: false });
-  };
-
-  closeImagePickerModal = () => {
-    this.setState({ imagePickerModalVisible: false });
-  };
-
-  openCamera = async () => {
+  const openCamera = async () => {
     const result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 4]
     });
 
-    this.setImage(result);
+    setSelectedImage(result);
   };
 
-  openImagePicker = async () => {
+  const openImagePicker = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 4]
     });
 
-    this.setImage(result);
+    setSelectedImage(result);
   };
 
-  setImage = image => {
-    if (!image.cancelled) {
-      this.setState({
-        image: image
-      });
-      this.closeImagePickerModal();
+  const setSelectedImage = selectedImage => {
+    if (!selectedImage.cancelled) {
+      setImage(selectedImage);
+      toggleImagePicker(false);
     }
   };
 
-  render() {
-    const { user } = this.props;
-    const { imagePickerModalVisible, permissionsModalVisible, image } = this.state;
-
-    return (
-      <View style={styles.container}>
-        <TouchableOpacity onPress={this.openImagePickerModal}>
-          {image !== '' || user.avatar !== null ? (
-            <Picture source={image} uri={user.avatar} />
-          ) : (
-            <Picture source={defaultAvatar} />
-          )}
-        </TouchableOpacity>
-        <KeyboardAwareScrollView enableOnAndroid>
-          <UpdateProfileForm onSubmit={this.handleSubmit} user={user} />
-        </KeyboardAwareScrollView>
-        <NoPermissionsForCameraModal
-          isVisible={permissionsModalVisible}
-          closeModal={this.closePermissionsModal}
-        />
-        <ImagePickerModal
-          isVisible={imagePickerModalVisible}
-          closeModal={this.closeImagePickerModal}
-          galleryImport={this.openImagePicker}
-          openCamera={this.openCamera}
-        />
-      </View>
-    );
-  }
-}
-
-const mapStateToProps = state => {
-  return { user: userSelector(state) };
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity onPress={openImagePickerModal}>
+        {image !== '' || user.avatar !== null ? (
+          <Picture source={image} uri={user.avatar} />
+        ) : (
+          <Picture source={defaultAvatar} />
+        )}
+      </TouchableOpacity>
+      <KeyboardAwareScrollView enableOnAndroid>
+        <UpdateProfileForm onSubmit={handleSubmit} user={user} />
+      </KeyboardAwareScrollView>
+      <NoPermissionsForCameraModal
+        isVisible={permissionsModalVisible}
+        closeModal={() => togglePermissionsModal(false)}
+      />
+      <ImagePickerModal
+        isVisible={imagePickerModalVisible}
+        closeModal={() => toggleImagePicker(false)}
+        galleryImport={openImagePicker}
+        openCamera={openCamera}
+      />
+    </View>
+  );
 };
 
-const mapDispatchToProps = { updateUser };
+EditProfile.propTypes = {
+  navigation: PropTypes.object
+};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EditProfile);
+export default EditProfile;
 
 const styles = StyleSheet.create({
   container: {
