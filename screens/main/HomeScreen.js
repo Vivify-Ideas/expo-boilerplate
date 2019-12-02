@@ -19,9 +19,9 @@ import { userSelector } from '../../store/selectors/UserSelector';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
-  //actions
+
   const handleLogout = () => dispatch(logout());
-  //state
+
   const user = useSelector(userSelector());
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -32,7 +32,10 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}
+      >
         <View style={styles.welcomeContainer}>
           <Text>{$t('helloWorld')}</Text>
           {user && <Text>{user.email}</Text>}
@@ -60,7 +63,10 @@ const HomeScreen = () => {
             <View>
               <Text>{$t('helloWorld')}</Text>
 
-              <Button onPress={() => setModalVisible(!modalVisible)} title="Hide Modal" />
+              <Button
+                onPress={() => setModalVisible(!modalVisible)}
+                title="Hide Modal"
+              />
             </View>
           </SafeAreaView>
         </Modal>

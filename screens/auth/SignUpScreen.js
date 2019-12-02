@@ -12,10 +12,9 @@ import { signUpErrorsSelector } from '../../store/selectors/ErrorSelector';
 const SignUpScreen = () => {
   const dispatch = useDispatch();
 
-  //actions
   const handleSignUp = useCallback(data => dispatch(signUp(data)));
   const handleSetSignUpErrors = data => dispatch(setSignUpErrors(data));
-  //state
+
   const signUpErrors = useSelector(signUpErrorsSelector());
 
   useEffect(() => {

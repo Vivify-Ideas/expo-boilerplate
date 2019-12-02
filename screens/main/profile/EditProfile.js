@@ -18,9 +18,7 @@ import defaultAvatar from '../../../assets/images/robot-dev.png';
 const EditProfile = () => {
   const dispatch = useDispatch();
 
-  //actions
   const handleUserUpdate = data => dispatch(updateUser(data));
-  //state
   const user = useSelector(userSelector());
 
   const [image, setImage] = useState('');
@@ -32,10 +30,14 @@ const EditProfile = () => {
   };
 
   const openImagePickerModal = async () => {
-    const cameraRollPermissions = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    const hasCameraRollPermission = cameraRollPermissions.status === PERMISSIONS_STATUS.GRANTED;
+    const cameraRollPermissions = await Permissions.askAsync(
+      Permissions.CAMERA_ROLL
+    );
+    const hasCameraRollPermission =
+      cameraRollPermissions.status === PERMISSIONS_STATUS.GRANTED;
     const cameraPermissions = await Permissions.askAsync(Permissions.CAMERA);
-    const hasCameraPermission = cameraPermissions.status === PERMISSIONS_STATUS.GRANTED;
+    const hasCameraPermission =
+      cameraPermissions.status === PERMISSIONS_STATUS.GRANTED;
 
     toggleImagePicker(hasCameraPermission && hasCameraRollPermission);
     togglePermissionsModal(!(hasCameraPermission && hasCameraRollPermission));

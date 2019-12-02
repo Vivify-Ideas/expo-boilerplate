@@ -10,9 +10,8 @@ import { resetPasswordErrorSelector } from '../../store/selectors/ErrorSelector'
 
 const ResetPasswordScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  //actions
+
   const handlePasswordReset = data => dispatch(passwordReset(data));
-  //state
   const resetPasswordError = useSelector(resetPasswordErrorSelector());
 
   const handleSubmit = resetPasswordData => {
@@ -25,7 +24,10 @@ const ResetPasswordScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView enableOnAndroid>
-        <ResetPasswordForm onSubmit={handleSubmit} resetPasswordError={resetPasswordError} />
+        <ResetPasswordForm
+          onSubmit={handleSubmit}
+          resetPasswordError={resetPasswordError}
+        />
       </KeyboardAwareScrollView>
     </View>
   );

@@ -5,18 +5,21 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { useDispatch, useSelector } from 'react-redux';
 import $t from 'i18n';
 
-import { login, facebookLogin, googleLogin } from '../../store/actions/UserActions';
+import {
+  login,
+  facebookLogin,
+  googleLogin
+} from '../../store/actions/UserActions';
 import { SignInForm } from '../../components/auth/SignInForm';
 import { signInErrorSelector } from '../../store/selectors/ErrorSelector';
 
 const SignInScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  //actions
   const handleLogin = useCallback(data => dispatch(login(data)));
   const handleFacebookLogin = data => dispatch(facebookLogin(data));
   const handleGoogleLogin = data => dispatch(googleLogin(data));
-  //state
+
   const signInError = useSelector(signInErrorSelector());
 
   const goToSignUp = () => {

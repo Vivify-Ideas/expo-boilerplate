@@ -10,27 +10,23 @@ import { userSelector } from '../store/selectors/UserSelector';
 const AuthLoadingScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  //actions
   const handleGetUser = () => dispatch(getUser());
   const handleSetActiveUser = data => dispatch(setActiveUser(data));
-  //stata
+
   const user = useSelector(userSelector());
 
   useEffect(() => {
-    _bootstrapAsync();
+    bootstrapAsync();
   }, []);
 
-  useEffect(
-    () => {
-      if (user.id) {
-        navigation.navigate('MainStack');
-      }
-    },
-    [user.id]
-  );
+  useEffect(() => {
+    if (user.id) {
+      navigation.navigate('MainStack');
+    }
+  }, [user.id]);
 
   // Fetch the token from storage then navigate to our appropriate place
-  const _bootstrapAsync = async () => {
+  const bootstrapAsync = async () => {
     const user = await authService.getUser();
     if (user) {
       handleSetActiveUser(user);

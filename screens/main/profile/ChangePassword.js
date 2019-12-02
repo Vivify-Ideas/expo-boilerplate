@@ -10,9 +10,10 @@ import { changePasswordErrorSelector } from '../../../store/selectors/ErrorSelec
 const ChangePassword = () => {
   const dispatch = useDispatch();
 
-  //actions
-  const handleChangePassword = useCallback(data => dispatch(changePassword(data)));
-  //state
+  const handleChangePassword = useCallback(data =>
+    dispatch(changePassword(data))
+  );
+
   const invalidOldPasswordError = useSelector(changePasswordErrorSelector());
 
   return (
