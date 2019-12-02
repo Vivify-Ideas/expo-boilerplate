@@ -24,21 +24,25 @@ class HttpService {
   }
 
   handleErrorResponse = error => {
-    const { status } = error.response;
+    try {
+      const { status } = error.response;
 
-    Sentry.captureException(error);
+      Sentry.captureException(error);
 
-    switch (status) {
-    case 401:
-      AsyncStorage.clear();
-      this.unauthorizedCallback();
+      switch (status) {
+      case 401:
+        AsyncStorage.clear();
+        this.unauthorizedCallback();
 
-      break;
-    default:
-      break;
+        break;
+      default:
+        break;
+      }
+
+      return Promise.reject(error);
+    } catch (e) {
+      return Promise.reject(error);
     }
-
-    return Promise.reject(error);
   };
 
   setUnauthorizedCallback(callback) {

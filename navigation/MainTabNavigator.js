@@ -9,7 +9,7 @@ import {
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/main/HomeScreen';
 import SettingsScreen from '../screens/main/SettingsScreen';
-import LeftSliderScreen from '../screens/main/LeftSliderScreen';
+import LeftSlider from '../screens/main/LeftSlider';
 import { addHeaderLeftNavigator } from '../helpers';
 import ChangePassword from '../screens/main/profile/ChangePassword';
 import EditProfile from '../screens/main/profile/EditProfile';
@@ -62,6 +62,6 @@ export default createDrawerNavigator(
     BottomTabNavigator: BottomTabNavigator
   },
   {
-    contentComponent: LeftSliderScreen
+    contentComponent: LeftSlider
   }
 );

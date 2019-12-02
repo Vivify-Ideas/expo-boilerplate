@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { ImagePicker } from 'expo';
+import { ImagePicker } from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 
 import { updateUser } from '../../../store/actions/UserActions';
@@ -30,14 +30,10 @@ const EditProfile = () => {
   };
 
   const openImagePickerModal = async () => {
-    const cameraRollPermissions = await Permissions.askAsync(
-      Permissions.CAMERA_ROLL
-    );
-    const hasCameraRollPermission =
-      cameraRollPermissions.status === PERMISSIONS_STATUS.GRANTED;
+    const cameraRollPermissions = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    const hasCameraRollPermission = cameraRollPermissions.status === PERMISSIONS_STATUS.GRANTED;
     const cameraPermissions = await Permissions.askAsync(Permissions.CAMERA);
-    const hasCameraPermission =
-      cameraPermissions.status === PERMISSIONS_STATUS.GRANTED;
+    const hasCameraPermission = cameraPermissions.status === PERMISSIONS_STATUS.GRANTED;
 
     toggleImagePicker(hasCameraPermission && hasCameraRollPermission);
     togglePermissionsModal(!(hasCameraPermission && hasCameraRollPermission));

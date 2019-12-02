@@ -14,20 +14,9 @@ import PasswordChangedModal from '../components/shared/modal/PasswordChangeModal
 import { passwordChangedSelector } from '../store/selectors/UserSelector';
 import { setChangePasswordSuccess } from '../store/actions/UserActions';
 import ErrorModal from '../components/shared/modal/ErrorModal';
-import {
-  globalErrorSelector,
-  socialLoginErrorSelector
-} from '../store/selectors/ErrorSelector';
-import {
-  setGlobalError,
-  setSocialLoginError
-} from '../store/actions/ErrorActions';
-import {
-  OS_TYPES,
-  DEFAULT,
-  NOTIFICATION,
-  NOTIFICATION_ORIGIN
-} from '../constants';
+import { globalErrorSelector, socialLoginErrorSelector } from '../store/selectors/ErrorSelector';
+import { setGlobalError, setSocialLoginError } from '../store/actions/ErrorActions';
+import { OS_TYPES, DEFAULT, NOTIFICATION, NOTIFICATION_ORIGIN } from '../constants';
 import { notificationHandleService } from '../services/NotificationHandleService';
 import SocialLoginErrorModal from '../components/shared/modal/SocialLoginErrorModal';
 
@@ -36,8 +25,7 @@ const NetworkInterceptor = ({ showNotification, children }) => {
 
   const handleSetGlobalError = data => dispatch(setGlobalError(data));
   const handleSetSocialLoginError = data => dispatch(setSocialLoginError(data));
-  const handleSetChangePasswordSuccess = data =>
-    dispatch(setChangePasswordSuccess(data));
+  const handleSetChangePasswordSuccess = data => dispatch(setChangePasswordSuccess(data));
 
   const loader = useSelector(loaderSelector());
   const passwordChanged = useSelector(passwordChangedSelector());
@@ -82,7 +70,7 @@ const NetworkInterceptor = ({ showNotification, children }) => {
     //If app is in background
     Linking.addEventListener('url', event => {
       let { queryParams } = Linking.parse(event.url);
-      _processUrlEvent(queryParams);
+      processUrlEvent(queryParams);
     });
 
     //If app is not open
@@ -120,10 +108,7 @@ const NetworkInterceptor = ({ showNotification, children }) => {
         isVisible={passwordChanged}
         closeModal={() => handleSetChangePasswordSuccess(false)}
       />
-      <ErrorModal
-        isVisible={globalError}
-        closeModal={() => handleSetGlobalError(false)}
-      />
+      <ErrorModal isVisible={globalError} closeModal={() => handleSetGlobalError(false)} />
       <SocialLoginErrorModal
         error={socialLoginError}
         closeModal={() => handleSetSocialLoginError('')}
