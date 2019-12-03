@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { ForgotPasswordForm } from '../../components/auth/ForgotPasswordForm';
@@ -9,54 +8,38 @@ import { passwordForgot } from '../../store/actions/UserActions';
 import { setForgotPasswordError } from '../../store/actions/ErrorActions';
 import { forgotPasswordErrorSelector } from '../../store/selectors/ErrorSelector';
 
-class ForgotPasswordScreen extends Component {
-  static navigationOptions = {
-    title: 'Forgot Password'
-  };
+const ForgotPasswordScreen = () => {
+  const dispatch = useDispatch();
 
-  static propTypes = {
-    navigation: PropTypes.object,
-    passwordForgot: PropTypes.func,
-    forgotPasswordError: PropTypes.bool,
-    setForgotPasswordError: PropTypes.func
-  };
+  const handlePasswordForgot = useCallback(data =>
+    dispatch(passwordForgot(data))
+  );
+  const handleSetForgotPasswordError = data =>
+    dispatch(setForgotPasswordError(data));
 
-  componentWillUnmount() {
-    this.props.setForgotPasswordError(false);
-  }
+  const forgotPasswordError = useSelector(forgotPasswordErrorSelector());
 
-  handleSubmit = forgotPasswordData => {
-    this.props.passwordForgot(forgotPasswordData);
-  };
+  useEffect(() => {
+    return () => handleSetForgotPasswordError(false);
+  }, []);
 
-  render() {
-    const { forgotPasswordError } = this.props;
-
-    return (
-      <View style={styles.container}>
-        <KeyboardAwareScrollView enableOnAndroid>
-          <ForgotPasswordForm
-            onSubmit={this.handleSubmit}
-            forgotPasswordError={forgotPasswordError}
-          />
-        </KeyboardAwareScrollView>
-      </View>
-    );
-  }
-}
-
-const mapStateToProps = state => {
-  return {
-    forgotPasswordError: forgotPasswordErrorSelector(state)
-  };
+  return (
+    <View style={styles.container}>
+      <KeyboardAwareScrollView enableOnAndroid>
+        <ForgotPasswordForm
+          onSubmit={handlePasswordForgot}
+          forgotPasswordError={forgotPasswordError}
+        />
+      </KeyboardAwareScrollView>
+    </View>
+  );
 };
 
-const mapDispatchToProps = { passwordForgot, setForgotPasswordError };
+ForgotPasswordScreen.navigationOptions = {
+  title: 'Forgot Password'
+};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ForgotPasswordScreen);
+export default ForgotPasswordScreen;
 
 const styles = StyleSheet.create({
   container: {
