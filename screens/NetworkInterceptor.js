@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { NetInfo, View, StyleSheet, Platform } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
 import NavigationService from '../services/NavigationService';
 import { Linking, Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
@@ -32,7 +33,11 @@ const NetworkInterceptor = ({ showNotification, children }) => {
   const globalError = useSelector(globalErrorSelector());
   const socialLoginError = useSelector(socialLoginErrorSelector());
 
-  useEffect(async () => {
+  useEffect(() => {
+    addNotificationListener();
+  }, []);
+
+  const addNotificationListener = async () => {
     await Permissions.askAsync(Permissions.NOTIFICATIONS);
     connectionInfo();
     setUrlEventListener();
@@ -44,7 +49,7 @@ const NetworkInterceptor = ({ showNotification, children }) => {
       });
     }
     Notifications.addListener(handleNotification);
-  }, []);
+  };
 
   const handleNotification = notification => {
     if (notification.origin === NOTIFICATION_ORIGIN.SELECTED) {
@@ -59,8 +64,8 @@ const NetworkInterceptor = ({ showNotification, children }) => {
   };
 
   const connectionInfo = () => {
-    NetInfo.isConnected.addEventListener('connectionChange', connectionInfo => {
-      connectionInfo
+    NetInfo.addEventListener(state => {
+      state.isConnected
         ? NavigationService.navigate('AuthLoading')
         : NavigationService.navigate('Offline');
     });
