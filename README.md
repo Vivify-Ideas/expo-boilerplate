@@ -1,6 +1,6 @@
 # **_VivifyIdeas Expo boilerplate_**
 
-Expo SDK version: **35.0.0**
+Expo SDK version: **37.0.0**
 
 If you are using our Expo boilerplate we recommend you use it with our [laravel](https://github.com/Vivify-Ideas/laravel-boilerplate) boilerplate.
 
