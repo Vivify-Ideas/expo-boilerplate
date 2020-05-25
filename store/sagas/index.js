@@ -10,7 +10,7 @@ import {
   USER_GET,
   PASSWORD_CHANGE,
   USER_UPDATE
-} from '../actions/ActionTypes';
+} from '../actionTypes/UserActionTypes';
 import {
   userLogin,
   userSignUp,

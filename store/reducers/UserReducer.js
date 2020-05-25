@@ -5,7 +5,7 @@ import {
   USER_SET,
   PASSWORD_CHANGE_SUCCESS,
   USER_UPDATE_SET
-} from '../actions/ActionTypes';
+} from '../actionTypes/UserActionTypes';
 
 const initialState = {
   userToken: {},

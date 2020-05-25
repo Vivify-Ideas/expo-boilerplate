@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
-import NetInfo from '@react-native-community/netinfo';
 import NavigationService from '../services/NavigationService';
 import { Linking, Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
@@ -20,6 +19,7 @@ import { setGlobalError, setSocialLoginError } from '../store/actions/ErrorActio
 import { OS_TYPES, DEFAULT, NOTIFICATION, NOTIFICATION_ORIGIN } from '../constants';
 import { notificationHandleService } from '../services/NotificationHandleService';
 import SocialLoginErrorModal from '../components/shared/modal/SocialLoginErrorModal';
+import OfflineWarning from '../components/shared/OfflineWarning';
 
 const NetworkInterceptor = ({ showNotification, children }) => {
   const dispatch = useDispatch();
@@ -39,7 +39,6 @@ const NetworkInterceptor = ({ showNotification, children }) => {
 
   const addNotificationListener = async () => {
     await Permissions.askAsync(Permissions.NOTIFICATIONS);
-    connectionInfo();
     setUrlEventListener();
 
     if (Platform.OS === OS_TYPES.ANDROID) {
@@ -61,14 +60,6 @@ const NetworkInterceptor = ({ showNotification, children }) => {
         showNotification
       );
     }
-  };
-
-  const connectionInfo = () => {
-    NetInfo.addEventListener(state => {
-      state.isConnected
-        ? NavigationService.navigate('AuthLoading')
-        : NavigationService.navigate('Offline');
-    });
   };
 
   const setUrlEventListener = () => {
@@ -107,6 +98,7 @@ const NetworkInterceptor = ({ showNotification, children }) => {
 
   return (
     <View style={styles.container}>
+      <OfflineWarning />
       {children}
       {loader && <ActivityIndicatorComponent animating />}
       <PasswordChangedModal
