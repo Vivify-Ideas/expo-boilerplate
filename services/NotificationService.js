@@ -9,28 +9,23 @@ const ENDPOINTS = {
 };
 
 class NotificationService extends ApiService {
-  getNotifications = () => {
-    return this.apiClient.get(ENDPOINTS.NOTIFICATIONS);
-  };
+  getNotifications = () => this.apiClient.get(ENDPOINTS.NOTIFICATIONS);
 
-  getNotificationSettings() {
-    return this.apiClient.get(ENDPOINTS.NOTIFICATION_SETTINGS);
-  }
+  getNotificationSettings = () => this.apiClient.get(ENDPOINTS.NOTIFICATION_SETTINGS);
 
-  updateNotificationSettings(data) {
-    return this.apiClient.put(ENDPOINTS.NOTIFICATION_SETTINGS, data);
-  }
+  updateNotificationSettings = data => this.apiClient.put(ENDPOINTS.NOTIFICATION_SETTINGS, data);
 
-  sendExpoTokenToServer = expoPushToken => {
-    return this.apiClient.post(ENDPOINTS.SEND_EXPO_TOKEN, {
+  sendExpoTokenToServer = expoPushToken =>
+    this.apiClient.post(ENDPOINTS.SEND_EXPO_TOKEN, {
       expo_token: expoPushToken
     });
-  };
 
   removeExpoTokenFromServer = async () => {
     try {
       const expoPushToken = await AsyncStorage.getItem('expoPushToken');
-      this.apiClient.post(ENDPOINTS.REMOVE_EXPO_TOKEN, { secret: expoPushToken });
+      this.apiClient.post(ENDPOINTS.REMOVE_EXPO_TOKEN, {
+        secret: expoPushToken
+      });
     } catch {
       return;
     }
@@ -38,4 +33,5 @@ class NotificationService extends ApiService {
 }
 
 const notificationService = new NotificationService();
+
 export default notificationService;

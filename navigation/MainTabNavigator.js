@@ -1,10 +1,8 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import {
-  createStackNavigator,
-  createBottomTabNavigator,
-  createDrawerNavigator
-} from 'react-navigation';
+import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/main/HomeScreen';

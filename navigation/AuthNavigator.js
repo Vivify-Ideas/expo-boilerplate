@@ -1,8 +1,7 @@
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
 import SignInScreen from '../screens/auth/SignInScreen';
 import SignUpScreen from '../screens/auth/SignUpScreen';
-import OfflineScreen from '../screens/OfflineScreen';
 import ForgotPasswordScreen from '../screens/auth/ForgotPasswordScreen';
 import ResetPasswordScreen from '../screens/auth/ResetPasswordScreen';
 import ForgotPasswordSuccess from '../screens/auth/ForgotPasswordSuccess';
@@ -14,11 +13,5 @@ export default createStackNavigator({
   ForgotPassword: ForgotPasswordScreen,
   ForgotPasswordSuccess,
   ResetPassword: ResetPasswordScreen,
-  ResetPasswordSuccess,
-  Offline: {
-    screen: OfflineScreen,
-    navigationOptions: {
-      headerLeft: null
-    }
-  }
+  ResetPasswordSuccess
 });
