@@ -4471,7 +4471,7 @@ expo-linear-gradient@~8.2.1:
   dependencies:
     prop-types "15.7.2"
 
-expo-linking@~1.0.3:
+expo-linking@^1.0.3, expo-linking@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/expo-linking/-/expo-linking-1.0.3.tgz#8c0f68e89262d09d4b280479010ac21ccfa1e971"
   integrity sha512-Bzm8qVlSRBmoQcnveBBLO4ea/AEW4t10WFiJ18m/w8OnEXbsP7WT39UyhTuFsrnjYSLMjW4/JXkfmswBOhISuA==
