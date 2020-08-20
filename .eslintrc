@@ -3,10 +3,17 @@
     "react-native/react-native": true,
     "es6": true
   },
-  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:react-native/all"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-native/all"
+  ],
   "plugins": ["react", "react-native"],
   "parser": "babel-eslint",
   "rules": {
+    "no-dupe-else-if": "off",
+    "no-import-assign": "off",
+    "no-setter-return": "off",
     "react/jsx-filename-extension": [
       2,
       {
@@ -24,6 +31,9 @@
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
-    "max-len": ["error", { "code": 100, "ignorePattern": "^import\\s.+\\sfrom\\s.+;$" }]
+    "max-len": [
+      "error",
+      { "code": 100, "ignorePattern": "^import\\s.+\\sfrom\\s.+;$" }
+    ]
   }
 }
