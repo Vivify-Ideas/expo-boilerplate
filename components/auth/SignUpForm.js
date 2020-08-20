@@ -8,7 +8,7 @@ import { signUpValidationRules } from '../../validation/auth';
 import $t from 'i18n';
 import ErrorText from '../shared/Text/ErrorText';
 
-export const SignUpForm = props => (
+export const SignUpForm = ({ onSubmit, signUpErrors }) => (
   <Formik
     initialValues={{
       first_name: '',
@@ -17,7 +17,7 @@ export const SignUpForm = props => (
       password: '',
       confirm_password: ''
     }}
-    onSubmit={values => props.onSubmit(values)}
+    onSubmit={onSubmit}
     validationSchema={signUpValidationRules}
   >
     {({ handleSubmit }) => (
@@ -29,7 +29,7 @@ export const SignUpForm = props => (
         />
         <Field name="last_name" component={TextInputField} placeholder={$t('auth.enterLastName')} />
         <Field name="email" component={TextInputField} placeholder={$t('auth.enterEmail')} />
-        <ErrorText error={!!props.signUpErrors.email} message={props.signUpErrors.email} />
+        <ErrorText error={!!signUpErrors.email} message={signUpErrors.email} />
         <Field
           name="password"
           component={TextInputField}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ExpoConfigView } from '@expo/samples';
-import { createMaterialTopTabNavigator } from 'react-navigation';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 
 class Tab1 extends React.Component {
   render() {
@@ -32,15 +32,18 @@ class Tab5 extends React.Component {
   }
 }
 
-export default createMaterialTopTabNavigator({
-  Tab1,
-  Tab2,
-  Tab3,
-  Tab4,
-  Tab5,
-}, {
-  lazy: true,
-  tabBarOptions: {
-    scrollEnabled: true
+export default createMaterialTopTabNavigator(
+  {
+    Tab1,
+    Tab2,
+    Tab3,
+    Tab4,
+    Tab5
+  },
+  {
+    lazy: true,
+    tabBarOptions: {
+      scrollEnabled: true
+    }
   }
-});
+);

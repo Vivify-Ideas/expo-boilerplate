@@ -7,13 +7,13 @@ import { TextInputField } from '../shared/FormFields';
 import { updateProfileValidationRules } from '../../validation/profile';
 import $t from 'i18n';
 
-export const UpdateProfileForm = props => (
+export const UpdateProfileForm = ({ user, onSubmit }) => (
   <Formik
     initialValues={{
-      first_name: props.user.first_name,
-      last_name: props.user.last_name
+      first_name: user.first_name,
+      last_name: user.last_name
     }}
-    onSubmit={values => props.onSubmit(values)}
+    onSubmit={onSubmit}
     validationSchema={updateProfileValidationRules}
   >
     {({ handleSubmit }) => (

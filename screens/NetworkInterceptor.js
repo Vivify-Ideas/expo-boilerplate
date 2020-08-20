@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { NetInfo, View, StyleSheet, Platform } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, StyleSheet, Platform } from 'react-native';
 import NavigationService from '../services/NavigationService';
 import { Linking, Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import PropTypes from 'prop-types';
 import { withInAppNotification } from 'react-native-in-app-notification';
+import { useSelector, useDispatch } from 'react-redux';
 
 import authService from '../services/AuthService';
 import ActivityIndicatorComponent from '../components/shared/ActivityIndicatorComponent';
-import { connect } from 'react-redux';
 import { loaderSelector } from '../store/selectors/LoaderSelector';
 import PasswordChangedModal from '../components/shared/modal/PasswordChangeModal';
 import { passwordChangedSelector } from '../store/selectors/UserSelector';
@@ -19,24 +19,27 @@ import { setGlobalError, setSocialLoginError } from '../store/actions/ErrorActio
 import { OS_TYPES, DEFAULT, NOTIFICATION, NOTIFICATION_ORIGIN } from '../constants';
 import { notificationHandleService } from '../services/NotificationHandleService';
 import SocialLoginErrorModal from '../components/shared/modal/SocialLoginErrorModal';
+import OfflineWarning from '../components/shared/OfflineWarning';
 
-class NetworkInterceptor extends Component {
-  static propTypes = {
-    children: PropTypes.any,
-    loader: PropTypes.bool,
-    globalError: PropTypes.bool,
-    setGlobalError: PropTypes.func,
-    setChangePasswordSuccess: PropTypes.func,
-    passwordChanged: PropTypes.bool,
-    showNotification: PropTypes.func,
-    socialLoginError: PropTypes.string,
-    setSocialLoginError: PropTypes.func
-  };
+const NetworkInterceptor = ({ showNotification, children }) => {
+  const dispatch = useDispatch();
 
-  async componentDidMount() {
+  const handleSetGlobalError = data => dispatch(setGlobalError(data));
+  const handleSetSocialLoginError = data => dispatch(setSocialLoginError(data));
+  const handleSetChangePasswordSuccess = data => dispatch(setChangePasswordSuccess(data));
+
+  const loader = useSelector(loaderSelector());
+  const passwordChanged = useSelector(passwordChangedSelector());
+  const globalError = useSelector(globalErrorSelector());
+  const socialLoginError = useSelector(socialLoginErrorSelector());
+
+  useEffect(() => {
+    addNotificationListener();
+  }, []);
+
+  const addNotificationListener = async () => {
     await Permissions.askAsync(Permissions.NOTIFICATIONS);
-    this._connectionInfo();
-    this._setUrlEventListener();
+    setUrlEventListener();
 
     if (Platform.OS === OS_TYPES.ANDROID) {
       Notifications.createChannelAndroidAsync(DEFAULT, {
@@ -44,44 +47,36 @@ class NetworkInterceptor extends Component {
         sound: true
       });
     }
-    this._notificationSubscription = Notifications.addListener(this._handleNotification);
-  }
+    Notifications.addListener(handleNotification);
+  };
 
-  _handleNotification = notification => {
+  const handleNotification = notification => {
     if (notification.origin === NOTIFICATION_ORIGIN.SELECTED) {
       notificationHandleService.handleOnClick(notification);
     } else {
       notificationHandleService.showInApp(
         notification,
         notification.notificationId,
-        this.props.showNotification
+        showNotification
       );
     }
   };
 
-  _connectionInfo = () => {
-    NetInfo.isConnected.addEventListener('connectionChange', connectionInfo => {
-      connectionInfo
-        ? NavigationService.navigate('AuthLoading')
-        : NavigationService.navigate('Offline');
-    });
-  };
-
-  _setUrlEventListener = () => {
+  const setUrlEventListener = () => {
     //If app is in background
     Linking.addEventListener('url', event => {
       let { queryParams } = Linking.parse(event.url);
-      this._processUrlEvent(queryParams);
+      processUrlEvent(queryParams);
     });
 
     //If app is not open
     Linking.getInitialURL().then(url => {
       let { queryParams } = Linking.parse(url);
-      this._processUrlEvent(queryParams);
+      processUrlEvent(queryParams);
     });
   };
 
-  async _processUrlEvent(queryParams) {
+  const processUrlEvent = async queryParams => {
     const userToken = await authService.getToken();
     if (queryParams.forgot_password_token) {
       NavigationService.navigate('ResetPassword', {
@@ -99,57 +94,32 @@ class NetworkInterceptor extends Component {
       NavigationService.navigate('NotificationsScreen');
       return;
     }
-  }
-
-  render() {
-    const {
-      passwordChanged,
-      setChangePasswordSuccess,
-      globalError,
-      setGlobalError,
-      loader,
-      children,
-      socialLoginError,
-      setSocialLoginError
-    } = this.props;
-
-    return (
-      <View style={styles.container}>
-        {children}
-        {loader && <ActivityIndicatorComponent animating />}
-        <PasswordChangedModal
-          isVisible={passwordChanged}
-          closeModal={() => setChangePasswordSuccess(false)}
-        />
-        <ErrorModal isVisible={globalError} closeModal={() => setGlobalError(false)} />
-        <SocialLoginErrorModal
-          error={socialLoginError}
-          closeModal={() => setSocialLoginError('')}
-        />
-      </View>
-    );
-  }
-}
-
-const mapStateToProps = state => {
-  return {
-    loader: loaderSelector(state),
-    passwordChanged: passwordChangedSelector(state),
-    globalError: globalErrorSelector(state),
-    socialLoginError: socialLoginErrorSelector(state)
   };
+
+  return (
+    <View style={styles.container}>
+      <OfflineWarning />
+      {children}
+      {loader && <ActivityIndicatorComponent animating />}
+      <PasswordChangedModal
+        isVisible={passwordChanged}
+        closeModal={() => handleSetChangePasswordSuccess(false)}
+      />
+      <ErrorModal isVisible={globalError} closeModal={() => handleSetGlobalError(false)} />
+      <SocialLoginErrorModal
+        error={socialLoginError}
+        closeModal={() => handleSetSocialLoginError('')}
+      />
+    </View>
+  );
 };
 
-const mapDispatchToProps = {
-  setChangePasswordSuccess,
-  setGlobalError,
-  setSocialLoginError
+NetworkInterceptor.propTypes = {
+  children: PropTypes.any,
+  showNotification: PropTypes.func
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withInAppNotification(NetworkInterceptor));
+export default withInAppNotification(NetworkInterceptor);
 
 const styles = StyleSheet.create({
   container: {

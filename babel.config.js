@@ -5,22 +5,22 @@ module.exports = function bpe(api) {
     'module:metro-react-native-babel-preset',
     'module:react-native-dotenv'
   ];
-  const plugins = [];
+
+  const moduleResolver = [
+    'module-resolver',
+    {
+      root: './',
+      alias: {
+        i18n: './i18n'
+      }
+    }
+  ];
+
+  const plugins = [moduleResolver];
 
   const envDevelopment = {
     presets: presets,
-    plugins: [
-      '@babel/transform-react-jsx-source',
-      [
-        'module-resolver',
-        {
-          root: './',
-          alias: {
-            i18n: './i18n'
-          }
-        }
-      ]
-    ]
+    plugins: ['@babel/transform-react-jsx-source', moduleResolver]
   };
 
   if (api.env(['development', 'test'])) {

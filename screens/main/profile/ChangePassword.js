@@ -1,50 +1,34 @@
-import React, { Component } from 'react';
+import React, { useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { ChangePasswordForm } from '../../../components/profile/ChangePasswordForm';
 import { changePassword } from '../../../store/actions/UserActions';
 import { changePasswordErrorSelector } from '../../../store/selectors/ErrorSelector';
 
-class ChangePassword extends Component {
-  static propTypes = {
-    navigation: PropTypes.object,
-    changePassword: PropTypes.func,
-    invalidOldPasswordError: PropTypes.bool
-  };
+const ChangePassword = () => {
+  const dispatch = useDispatch();
 
-  handleSubmit = changePasswordData => {
-    this.props.changePassword(changePasswordData);
-  };
+  const handleChangePassword = useCallback(data =>
+    dispatch(changePassword(data))
+  );
 
-  render() {
-    const { invalidOldPasswordError } = this.props;
+  const invalidOldPasswordError = useSelector(changePasswordErrorSelector());
 
-    return (
-      <View style={styles.container}>
-        <KeyboardAwareScrollView enableOnAndroid>
-          <ChangePasswordForm
-            onSubmit={this.handleSubmit}
-            invalidOldPasswordError={invalidOldPasswordError}
-          />
-        </KeyboardAwareScrollView>
-      </View>
-    );
-  }
-}
-
-const mapStateToProps = state => {
-  return { invalidOldPasswordError: changePasswordErrorSelector(state) };
+  return (
+    <View style={styles.container}>
+      <KeyboardAwareScrollView enableOnAndroid>
+        <ChangePasswordForm
+          onSubmit={handleChangePassword}
+          invalidOldPasswordError={invalidOldPasswordError}
+        />
+      </KeyboardAwareScrollView>
+    </View>
+  );
 };
 
-const mapDispatchToProps = { changePassword };
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ChangePassword);
+export default ChangePassword;
 
 const styles = StyleSheet.create({
   container: {

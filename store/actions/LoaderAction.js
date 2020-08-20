@@ -1,8 +1,6 @@
-import { SET_LOADER } from '../actions/ActionTypes';
+import { SET_LOADER } from '../actionTypes/LoaderActionTypes';
 
-export const setLoader = payload => {
-  return {
-    type: SET_LOADER,
-    payload
-  };
-};
+export const setLoader = payload => ({
+  type: SET_LOADER,
+  payload
+});

@@ -7,13 +7,9 @@ const ENDPOINTS = {
 };
 
 class ProfileService extends ApiService {
-  getProfile = () => {
-    return this.apiClient.get(ENDPOINTS.PROFILE);
-  };
+  getProfile = () => this.apiClient.get(ENDPOINTS.PROFILE);
 
-  changePassword = data => {
-    return this.apiClient.post(ENDPOINTS.CHANGE_PASSWORD, data);
-  };
+  changePassword = data => this.apiClient.post(ENDPOINTS.CHANGE_PASSWORD, data);
 
   updateUser = data => {
     let formData = new FormData();

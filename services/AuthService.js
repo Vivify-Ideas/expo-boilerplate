@@ -99,7 +99,9 @@ class AuthService extends ApiService {
     if (result.type !== 'success') {
       throw new Error(result.type);
     }
-    const { data } = await this.apiClient.post(ENDPOINTS.FACEBOOK, { accessToken: result.token });
+    const { data } = await this.apiClient.post(ENDPOINTS.FACEBOOK, {
+      accessToken: result.token
+    });
     await this.createSession(data);
 
     return data;
@@ -119,13 +121,9 @@ class AuthService extends ApiService {
     return { ok: true, data };
   };
 
-  forgotPassword = data => {
-    return this.apiClient.post(ENDPOINTS.FORGOT_PASSWORD, data);
-  };
+  forgotPassword = data => this.apiClient.post(ENDPOINTS.FORGOT_PASSWORD, data);
 
-  resetPassword = data => {
-    return this.apiClient.post(ENDPOINTS.RESET_PASSWORD, data);
-  };
+  resetPassword = data => this.apiClient.post(ENDPOINTS.RESET_PASSWORD, data);
 
   signup = async signupData => {
     await this.apiClient.post(ENDPOINTS.SIGN_UP, signupData);
@@ -152,4 +150,5 @@ class AuthService extends ApiService {
 }
 
 const authService = new AuthService();
+
 export default authService;

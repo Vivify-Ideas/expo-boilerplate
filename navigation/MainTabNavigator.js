@@ -1,15 +1,13 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import {
-  createStackNavigator,
-  createBottomTabNavigator,
-  createDrawerNavigator
-} from 'react-navigation';
+import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/main/HomeScreen';
 import SettingsScreen from '../screens/main/SettingsScreen';
-import LeftSliderScreen from '../screens/main/LeftSliderScreen';
+import LeftSlider from '../screens/main/LeftSlider';
 import { addHeaderLeftNavigator } from '../helpers';
 import ChangePassword from '../screens/main/profile/ChangePassword';
 import EditProfile from '../screens/main/profile/EditProfile';
@@ -62,6 +60,6 @@ export default createDrawerNavigator(
     BottomTabNavigator: BottomTabNavigator
   },
   {
-    contentComponent: LeftSliderScreen
+    contentComponent: LeftSlider
   }
 );

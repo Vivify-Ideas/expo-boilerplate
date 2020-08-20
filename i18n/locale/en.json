@@ -4,10 +4,10 @@
     "ok": "OK",
     "success": "success",
     "send": "Send",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "offline": "Please check your Internet connection"
   },
   "auth": {
-    "offline": "Please check your Internet connection",
     "signUp": "Sign up",
     "signIn": "Sign in",
     "enterFirstName": "Enter your first name",

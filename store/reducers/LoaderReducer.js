@@ -1,4 +1,4 @@
-import { SET_LOADER } from '../actions/ActionTypes';
+import { SET_LOADER } from '../actionTypes/LoaderActionTypes';
 
 export default (state = false, action) => {
   /*eslint-disable indent */

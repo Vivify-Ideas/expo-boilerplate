@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Image, ActivityIndicator, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -6,14 +6,10 @@ import config from '../../config';
 
 const { IMAGE_BASE_URL } = config;
 
-class Picture extends Component {
-  state = {
-    loader: true
-  };
+const Picture = ({ source, uri, style }) => {
+  const [loader, setLoader] = useState(true);
 
-  getSourceForImage = () => {
-    const { source, uri } = this.props;
-
+  const getSourceForImage = () => {
     if (source) {
       return source;
     }
@@ -21,25 +17,17 @@ class Picture extends Component {
     return uri.match(/^https?/) ? { uri } : { uri: IMAGE_BASE_URL + uri };
   };
 
-  getStyle() {
-    return this.props.style ? this.props.style : { width: 100, height: 100 };
-  }
+  const getStyle = () => {
+    return style ? style : { width: 100, height: 100 };
+  };
 
-  render() {
-    return (
-      <Fragment>
-        <Image
-          style={this.getStyle()}
-          source={this.getSourceForImage()}
-          onLoadEnd={() => this.setState({ loader: false })}
-        />
-        {this.state.loader && (
-          <ActivityIndicator style={styles.loading} animating={this.state.loader} size="large" />
-        )}
-      </Fragment>
-    );
-  }
-}
+  return (
+    <Fragment>
+      <Image style={getStyle()} source={getSourceForImage()} onLoadEnd={() => setLoader(false)} />
+      {loader && <ActivityIndicator style={styles.loading} animating={loader} size="large" />}
+    </Fragment>
+  );
+};
 
 Picture.propTypes = {
   uri: PropTypes.string,

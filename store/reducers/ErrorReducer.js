@@ -7,7 +7,7 @@ import {
   RESET_PASSWORD_ERROR_SET,
   PASSWORD_CHANGE_ERROR,
   SOCIAL_LOGIN_ERROR_SET
-} from '../actions/ActionTypes';
+} from '../actionTypes/ErrorActionTypes';
 
 const initialState = {
   globalError: false,

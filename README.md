@@ -1,15 +1,21 @@
 # **_VivifyIdeas Expo boilerplate_**
 
-Expo SDK version: **35.0.0**
+Expo SDK version: **37.0.0**
+
+If you are using our Expo boilerplate we recommend you use it with our [laravel](https://github.com/Vivify-Ideas/laravel-boilerplate) boilerplate.
 
 ## **Built in functions**
 
+- Redux & Saga
+- Formik & Yup
+- Immerjs
 - Sign in
 - Sign up
 - Facebook sign in
 - Google sign in
 - Forgot & reset password
 - Internationalization
+- Deeplinking
 - Global Error Modal ( Something went wrong )
 - Edit profile
 - Change password
