@@ -1,4 +1,4 @@
-import { Notifications } from 'expo';
+import * as Notifications from 'expo-notifications';
 import { AppState } from 'react-native';
 
 import ApiService from './ApiService';
