@@ -1,5 +1,5 @@
 import React from 'react';
-import Updates from 'expo-updates';
+import * as Updates from 'expo-updates';
 import { TouchableOpacity, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import $t from 'i18n';
