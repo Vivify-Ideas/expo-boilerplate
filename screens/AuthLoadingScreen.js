@@ -3,18 +3,15 @@ import { ActivityIndicator, View, StyleSheet, StatusBar } from 'react-native';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setActiveUser, getUser } from '../store/actions/UserActions';
 import authService from '../services/AuthService';
-import { userSelector } from '../store/selectors/UserSelector';
+import { getActiveUser, activeUserSelector } from '../store/auth';
 
 const AuthLoadingScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  const handleGetUser = () => dispatch(getUser());
-  const handleSetActiveUser = data => dispatch(setActiveUser(data));
+  const handleGetUser = () => dispatch(getActiveUser());
 
-  const user = useSelector(userSelector());
-
+  const user = useSelector(activeUserSelector());
   useEffect(() => {
     bootstrapAsync();
   }, []);
@@ -29,7 +26,6 @@ const AuthLoadingScreen = ({ navigation }) => {
   const bootstrapAsync = async () => {
     const user = await authService.getUser();
     if (user) {
-      handleSetActiveUser(user);
       handleGetUser();
     } else {
       navigation.navigate('AuthStack');

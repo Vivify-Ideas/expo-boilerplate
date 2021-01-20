@@ -28,7 +28,7 @@ class AuthService extends ApiService {
   }
 
   init = async () => {
-    const token = this.getToken();
+    const token = this.getAccessToken();
     const user = this.getUser();
 
     if (token && user) {
@@ -38,10 +38,10 @@ class AuthService extends ApiService {
   };
 
   setAuthorizationHeader = async () => {
-    const token = await this.getToken();
-    if (token) {
+    const accessToken = await this.getAccessToken();
+    if (accessToken) {
       this.api.attachHeaders({
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${accessToken}`
       });
     }
 
@@ -66,8 +66,8 @@ class AuthService extends ApiService {
     this.api.removeHeaders(['Authorization']);
   };
 
-  login = async loginData => {
-    const { data } = await this.apiClient.post(ENDPOINTS.LOGIN, loginData);
+  login = async credentials => {
+    const { data } = await this.apiClient.post(ENDPOINTS.LOGIN, credentials);
     await this.createSession(data);
     return data;
   };
@@ -121,7 +121,7 @@ class AuthService extends ApiService {
     return { ok: true, data };
   };
 
-  forgotPassword = data => this.apiClient.post(ENDPOINTS.FORGOT_PASSWORD, data);
+  forgotPassword = email => this.apiClient.post(ENDPOINTS.FORGOT_PASSWORD, { email });
 
   resetPassword = data => this.apiClient.post(ENDPOINTS.RESET_PASSWORD, data);
 
@@ -131,9 +131,9 @@ class AuthService extends ApiService {
     return this.login({ email, password });
   };
 
-  getToken = async () => {
+  getAccessToken = async () => {
     const user = await AsyncStorage.getItem('user');
-    return user ? JSON.parse(user).access_token : undefined;
+    return user ? JSON.parse(user).accessToken : undefined;
   };
 
   getUser = async () => {

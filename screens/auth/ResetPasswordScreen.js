@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { passwordReset } from '../../store/actions/UserActions';
 import { ResetPasswordForm } from '../../components/auth/ResetPasswordForm';
-import { resetPasswordErrorSelector } from '../../store/selectors/ErrorSelector';
+import { resetPassword } from '../../store/auth';
+import { resetPasswordErrorSelector } from '../../store/error';
 
 const ResetPasswordScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  const handlePasswordReset = data => dispatch(passwordReset(data));
+  const handlePasswordReset = data => dispatch(resetPassword(data));
   const resetPasswordError = useSelector(resetPasswordErrorSelector());
 
   const handleSubmit = resetPasswordData => {

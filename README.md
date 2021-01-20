@@ -41,11 +41,13 @@ In components folder there are some examples of our forms, they all use custom t
 For state management we use [React Redux](https://github.com/reduxjs/react-redux) with [Redux Saga](https://github.com/redux-saga/redux-saga) and [Reselect](https://github.com/reduxjs/reselect).
 
     ├── store
-    ├──── actions
-    ├──── index.js
-    ├──── reducer
-    ├──── selectors
-    └──── sagas
+    ├──── feature
+    ├────── actions
+    ├────── actionTypes
+    ├────── index.js
+    ├────── reducer
+    ├────── selectors
+    └────── sagas
 
 For localization we have `$t` wrapper around [I18n-js](https://github.com/fnando/i18n-js) library.
 

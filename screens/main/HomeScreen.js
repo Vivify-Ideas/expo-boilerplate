@@ -14,15 +14,14 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { addHeaderLeftNavigator } from '../../helpers';
 import $t from 'i18n';
-import { logout } from '../../store/actions/UserActions';
-import { userSelector } from '../../store/selectors/UserSelector';
+import { activeUserSelector, logout } from '../../store/auth';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
 
   const handleLogout = () => dispatch(logout());
 
-  const user = useSelector(userSelector());
+  const user = useSelector(activeUserSelector());
 
   const [modalVisible, setModalVisible] = useState(false);
 

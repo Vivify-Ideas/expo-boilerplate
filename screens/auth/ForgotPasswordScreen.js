@@ -4,15 +4,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { ForgotPasswordForm } from '../../components/auth/ForgotPasswordForm';
-import { passwordForgot } from '../../store/actions/UserActions';
-import { setForgotPasswordError } from '../../store/actions/ErrorActions';
-import { forgotPasswordErrorSelector } from '../../store/selectors/ErrorSelector';
+import { forgotPassword } from '../../store/auth';
+import {
+  setForgotPasswordError,
+  forgotPasswordErrorSelector
+} from '../../store/error';
 
 const ForgotPasswordScreen = () => {
   const dispatch = useDispatch();
 
-  const handlePasswordForgot = useCallback(data =>
-    dispatch(passwordForgot(data))
+  const handlePasswordForgot = useCallback(({ email }) =>
+    dispatch(forgotPassword(email))
   );
   const handleSetForgotPasswordError = data =>
     dispatch(setForgotPasswordError(data));

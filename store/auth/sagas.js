@@ -1,23 +1,42 @@
-import { call, put } from 'redux-saga/effects';
-import { setLoader } from '../actions/LoaderAction';
+import { call, put, takeLatest } from 'redux-saga/effects';
+
 import authService from '../../services/AuthService';
 import NavigationService from '../../services/NavigationService';
-import {
-  setSignInError,
-  setGlobalError,
-  setSignUpErrors,
-  changePasswordError,
-  setForgotPasswordError,
-  setResetPasswordError,
-  setSocialLoginError
-} from '../actions/ErrorActions';
-import { setUser, setChangePasswordSuccess, setUpdatedUser } from '../actions/UserActions';
 import { profileService } from '../../services/ProfileService';
+import {
+  setForgotPasswordError,
+  setGlobalError,
+  setResetPasswordError,
+  setSignInError,
+  setSignUpErrors,
+  setSocialLoginError
+} from '../error';
+import { setLoader } from '../loader';
+import { resetState } from '../shared';
+import {
+  setChangePasswordSuccess,
+  setUpdatedUser,
+  setActiveUser
+} from './actions';
 
-export function* userLogin({ payload }) {
+import {
+  CHANGE_PASSWORD,
+  FACEBOOK_LOGIN,
+  FORGOT_PASSWORD,
+  GET_ACTIVE_USER,
+  GOOGLE_LOGIN,
+  LOGIN,
+  LOGOUT,
+  RESET_PASSWORD,
+  SIGN_UP,
+  UPDATE_USER
+} from './actionTypes';
+
+function* login({ payload }) {
   try {
     yield put(setSignInError(false));
     yield put(setLoader(true));
+
     yield call(authService.login, payload);
     NavigationService.navigate('AuthLoading');
   } catch (error) {
@@ -31,7 +50,7 @@ export function* userLogin({ payload }) {
   }
 }
 
-export function* userFacebookLogin() {
+function* loginWithFacebook() {
   try {
     yield put(setLoader(true));
     yield call(authService.loginWithFacebook);
@@ -49,7 +68,7 @@ export function* userFacebookLogin() {
   }
 }
 
-export function* userGoogleLogin() {
+function* loginWithGoogle() {
   try {
     yield put(setLoader(true));
     yield call(authService.loginWithGoogle);
@@ -67,7 +86,7 @@ export function* userGoogleLogin() {
   }
 }
 
-export function* userSignUp({ payload }) {
+function* signUp({ payload }) {
   try {
     yield put(setSignUpErrors({}));
     yield put(setLoader(true));
@@ -84,19 +103,19 @@ export function* userSignUp({ payload }) {
   }
 }
 
-export function* userLogout() {
+function* logout() {
   try {
     yield put(setLoader(true));
     yield call(authService.logout);
+    yield put(resetState());
     NavigationService.navigate('AuthLoading');
   } catch (error) {
-    console.log(error); /*eslint-disable-line*/
   } finally {
     yield put(setLoader(false));
   }
 }
 
-export function* forgotPassword({ payload }) {
+function* forgotPassword({ payload }) {
   try {
     yield put(setForgotPasswordError(false));
     yield put(setLoader(true));
@@ -113,7 +132,7 @@ export function* forgotPassword({ payload }) {
   }
 }
 
-export function* resetPassword({ payload }) {
+function* resetPassword({ payload }) {
   try {
     yield put(setLoader(true));
     yield call(authService.resetPassword, payload);
@@ -129,11 +148,11 @@ export function* resetPassword({ payload }) {
   }
 }
 
-export function* userGet() {
+function* getActiveUser() {
   try {
     yield put(setLoader(true));
     const { data } = yield call(profileService.getProfile);
-    yield put(setUser(data));
+    yield put(setActiveUser(data));
   } catch (error) {
     yield put(setGlobalError(true));
   } finally {
@@ -141,7 +160,7 @@ export function* userGet() {
   }
 }
 
-export function* passwordChange({ payload }) {
+function* changePassword({ payload }) {
   try {
     yield put(setLoader(true));
     yield call(profileService.changePassword, payload);
@@ -149,7 +168,7 @@ export function* passwordChange({ payload }) {
     NavigationService.goBack();
   } catch (error) {
     if (error.response.status === 422) {
-      yield put(changePasswordError(true));
+      yield put(setChangePasswordError(true));
     } else {
       yield put(setGlobalError(true));
     }
@@ -158,7 +177,7 @@ export function* passwordChange({ payload }) {
   }
 }
 
-export function* updateUser({ payload }) {
+function* updateUser({ payload }) {
   try {
     yield put(setLoader(true));
     const { data } = yield call(profileService.updateUser, payload);
@@ -169,4 +188,44 @@ export function* updateUser({ payload }) {
   } finally {
     yield put(setLoader(false));
   }
+}
+
+export function* watchLogin() {
+  yield takeLatest(LOGIN, login);
+}
+
+export function* watchLoginWithFacebook() {
+  yield takeLatest(FACEBOOK_LOGIN, loginWithFacebook);
+}
+
+export function* watchLoginWithGoogle() {
+  yield takeLatest(GOOGLE_LOGIN, loginWithGoogle);
+}
+
+export function* watchSignUp() {
+  yield takeLatest(SIGN_UP, signUp);
+}
+
+export function* watchLogout() {
+  yield takeLatest(LOGOUT, logout);
+}
+
+export function* watchForgotPassword() {
+  yield takeLatest(FORGOT_PASSWORD, forgotPassword);
+}
+
+export function* watchResetPassword() {
+  yield takeLatest(RESET_PASSWORD, resetPassword);
+}
+
+export function* watchGetActiveUser() {
+  yield takeLatest(GET_ACTIVE_USER, getActiveUser);
+}
+
+export function* watchChangePassword() {
+  yield takeLatest(CHANGE_PASSWORD, changePassword);
+}
+
+export function* watchUpdateUser() {
+  yield takeLatest(UPDATE_USER, updateUser);
 }
