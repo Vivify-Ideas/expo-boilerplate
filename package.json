@@ -28,7 +28,7 @@
     "@expo/samples": "^3.0.3",
     "@expo/vector-icons": "^12.0.0",
     "@react-native-community/netinfo": "5.9.7",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "expo": "^40.0.0",
     "expo-app-loading": "^1.0.1",
     "expo-asset": "~8.2.1",
