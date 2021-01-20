@@ -1,6 +1,6 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, YellowBox } from 'react-native';
-import { AppLoading } from 'expo';
+import { Platform, StatusBar, StyleSheet, View, LogBox } from 'react-native';
+import AppLoading from 'expo-app-loading';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import * as Icon from '@expo/vector-icons';
@@ -19,7 +19,7 @@ if (!__DEV__) {
   Sentry.config('https://<key>@sentry.io/<project>').install();
 }
 
-YellowBox.ignoreWarnings(['react-native-i18n module is not correctly linked']);
+LogBox.ignoreLogs(['react-native-i18n module is not correctly linked']);
 
 export default class App extends React.Component {
   state = {

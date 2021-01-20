@@ -1,5 +1,5 @@
 import React from 'react';
-import { Updates } from 'expo';
+import * as Updates from 'expo-updates';
 import { TouchableOpacity, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import $t from 'i18n';
@@ -8,7 +8,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from './baseModal';
 const ErrorModal = ({ isVisible, closeModal }) => {
   const _restartApp = () => {
     closeModal();
-    Updates.reload();
+    Updates.reloadAsync();
   };
 
   return (
