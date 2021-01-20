@@ -6,8 +6,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { ImagePicker } from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 
-import { updateUser } from '../../../store/actions/UserActions';
-import { userSelector } from '../../../store/selectors/UserSelector';
+import { activeUserSelector, updateUser } from '../../../store/auth';
 import { UpdateProfileForm } from '../../../components/profile/UpdateProfileForm';
 import Picture from '../../../components/shared/Picture';
 import NoPermissionsForCameraModal from '../../../components/shared/modal/NoPermissionsForCameraModal';
@@ -19,7 +18,7 @@ const EditProfile = () => {
   const dispatch = useDispatch();
 
   const handleUserUpdate = data => dispatch(updateUser(data));
-  const user = useSelector(userSelector());
+  const user = useSelector(activeUserSelector());
 
   const [image, setImage] = useState('');
   const [imagePickerModalVisible, toggleImagePicker] = useState(false);

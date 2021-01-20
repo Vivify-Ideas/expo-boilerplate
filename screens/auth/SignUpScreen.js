@@ -4,10 +4,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import $t from 'i18n';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { signUp } from '../../store/actions/UserActions';
-import { setSignUpErrors } from '../../store/actions/ErrorActions';
 import { SignUpForm } from '../../components/auth/SignUpForm';
-import { signUpErrorsSelector } from '../../store/selectors/ErrorSelector';
+import { signUp } from '../../store/auth';
+import { setSignUpErrors, signUpErrorsSelector } from '../../store/error';
 
 const SignUpScreen = () => {
   const dispatch = useDispatch();

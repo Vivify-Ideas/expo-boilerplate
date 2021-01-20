@@ -10,14 +10,22 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import authService from '../services/AuthService';
 import ActivityIndicatorComponent from '../components/shared/ActivityIndicatorComponent';
-import { loaderSelector } from '../store/selectors/LoaderSelector';
+import { loaderSelector } from '../store/loader';
 import PasswordChangedModal from '../components/shared/modal/PasswordChangeModal';
-import { passwordChangedSelector } from '../store/selectors/UserSelector';
-import { setChangePasswordSuccess } from '../store/actions/UserActions';
+import { passwordChangedSelector, setChangePasswordSuccess } from '../store/auth';
 import ErrorModal from '../components/shared/modal/ErrorModal';
-import { globalErrorSelector, socialLoginErrorSelector } from '../store/selectors/ErrorSelector';
-import { setGlobalError, setSocialLoginError } from '../store/actions/ErrorActions';
-import { OS_TYPES, DEFAULT, NOTIFICATION, NOTIFICATION_ORIGIN } from '../constants';
+import {
+  setGlobalError,
+  globalErrorSelector,
+  setSocialLoginError,
+  socialLoginErrorSelector
+} from '../store/error';
+import {
+  OS_TYPES,
+  DEFAULT,
+  NOTIFICATION,
+  NOTIFICATION_ORIGIN
+} from '../constants';
 import { notificationHandleService } from '../services/NotificationHandleService';
 import SocialLoginErrorModal from '../components/shared/modal/SocialLoginErrorModal';
 import OfflineWarning from '../components/shared/OfflineWarning';
@@ -27,7 +35,8 @@ const NetworkInterceptor = ({ showNotification, children }) => {
 
   const handleSetGlobalError = data => dispatch(setGlobalError(data));
   const handleSetSocialLoginError = data => dispatch(setSocialLoginError(data));
-  const handleSetChangePasswordSuccess = data => dispatch(setChangePasswordSuccess(data));
+  const handleSetChangePasswordSuccess = data =>
+    dispatch(setChangePasswordSuccess(data));
 
   const loader = useSelector(loaderSelector());
   const passwordChanged = useSelector(passwordChangedSelector());
@@ -78,7 +87,7 @@ const NetworkInterceptor = ({ showNotification, children }) => {
   };
 
   const processUrlEvent = async queryParams => {
-    const userToken = await authService.getToken();
+    const accessToken = await authService.getAccessToken();
     if (queryParams.forgot_password_token) {
       NavigationService.navigate('ResetPassword', {
         forgot_password_token: queryParams.forgot_password_token
@@ -86,7 +95,7 @@ const NetworkInterceptor = ({ showNotification, children }) => {
       return;
     }
 
-    if (!userToken) {
+    if (!accessToken) {
       NavigationService.navigate('AuthStack');
       return;
     }
@@ -106,7 +115,10 @@ const NetworkInterceptor = ({ showNotification, children }) => {
         isVisible={passwordChanged}
         closeModal={() => handleSetChangePasswordSuccess(false)}
       />
-      <ErrorModal isVisible={globalError} closeModal={() => handleSetGlobalError(false)} />
+      <ErrorModal
+        isVisible={globalError}
+        closeModal={() => handleSetGlobalError(false)}
+      />
       <SocialLoginErrorModal
         error={socialLoginError}
         closeModal={() => handleSetSocialLoginError('')}

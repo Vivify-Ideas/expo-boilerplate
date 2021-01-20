@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { ChangePasswordForm } from '../../../components/profile/ChangePasswordForm';
-import { changePassword } from '../../../store/actions/UserActions';
-import { changePasswordErrorSelector } from '../../../store/selectors/ErrorSelector';
+import { changePassword } from '../../../store/auth';
+import { changePasswordErrorSelector } from '../../../store/error';
 
 const ChangePassword = () => {
   const dispatch = useDispatch();
