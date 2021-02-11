@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, LogBox } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, LogBox, Text, TextInput } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
@@ -29,6 +29,10 @@ export default class App extends React.Component {
   static propTypes = {
     skipLoadingScreen: PropTypes.bool
   };
+
+  async componentDidMount() {
+    this._disableFontScaling();
+  }
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
@@ -84,6 +88,15 @@ export default class App extends React.Component {
 
   _handleFinishLoading = () => {
     this.setState({ isLoadingComplete: true });
+  };
+
+  _disableFontScaling = () => {
+    Text.defaultProps = {
+      allowFontScaling: false
+    };
+    TextInput.defaultProps = {
+      allowFontScaling: false
+    };
   };
 }
 
