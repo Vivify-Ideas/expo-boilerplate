@@ -30,7 +30,7 @@ export default class App extends React.Component {
     skipLoadingScreen: PropTypes.bool
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     this._disableFontScaling();
   }
 
@@ -90,7 +90,7 @@ export default class App extends React.Component {
     this.setState({ isLoadingComplete: true });
   };
 
-  _disableFontScaling = () => {
+  _disableFontScaling = async () => {
     Text.defaultProps = {
       allowFontScaling: false
     };
