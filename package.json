@@ -44,7 +44,7 @@
     "expo-web-browser": "~8.6.0",
     "formik": "^2.2.6",
     "i18n-js": "^3.3.0",
-    "immer": "^3.2.0",
+    "immer": "^9.0.6",
     "prop-types": "^15.6.2",
     "react": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
